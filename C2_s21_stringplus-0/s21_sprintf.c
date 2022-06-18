@@ -13,6 +13,7 @@ typedef struct {
 int s21_sprintf(char * str, const char * format, ...);
 int searchModifiersForString(int x, const char * format, spec * config, va_list * params);
 char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * params);
+char * s21_ptoa(char * str, int * variable);
 char * s21_itoa(char * str, int number);
 char * s21_reverse(char * str);
 char * s21_i16toa(char * str, int number);
@@ -184,6 +185,8 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
             va_arg(*params, int);
             break;
         case 'p':
+            int * aux_var = va_arg(*params, int *);
+            strcat(str, s21_ptoa(storage, aux_var));
             break;
         case 'n':
             va_arg(*params, int);
@@ -202,6 +205,24 @@ char * s21_reverse(char * str) {
         str[x] = str[lenStr - x];
         str[lenStr - x] = aux;
     }
+    return str;
+}
+
+char * s21_ptoa(char * str, int * variable) {
+
+    int lenStr = strlen(str);
+    lenStr = lenStr != 0 ? (lenStr - 1) : lenStr;
+
+    int * y = variable;
+    printf("TEST = %p - %d\n", y, ((size_t) y % 0x10));
+
+    printf("TEST_2 = %u\n", ((size_t) y));
+
+    for (int * x = variable, z = lenStr; z < (lenStr + 16); x = (void *) (((size_t) x) >> 4), z += 1) {
+        unsigned int aux = ((size_t) x) % 0x10;
+        aux < 10 ? (str[z] = ('0' + aux)) : (str[z] = ('a' + (aux - 10))); 
+    }
+
     return str;
 }
 
@@ -233,7 +254,7 @@ int main() {
     char TEST_MESSAGE[500] = "Hello, World!!";
 
     char TEST_c = '5';
-    int TEST_d = 123;
+    unsigned long TEST_d = 2147483648;
     int TEST_i = 321;
     double TEST_e = 101.753;
     double TEST_E = 101.753;
@@ -252,24 +273,22 @@ int main() {
 
     sprintf(TEST_MESSAGE, "%c|%d|%i|%e|%E|%f|%.*g|%G|%o|%s|%u|%x|%X|%p|%n|%%", 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, width, TEST_g, TEST_G, TEST_o, 
-        TEST_s, TEST_u, TEST_x, TEST_X, TEST_p, &TEST_n);
-    printf("ORIGINAL - |%s| - %d\n", TEST_MESSAGE, TEST_n);   
+        TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
+    printf("\nORIGINAL - |%s| - %d\n", TEST_MESSAGE, TEST_n);
+
     s21_sprintf(TEST_MESSAGE, "%c|%d|%i|%e|%E|%f|%.*g|%G|%o|%s|%u|%x|%X|%p|%n|%%", 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, width, TEST_g, TEST_G, TEST_o, 
-        TEST_s, TEST_u, TEST_x, TEST_X, TEST_X, &TEST_n);
+        TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
     printf("__FAKE__ - |%s| - %d\n", TEST_MESSAGE, TEST_n);
-
-    s21_i16toa(TEST_MESSAGE, TEST_X);
-    printf("TEST FUNC - %s|\n", TEST_MESSAGE);
 
     int TEST = 555;
     int * TEST_piz = &TEST;
-    printf("Z - %p - %p - %p\n", TEST, TEST_piz, *TEST_piz);
-    for (int * x = &TEST, z = 0; z < 13 ; *x = (((size_t)*x) >> 4), z += 1) {
+    printf("\nPATH - [TEST = %p] - [TEST_piz = %p] - [*TEST_piz = %p]\n\n", TEST, TEST_piz, *TEST_piz);
+    for (int * x = &TEST, z = 0; z < 16 ; *x = (((size_t)*x) >> 4), z += 1) {
         unsigned int aux = ((size_t) *x) % 0x10;
         aux < 10 ? printf("%c", ('0' + aux)) : printf("%c", ('a' + (aux - 10))); 
     }
-    printf("TEST = %d", TEST);
+    printf("  <---  FORMED PATH!\n\n");
 
     return 0;
 }
