@@ -185,8 +185,7 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
             va_arg(*params, int);
             break;
         case 'p':
-            int * aux_var = va_arg(*params, int *);
-            strcat(str, s21_ptoa(storage, aux_var));
+            strcat(str, s21_reverse(s21_ptoa(storage, va_arg(*params, int *))));
             break;
         case 'n':
             va_arg(*params, int);
@@ -209,20 +208,13 @@ char * s21_reverse(char * str) {
 }
 
 char * s21_ptoa(char * str, int * variable) {
-
     int lenStr = strlen(str);
     lenStr = lenStr != 0 ? (lenStr - 1) : lenStr;
-
-    int * y = variable;
-    printf("TEST = %p - %d\n", y, ((size_t) y % 0x10));
-
-    printf("TEST_2 = %u\n", ((size_t) y));
-
-    for (int * x = variable, z = lenStr; z < (lenStr + 16); x = (void *) (((size_t) x) >> 4), z += 1) {
-        unsigned int aux = ((size_t) x) % 0x10;
-        aux < 10 ? (str[z] = ('0' + aux)) : (str[z] = ('a' + (aux - 10))); 
+    for (int * aux = variable, x = lenStr; x < (lenStr + 16); aux = ((void *) (((size_t) aux) >> 4)), x += 1) {
+        unsigned int last_symbol = ((size_t) aux) % 0x10;
+        last_symbol < 10 ? 
+            (str[x] = ('0' + last_symbol)) : (str[x] = ('a' + (last_symbol - 10))); 
     }
-
     return str;
 }
 
@@ -254,6 +246,7 @@ int main() {
     char TEST_MESSAGE[500] = "Hello, World!!";
 
     char TEST_c = '5';
+    // TODO: функция обрабатывает размер не больше long!!!
     unsigned long TEST_d = 2147483648;
     int TEST_i = 321;
     double TEST_e = 101.753;
