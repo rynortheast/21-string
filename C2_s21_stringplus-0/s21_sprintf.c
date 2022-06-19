@@ -179,13 +179,23 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
             strcat(str, va_arg(*params, char *));
             break;
         case 'o':
-        case 'u':
-        case 'x':
-        case 'X':
             va_arg(*params, int);
             break;
+        case 'u':
+            // TODO: здесь проблема в том, что отправляя чисто в s21_itoa там такой размер не поддержтивается!
+            unsigned int aux = va_arg(*params, int);
+            aux = aux < 0 ? UINT_MAX + aux : aux;
+            printf("TEST - %d\n", aux);
+            strcat(str, s21_reverse(s21_itoa(storage, aux)));
+            break;
+        case 'x':
+        case 'X':
+            // printf("TEST_0 - START\n");
+            strcat(str, s21_reverse(s21_i16toa(storage, va_arg(*params, int))));
+            // printf("TEST_3 - END\n");
+            break;
         case 'p':
-            strcat(str, s21_reverse(s21_ptoa(storage, va_arg(*params, int *))));
+            strcat(str, s21_reverse(s21_ptoa(storage, va_arg(*params, void *))));
             break;
         case 'n':
             va_arg(*params, int);
@@ -228,17 +238,17 @@ char * s21_itoa(char * str, int number) {
 }
 
 char * s21_i16toa(char * str, int number) {
+    // printf("TEST_1 - %s|\n", str);
     int lenStr = strlen(str);
-    number = number < 0 ? (INT_MAX + number + 1) : number;
-    printf("T - %d\n", number);
+    lenStr = lenStr != 0 ? (lenStr - 1) : lenStr;
+    // number = number < 0 ? (INT_MAX + number + 1) : number;
     for (; (number / 0x10) != 0; number /= 0x10, lenStr += 1) {
-        printf("TEST - %d\n", number % 0x10);
         str[lenStr] = (number % 0x10) < 10 ? (number % 0x10) + '0' : ((number %0x10) - 10) + 97;
-
     }
-    printf("TEST_LAST - %d\n", number);
     str[lenStr] = number < 10 ? number + '0' : number + 97;
     str[lenStr + 1] = '\0';
+    // printf("TEST_2 - %s|\n", str);
+    return str;
 }
 
 int main() {
@@ -256,9 +266,9 @@ int main() {
     double TEST_G = 5.753;
     int TEST_o = 777;
     char TEST_s[100] = "CHAMOMIL VAMIRYN";
-    int TEST_u = 999;
+    int TEST_u = -999;
     int TEST_x = 999;
-    int TEST_X = INT_MIN + 1;
+    int TEST_X = 998;
     int TEST_p = 999;
     int TEST_n = 999;
 
