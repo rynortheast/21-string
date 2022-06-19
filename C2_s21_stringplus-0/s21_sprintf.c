@@ -8,6 +8,7 @@ typedef struct {
     int width;
     int accuracy;
     char type;
+    int minus;
 } spec;
 
 int s21_sprintf(char * str, const char * format, ...);
@@ -121,7 +122,7 @@ int s21_sprintf(char * str, const char * format, ...) {
 
         if (format[x] == '%') {
 
-            spec config = {'0', 0, 0, '0'};
+            spec config = {'0', 0, 0, '0', 0};
             x = searchModifiersForString(x, format, &config, &params);            
             // printf("%% | %c | %d | .%d | %c | %c\n", config.flag, config.width, config.accuracy, config.type, format[x]);
             insertStringBySpecifier(str, format[x], config, &params);
@@ -166,7 +167,8 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
             break;
         case 'd':
         case 'i':
-            strcat(str, s21_reverse(s21_itoa(storage, va_arg(*params, int))));
+            strcat(str, s21_reverse(
+                    s21_itoa(storage, va_arg(*params, int))));
             break;
         case 'e':
         case 'E':
@@ -183,9 +185,9 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
             break;
         case 'u':
             // TODO: здесь проблема в том, что отправляя чисто в s21_itoa там такой размер не поддержтивается!
-            unsigned int aux = va_arg(*params, int);
-            aux = aux < 0 ? UINT_MAX + aux : aux;
-            printf("TEST - %d\n", aux);
+            unsigned int aux = UINT_MAX;
+            printf("TEST - %u\n", aux);
+            va_arg(*params, void *);
             strcat(str, s21_reverse(s21_itoa(storage, aux)));
             break;
         case 'x':
@@ -229,6 +231,9 @@ char * s21_ptoa(char * str, int * variable) {
 }
 
 char * s21_itoa(char * str, int number) {
+    if (number < 0) {
+        printf("TEST_itoa - %d\n", number);
+    }
     int lenStr = strlen(str);
     for (; (number / 10) != 0; number /= 10, lenStr += 1)
         str[lenStr] = number > 0 ? (number % 10) + '0' : ((-number) % 10) + '0';
@@ -257,8 +262,8 @@ int main() {
 
     char TEST_c = '5';
     // TODO: функция обрабатывает размер не больше long!!!
-    unsigned long TEST_d = 2147483648;
-    int TEST_i = 321;
+    unsigned int TEST_d = 2147483699;
+    unsigned int TEST_i = 2147483655;
     double TEST_e = 101.753;
     double TEST_E = 101.753;
     double TEST_f = 101.753;
@@ -282,16 +287,7 @@ int main() {
     s21_sprintf(TEST_MESSAGE, "%c|%d|%i|%e|%E|%f|%.*g|%G|%o|%s|%u|%x|%X|%p|%n|%%", 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, width, TEST_g, TEST_G, TEST_o, 
         TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
-    printf("__FAKE__ - |%s| - %d\n", TEST_MESSAGE, TEST_n);
-
-    int TEST = 555;
-    int * TEST_piz = &TEST;
-    printf("\nPATH - [TEST = %p] - [TEST_piz = %p] - [*TEST_piz = %p]\n\n", TEST, TEST_piz, *TEST_piz);
-    for (int * x = &TEST, z = 0; z < 16 ; *x = (((size_t)*x) >> 4), z += 1) {
-        unsigned int aux = ((size_t) *x) % 0x10;
-        aux < 10 ? printf("%c", ('0' + aux)) : printf("%c", ('a' + (aux - 10))); 
-    }
-    printf("  <---  FORMED PATH!\n\n");
+    printf("__FAKE__ - |%s| - %d\n\n", TEST_MESSAGE, TEST_n);
 
     return 0;
 }
