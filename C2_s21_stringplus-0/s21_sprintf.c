@@ -8,7 +8,6 @@ typedef struct {
     int width;
     int accuracy;
     char type;
-    int minus;
 } spec;
 
 int s21_sprintf(char * str, const char * format, ...);
@@ -16,6 +15,8 @@ int s21_sprintf(char * str, const char * format, ...);
 char * s21_conf(char * str, spec config, char symbol);
 
 char * s21_utoa(char * str, unsigned int number, int format);
+
+char * s21_ftoi(char * str, double number);
 
 int searchModifiersForString(int x, const char * format, spec * config, va_list * params);
 char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * params);
@@ -27,12 +28,6 @@ void s21_itoi(char * str, int * len, int number) {
     // s21_itoa(str, len, number < 0 ? (- number) : number);
     number < 0 ? str[*len += 1] = '-' : 0;
     str[*len + 1] = '\0';
-}
-void s21_ftoi(char * str, int * len, double remainder) {
-    remainder < 0 ? remainder *= (-1) : 0;
-    // s21_itoa(str, len, ((int) (remainder * pow(10, 6))));
-    str[*len += 1] = '.';
-    str[*len += 1] = '\0';
 }
 int insertSpecifier(char * str, char symbol, va_list * param) {
     int status = 1, len = 0;
@@ -126,7 +121,7 @@ int s21_sprintf(char * str, const char * format, ...) {
 
         if (format[x] == '%') {
 
-            spec config = {'0', 0, 0, '0', 0};
+            spec config = {'0', 0, 0, '0'};
             x = searchModifiersForString(x, format, &config, &params);            
             // printf("%% | %c | %d | .%d | %c | %c\n", config.flag, config.width, config.accuracy, config.type, format[x]);
             insertStringBySpecifier(str, format[x], config, &params);
@@ -175,7 +170,12 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
             break;
         case 'e':
         case 'E':
+            // TODO: если число не входит в итог, то последнее округляется!
+            va_arg(*params, double);
+            break;
         case 'f':
+            strcat(str, s21_conf(s21_ftoi(storage, va_arg(*params, double)), config, symbol));
+            break;
         case 'g':
         case 'G':
             va_arg(*params, double);
@@ -221,13 +221,22 @@ char * s21_reverse(char * str) {
 }
 
 char * s21_ptoa(char * str, int * variable) {
-    int lenStr = strlen(str);
-    lenStr = lenStr != 0 ? (lenStr - 1) : lenStr;
-    for (int * aux = variable, x = lenStr; x < (lenStr + 16); aux = ((void *) (((size_t) aux) >> 4)), x += 1) {
+    for (int * aux = variable, x = 0; x < 16; aux = ((void *) (((size_t) aux) >> 4)), x += 1) {
         unsigned int last_symbol = ((size_t) aux) % 0x10;
         last_symbol < 10 ? 
             (str[x] = ('0' + last_symbol)) : (str[x] = ('a' + (last_symbol - 10))); 
     }
+    return str;
+}
+
+char * s21_ftoi(char * str, double number) {
+    char storage[100] = "Hello, world!";
+    strcat(str, s21_itoa(storage, ((int) number), 10));
+    number < 0 ? number *= (-1) : number;
+    str[strlen(str) + 1] = '\0';
+    str[strlen(str)] = '.';
+    number -= (int) number;
+    strcat(str, s21_itoa(storage, ((int) (number * pow(10, 6))), 10));
     return str;
 }
 
@@ -265,11 +274,17 @@ int main() {
     char TEST_c = '5';
     unsigned int TEST_d = -214748369;
     unsigned int TEST_i = -214748365;
-    double TEST_e = 101.753;
-    double TEST_E = 101.753;
-    double TEST_f = 101.753;
-    double TEST_g = 5.753453;
-    double TEST_G = 5.753453;
+    double TEST_e = 504000000.75368;
+    int TEST_e_test = (int) TEST_e;
+    int TEST_ES = 0;
+    for (; pow(10, TEST_ES) < TEST_e; TEST_ES += 1) {
+        
+    }
+    printf("TEST - %d\n", TEST_ES);
+    double TEST_E = 50.75;
+    double TEST_f = -5.753;
+    double TEST_g = -5.7534551;
+    double TEST_G = -5.7534551;
     int TEST_o = 775;
     char TEST_s[100] = "CHAMOMIL VAMIRYN";
     int TEST_u = 747385742;
@@ -280,13 +295,13 @@ int main() {
 
     int width = 5;
 
-    sprintf(TEST_MESSAGE, "|%c|%d|%i|%e|%E|%f|%.*g|%G|%o|%s|%u|%x|%X|%p|%n|%%|", 
-        TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, width, TEST_g, TEST_G, TEST_o, 
+    sprintf(TEST_MESSAGE, "|%c|%d|%i|%e|%E|%f|%g|%G|%o|%s|%u|%x|%X|%p|%n|%%|", 
+        TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o, 
         TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
     printf("\nORIGINAL - %s - %d\n", TEST_MESSAGE, TEST_n);
 
-    s21_sprintf(TEST_MESSAGE, "|%c|%d|%i|%e|%E|%f|%.*g|%G|%o|%s|%u|%x|%X|%p|%n|%%|", 
-        TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, width, TEST_g, TEST_G, TEST_o, 
+    s21_sprintf(TEST_MESSAGE, "|%c|%d|%i|%e|%E|%f|%g|%G|%o|%s|%u|%x|%X|%p|%n|%%|", 
+        TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o, 
         TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
     printf("__FAKE__ - %s - %d\n\n", TEST_MESSAGE, TEST_n);
 
