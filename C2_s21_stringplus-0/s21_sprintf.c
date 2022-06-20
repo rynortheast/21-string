@@ -22,7 +22,6 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
 char * s21_ptoa(char * str, int * variable);
 char * s21_itoa(char * str, int number, int format);
 char * s21_reverse(char * str);
-char * s21_i16toa(char * str, int number);
 
 void s21_itoi(char * str, int * len, int number) {
     // s21_itoa(str, len, number < 0 ? (- number) : number);
@@ -185,14 +184,14 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
             strcat(str, va_arg(*params, char *));
             break;
         case 'o':
-            va_arg(*params, int);
+            strcat(str, s21_conf(s21_utoa(storage, va_arg(*params, unsigned int), 8), config, symbol));
             break;
         case 'u':
             strcat(str, s21_conf(s21_utoa(storage, va_arg(*params, unsigned int), 10), config, symbol));
             break;
         case 'x':
         case 'X':
-            strcat(str, s21_conf(s21_itoa(storage, va_arg(*params, int), 16), config, symbol));
+            strcat(str, s21_conf(s21_utoa(storage, va_arg(*params, int), symbol == 'x' ? 32 : 16), config, symbol));
             break;
         case 'p':
             strcat(str, s21_reverse(s21_ptoa(storage, va_arg(*params, void *))));
@@ -212,11 +211,11 @@ char * s21_conf(char * str, spec config, char symbol) {
 }
 
 char * s21_reverse(char * str) {
-    int lenStr = strlen(str) - 1;
+    int lenStr = strlen(str);
     for (int x = 0; x < (lenStr / 2); x += 1) {
-        char aux = str[x];
-        str[x] = str[lenStr - x];
-        str[lenStr - x] = aux;
+        char aux = str[lenStr - 1 - x];
+        str[lenStr - 1 - x] = str[x];
+        str[x] = aux;
     }
     return str;
 }
@@ -233,10 +232,11 @@ char * s21_ptoa(char * str, int * variable) {
 }
 
 char * s21_utoa(char * str, unsigned int number, int format) {
-    int lenStr = 0;
+    int lenStr = 0, type = 97;
+    format == 32 ? format /= 2 : (type = 65);
     for (; (number / format) != 0; number /= format, lenStr += 1)
-        str[lenStr] = (number % format) < 10 ? (number % format) + 48 : ((number % format) - 10) + 97;
-    str[lenStr] = number < 10 ? number + 48 : (number - 10) + 97;
+        str[lenStr] = (number % format) < 10 ? (number % format) + 48 : ((number % format) - 10) + type;
+    str[lenStr] = number < 10 ? number + 48 : (number - 10) + type;
     str[lenStr + 1] = '\0';
     s21_reverse(str);
     return str;
@@ -252,23 +252,9 @@ char * s21_itoa(char * str, int number, int format) {
         minus != 0 ? str[lenStr += 1] = '-' : 0;
         str[lenStr + 1] = '\0';
         s21_reverse(str);
-    } else if (format == 16) {
-        s21_utoa(str, number < 0 ? UINT_MAX + number + 1 : number, 16);
+    } else if (format == 16 || format == 32) {
+        s21_utoa(str, number < 0 ? UINT_MAX + number + 1 : number, format);
     }
-    return str;
-}
-
-char * s21_i16toa(char * str, int number) {
-    // printf("TEST_1 - %s|\n", str);
-    int lenStr = strlen(str);
-    lenStr = lenStr != 0 ? (lenStr - 1) : lenStr;
-    // number = number < 0 ? (INT_MAX + number + 1) : number;
-    for (; (number / 0x10) != 0; number /= 0x10, lenStr += 1) {
-        str[lenStr] = (number % 0x10) < 10 ? (number % 0x10) + '0' : ((number %0x10) - 10) + 97;
-    }
-    str[lenStr] = number < 10 ? number + '0' : number + 97;
-    str[lenStr + 1] = '\0';
-    // printf("TEST_2 - %s|\n", str);
     return str;
 }
 
@@ -284,7 +270,7 @@ int main() {
     double TEST_f = 101.753;
     double TEST_g = 5.753453;
     double TEST_G = 5.753453;
-    int TEST_o = 777;
+    int TEST_o = 775;
     char TEST_s[100] = "CHAMOMIL VAMIRYN";
     int TEST_u = 747385742;
     int TEST_x = -999;
@@ -303,11 +289,6 @@ int main() {
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, width, TEST_g, TEST_G, TEST_o, 
         TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
     printf("__FAKE__ - %s - %d\n\n", TEST_MESSAGE, TEST_n);
-
-    char TEST_itoa[200] = "PRIVET";
-    printf("1 - %s\n", TEST_itoa);
-    itoa(-256, TEST_itoa, 10);
-    printf("2 - %s - %d\n", TEST_itoa, '-');
 
     return 0;
 }
