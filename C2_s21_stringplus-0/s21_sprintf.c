@@ -16,7 +16,7 @@ char * s21_conf(char * str, spec config, char symbol);
 
 char * s21_utoa(char * str, unsigned int number, int format);
 
-char * s21_ftoi(char * str, double number);
+char * s21_ftoi(char * str, double number, int format);
 
 int searchModifiersForString(int x, const char * format, spec * config, va_list * params);
 char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * params);
@@ -174,11 +174,11 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
             va_arg(*params, double);
             break;
         case 'f':
-            strcat(str, s21_conf(s21_ftoi(storage, va_arg(*params, double)), config, symbol));
+            strcat(str, s21_conf(s21_ftoi(storage, va_arg(*params, double), 1), config, symbol));
             break;
         case 'g':
         case 'G':
-            va_arg(*params, double);
+            strcat(str, s21_conf(s21_ftoi(storage, va_arg(*params, double), 2), config, symbol));
             break;
         case 's':
             strcat(str, va_arg(*params, char *));
@@ -197,7 +197,7 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
             strcat(str, s21_reverse(s21_ptoa(storage, va_arg(*params, void *))));
             break;
         case 'n':
-            va_arg(*params, int);
+            va_arg(*params, int *);
             break;
         case '%':
             strcat(str, "%");
@@ -229,14 +229,21 @@ char * s21_ptoa(char * str, int * variable) {
     return str;
 }
 
-char * s21_ftoi(char * str, double number) {
+char * s21_ftoi(char * str, double number, int format) {
+    // TODO: надо бы выделять память через malloc
     char storage[100] = "Hello, world!";
     strcat(str, s21_itoa(storage, ((int) number), 10));
     number < 0 ? number *= (-1) : number;
     str[strlen(str) + 1] = '\0';
     str[strlen(str)] = '.';
     number -= (int) number;
-    strcat(str, s21_itoa(storage, ((int) (number * pow(10, 6))), 10));
+    int ostatok = round(number * pow(10, 6));
+    if (format == 2) {
+        ostatok /= 10;
+        for (; ostatok % 10 == 0;)
+            ostatok /= 10;
+    }
+    strcat(str, s21_itoa(storage, ostatok, 10));
     return str;
 }
 
@@ -283,8 +290,8 @@ int main() {
     printf("TEST - %d\n", TEST_ES);
     double TEST_E = 50.75;
     double TEST_f = -5.753;
-    double TEST_g = -5.7534551;
-    double TEST_G = -5.7534551;
+    double TEST_g = -5.753;
+    double TEST_G = -5.753;
     int TEST_o = 775;
     char TEST_s[100] = "CHAMOMIL VAMIRYN";
     int TEST_u = 747385742;
