@@ -192,9 +192,7 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
             break;
         case 'x':
         case 'X':
-            // printf("TEST_0 - START\n");
-            strcat(str, s21_reverse(s21_i16toa(storage, va_arg(*params, int))));
-            // printf("TEST_3 - END\n");
+            strcat(str, s21_conf(s21_itoa(storage, va_arg(*params, int), 16), config, symbol));
             break;
         case 'p':
             strcat(str, s21_reverse(s21_ptoa(storage, va_arg(*params, void *))));
@@ -247,9 +245,9 @@ char * s21_utoa(char * str, unsigned int number, int format) {
 char * s21_itoa(char * str, int number, int format) {
     int lenStr = 0, minus = 0;
     minus = number < 0 ? number *= (-1) : 0;
-    for (; (number / 10) != 0; number /= 10, lenStr += 1)
-        str[lenStr] = number > 0 ? (number % 10) + 48 : ((-number) % 10) + 48;
-    str[lenStr] = number > 0 ? number + 48 : (-number) + 48;
+    for (; (number / format) != 0; number /= format, lenStr += 1)
+        str[lenStr] = (number % format) < 10 ? (number % format) + 48 : ((number % format) - 10) + 97;
+    str[lenStr] = number < 10 ? number + 48 : (number - 10) + 97;
     minus != 0 ? str[lenStr += 1] = '-' : 0;
     str[lenStr + 1] = '\0';
     s21_reverse(str);
@@ -275,14 +273,13 @@ int main() {
     char TEST_MESSAGE[500] = "Hello, World!!";
 
     char TEST_c = '5';
-    // TODO: функция обрабатывает размер не больше long!!!
     unsigned int TEST_d = 2147483699;
     unsigned int TEST_i = 2147483655;
     double TEST_e = 101.753;
     double TEST_E = 101.753;
     double TEST_f = 101.753;
-    double TEST_g = 5.753;
-    double TEST_G = 5.753;
+    double TEST_g = 5.753453;
+    double TEST_G = 5.753453;
     int TEST_o = 777;
     char TEST_s[100] = "CHAMOMIL VAMIRYN";
     int TEST_u = 747385742;
