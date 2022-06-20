@@ -197,7 +197,7 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
             strcat(str, s21_reverse(s21_ptoa(storage, va_arg(*params, void *))));
             break;
         case 'n':
-            va_arg(*params, int *);
+            *(va_arg(*params, int *)) = strlen(str);
             break;
         case '%':
             strcat(str, "%");
