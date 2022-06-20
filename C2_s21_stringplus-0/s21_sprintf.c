@@ -16,7 +16,7 @@ char * s21_conf(char * str, spec config, char symbol);
 
 char * s21_utoa(char * str, unsigned int number, int format);
 
-char * s21_ftoi(char * str, double number, int format);
+char * s21_ftoi(char * str, double number, int afterpoint);
 
 int searchModifiersForString(int x, const char * format, spec * config, va_list * params);
 char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * params);
@@ -174,11 +174,11 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
             va_arg(*params, double);
             break;
         case 'f':
-            strcat(str, s21_conf(s21_ftoi(storage, va_arg(*params, double), 1), config, symbol));
+            strcat(str, s21_conf(s21_ftoi(storage, va_arg(*params, double), 6), config, symbol));
             break;
         case 'g':
         case 'G':
-            strcat(str, s21_conf(s21_ftoi(storage, va_arg(*params, double), 2), config, symbol));
+            strcat(str, s21_conf(s21_ftoi(storage, va_arg(*params, double), 5), config, symbol));
             break;
         case 's':
             strcat(str, va_arg(*params, char *));
@@ -207,6 +207,12 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
 }
 
 char * s21_conf(char * str, spec config, char symbol) {
+
+    if (strchr("gG", symbol)) {
+        for (int x = (strlen(str) - 1); str[x] == '0'; x -= 1)
+            str[x] = '\0';
+    }
+
     return str;
 }
 
@@ -229,7 +235,7 @@ char * s21_ptoa(char * str, int * variable) {
     return str;
 }
 
-char * s21_ftoi(char * str, double number, int format) {
+char * s21_ftoi(char * str, double number, int afterpoint) {
     // TODO: надо бы выделять память через malloc
     char storage[100] = "Hello, world!";
     strcat(str, s21_itoa(storage, ((int) number), 10));
@@ -237,13 +243,7 @@ char * s21_ftoi(char * str, double number, int format) {
     str[strlen(str) + 1] = '\0';
     str[strlen(str)] = '.';
     number -= (int) number;
-    int ostatok = round(number * pow(10, 6));
-    if (format == 2) {
-        ostatok /= 10;
-        for (; ostatok % 10 == 0;)
-            ostatok /= 10;
-    }
-    strcat(str, s21_itoa(storage, ostatok, 10));
+    strcat(str, s21_itoa(storage, round(number * pow(10, afterpoint)), 10));
     return str;
 }
 
