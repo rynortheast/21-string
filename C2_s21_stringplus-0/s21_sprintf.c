@@ -12,10 +12,15 @@ typedef struct {
 } spec;
 
 int s21_sprintf(char * str, const char * format, ...);
+
+char * s21_conf(char * str, spec config, char symbol);
+
+char * s21_utoa(char * str, unsigned int number, int format);
+
 int searchModifiersForString(int x, const char * format, spec * config, va_list * params);
 char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * params);
 char * s21_ptoa(char * str, int * variable);
-char * s21_itoa(char * str, int number);
+char * s21_itoa(char * str, int number, int format);
 char * s21_reverse(char * str);
 char * s21_i16toa(char * str, int number);
 
@@ -167,8 +172,7 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
             break;
         case 'd':
         case 'i':
-            strcat(str, s21_reverse(
-                    s21_itoa(storage, va_arg(*params, int))));
+            strcat(str, s21_conf(s21_itoa(storage, va_arg(*params, int), 10), config, symbol));
             break;
         case 'e':
         case 'E':
@@ -184,11 +188,7 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
             va_arg(*params, int);
             break;
         case 'u':
-            // TODO: здесь проблема в том, что отправляя чисто в s21_itoa там такой размер не поддержтивается!
-            unsigned int aux = UINT_MAX;
-            printf("TEST - %u\n", aux);
-            va_arg(*params, void *);
-            strcat(str, s21_reverse(s21_itoa(storage, aux)));
+            strcat(str, s21_conf(s21_utoa(storage, va_arg(*params, unsigned int), 10), config, symbol));
             break;
         case 'x':
         case 'X':
@@ -206,6 +206,10 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
             strcat(str, "%");
             break;
     }
+    return str;
+}
+
+char * s21_conf(char * str, spec config, char symbol) {
     return str;
 }
 
@@ -230,15 +234,25 @@ char * s21_ptoa(char * str, int * variable) {
     return str;
 }
 
-char * s21_itoa(char * str, int number) {
-    if (number < 0) {
-        printf("TEST_itoa - %d\n", number);
-    }
-    int lenStr = strlen(str);
+char * s21_utoa(char * str, unsigned int number, int format) {
+    int lenStr = 0;
     for (; (number / 10) != 0; number /= 10, lenStr += 1)
-        str[lenStr] = number > 0 ? (number % 10) + '0' : ((-number) % 10) + '0';
-    str[lenStr] = number > 0 ? number + '0' : (-number) + '0';
+        str[lenStr] = number > 0 ? (number % 10) + 48 : ((-number) % 10) + 48;
+    str[lenStr] = number > 0 ? number + 48 : (-number) + 48;
     str[lenStr + 1] = '\0';
+    s21_reverse(str);
+    return str;
+}
+
+char * s21_itoa(char * str, int number, int format) {
+    int lenStr = 0, minus = 0;
+    minus = number < 0 ? number *= (-1) : 0;
+    for (; (number / 10) != 0; number /= 10, lenStr += 1)
+        str[lenStr] = number > 0 ? (number % 10) + 48 : ((-number) % 10) + 48;
+    str[lenStr] = number > 0 ? number + 48 : (-number) + 48;
+    minus != 0 ? str[lenStr += 1] = '-' : 0;
+    str[lenStr + 1] = '\0';
+    s21_reverse(str);
     return str;
 }
 
@@ -271,7 +285,7 @@ int main() {
     double TEST_G = 5.753;
     int TEST_o = 777;
     char TEST_s[100] = "CHAMOMIL VAMIRYN";
-    int TEST_u = -999;
+    int TEST_u = 747385742;
     int TEST_x = 999;
     int TEST_X = 998;
     int TEST_p = 999;
@@ -279,15 +293,20 @@ int main() {
 
     int width = 5;
 
-    sprintf(TEST_MESSAGE, "%c|%d|%i|%e|%E|%f|%.*g|%G|%o|%s|%u|%x|%X|%p|%n|%%", 
+    sprintf(TEST_MESSAGE, "|%c|%d|%i|%e|%E|%f|%.*g|%G|%o|%s|%u|%x|%X|%p|%n|%%|", 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, width, TEST_g, TEST_G, TEST_o, 
         TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
-    printf("\nORIGINAL - |%s| - %d\n", TEST_MESSAGE, TEST_n);
+    printf("\nORIGINAL - %s - %d\n", TEST_MESSAGE, TEST_n);
 
-    s21_sprintf(TEST_MESSAGE, "%c|%d|%i|%e|%E|%f|%.*g|%G|%o|%s|%u|%x|%X|%p|%n|%%", 
+    s21_sprintf(TEST_MESSAGE, "|%c|%d|%i|%e|%E|%f|%.*g|%G|%o|%s|%u|%x|%X|%p|%n|%%|", 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, width, TEST_g, TEST_G, TEST_o, 
         TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
-    printf("__FAKE__ - |%s| - %d\n\n", TEST_MESSAGE, TEST_n);
+    printf("__FAKE__ - %s - %d\n\n", TEST_MESSAGE, TEST_n);
+
+    char TEST_itoa[200] = "PRIVET";
+    printf("1 - %s\n", TEST_itoa);
+    itoa(-256, TEST_itoa, 10);
+    printf("2 - %s - %d\n", TEST_itoa, '-');
 
     return 0;
 }
