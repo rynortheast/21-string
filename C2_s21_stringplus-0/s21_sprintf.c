@@ -234,23 +234,27 @@ char * s21_ptoa(char * str, int * variable) {
 
 char * s21_utoa(char * str, unsigned int number, int format) {
     int lenStr = 0;
-    for (; (number / 10) != 0; number /= 10, lenStr += 1)
-        str[lenStr] = number > 0 ? (number % 10) + 48 : ((-number) % 10) + 48;
-    str[lenStr] = number > 0 ? number + 48 : (-number) + 48;
+    for (; (number / format) != 0; number /= format, lenStr += 1)
+        str[lenStr] = (number % format) < 10 ? (number % format) + 48 : ((number % format) - 10) + 97;
+    str[lenStr] = number < 10 ? number + 48 : (number - 10) + 97;
     str[lenStr + 1] = '\0';
     s21_reverse(str);
     return str;
 }
 
 char * s21_itoa(char * str, int number, int format) {
-    int lenStr = 0, minus = 0;
-    minus = number < 0 ? number *= (-1) : 0;
-    for (; (number / format) != 0; number /= format, lenStr += 1)
-        str[lenStr] = (number % format) < 10 ? (number % format) + 48 : ((number % format) - 10) + 97;
-    str[lenStr] = number < 10 ? number + 48 : (number - 10) + 97;
-    minus != 0 ? str[lenStr += 1] = '-' : 0;
-    str[lenStr + 1] = '\0';
-    s21_reverse(str);
+    if (format == 10) {
+        int lenStr = 0, minus = 0;
+        minus = number < 0 ? number *= (-1) : 0;
+        for (; (number / format) != 0; number /= format, lenStr += 1)
+            str[lenStr] = (number % format) < 10 ? (number % format) + 48 : ((number % format) - 10) + 97;
+        str[lenStr] = number < 10 ? number + 48 : (number - 10) + 97;
+        minus != 0 ? str[lenStr += 1] = '-' : 0;
+        str[lenStr + 1] = '\0';
+        s21_reverse(str);
+    } else if (format == 16) {
+        s21_utoa(str, number < 0 ? UINT_MAX + number + 1 : number, 16);
+    }
     return str;
 }
 
@@ -273,8 +277,8 @@ int main() {
     char TEST_MESSAGE[500] = "Hello, World!!";
 
     char TEST_c = '5';
-    unsigned int TEST_d = 2147483699;
-    unsigned int TEST_i = 2147483655;
+    unsigned int TEST_d = -214748369;
+    unsigned int TEST_i = -214748365;
     double TEST_e = 101.753;
     double TEST_E = 101.753;
     double TEST_f = 101.753;
@@ -283,8 +287,8 @@ int main() {
     int TEST_o = 777;
     char TEST_s[100] = "CHAMOMIL VAMIRYN";
     int TEST_u = 747385742;
-    int TEST_x = 999;
-    int TEST_X = 998;
+    int TEST_x = -999;
+    int TEST_X = -998;
     int TEST_p = 999;
     int TEST_n = 999;
 
