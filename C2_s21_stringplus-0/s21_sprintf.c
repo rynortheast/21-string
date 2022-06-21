@@ -16,7 +16,9 @@ char * s21_conf(char * str, spec config, char symbol);
 
 char * s21_utoa(char * str, unsigned int number, int format);
 
-char * s21_ftoi(char * str, double number, int afterpoint);
+char * s21_ftoa(char * str, double number, int afterpoint);
+
+char * s21_ntoa(char * str, double number, int format);
 
 int searchModifiersForString(int x, const char * format, spec * config, va_list * params);
 char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * params);
@@ -122,8 +124,7 @@ int s21_sprintf(char * str, const char * format, ...) {
         if (format[x] == '%') {
 
             spec config = {'0', 0, 0, '0'};
-            x = searchModifiersForString(x, format, &config, &params);            
-            // printf("%% | %c | %d | .%d | %c | %c\n", config.flag, config.width, config.accuracy, config.type, format[x]);
+            x = searchModifiersForString(x, format, &config, &params);
             insertStringBySpecifier(str, format[x], config, &params);
 
         } else {
@@ -171,14 +172,14 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
         case 'e':
         case 'E':
             // TODO: если число не входит в итог, то последнее округляется!
-            va_arg(*params, double);
+            strcat(str, s21_conf(s21_ntoa(storage, va_arg(*params, double), symbol), config, symbol));
             break;
         case 'f':
-            strcat(str, s21_conf(s21_ftoi(storage, va_arg(*params, double), 6), config, symbol));
+            strcat(str, s21_conf(s21_ftoa(storage, va_arg(*params, double), 6), config, symbol));
             break;
         case 'g':
         case 'G':
-            strcat(str, s21_conf(s21_ftoi(storage, va_arg(*params, double), 5), config, symbol));
+            strcat(str, s21_conf(s21_ftoa(storage, va_arg(*params, double), 5), config, symbol));
             break;
         case 's':
             strcat(str, va_arg(*params, char *));
@@ -235,10 +236,25 @@ char * s21_ptoa(char * str, int * variable) {
     return str;
 }
 
-char * s21_ftoi(char * str, double number, int afterpoint) {
+char * s21_ntoa(char * str, double number, int format) {
+    int lenStr = 0, e = 0;
+    // TODO: выдел память через malloc
+    char storage[100] = "Hello, world!";
+    for (; pow(10, e) < number; e += 1);
+    strcat(str, s21_ftoa(storage, number * pow(10, -(e - 1)), 6));
+    lenStr = strlen(str);
+    str[lenStr] = format;
+    str[lenStr += 1] = '+';
+    e < 10 ? str[lenStr += 1] = '0' : 0;
+    str[lenStr + 1] = '\0';
+    strcat(str, s21_itoa(storage, e - 1, 10));
+    return str;
+}
+
+char * s21_ftoa(char * str, double number, int afterpoint) {
     // TODO: надо бы выделять память через malloc
     char storage[100] = "Hello, world!";
-    strcat(str, s21_itoa(storage, ((int) number), 10));
+    strcpy(str, s21_itoa(storage, ((int) number), 10));
     number < 0 ? number *= (-1) : number;
     str[strlen(str) + 1] = '\0';
     str[strlen(str)] = '.';
@@ -281,16 +297,10 @@ int main() {
     char TEST_c = '5';
     unsigned int TEST_d = -214748369;
     unsigned int TEST_i = -214748365;
-    double TEST_e = 504000000.75368;
-    int TEST_e_test = (int) TEST_e;
-    int TEST_ES = 0;
-    for (; pow(10, TEST_ES) < TEST_e; TEST_ES += 1) {
-        
-    }
-    printf("TEST - %d\n", TEST_ES);
-    double TEST_E = 50.75;
+    double TEST_e = 3235.7536875368;
+    double TEST_E = 3235.7536875368;
     double TEST_f = -5.753;
-    double TEST_g = -5.753;
+    double TEST_g = -5.75301;
     double TEST_G = -5.753;
     int TEST_o = 775;
     char TEST_s[100] = "CHAMOMIL VAMIRYN";
