@@ -26,87 +26,6 @@ char * s21_ptoa(char * str, int * variable);
 char * s21_itoa(char * str, int number, int format);
 char * s21_reverse(char * str);
 
-void s21_itoi(char * str, int * len, int number) {
-    // s21_itoa(str, len, number < 0 ? (- number) : number);
-    number < 0 ? str[*len += 1] = '-' : 0;
-    str[*len + 1] = '\0';
-}
-int insertSpecifier(char * str, char symbol, va_list * param) {
-    int status = 1, len = 0;
-    if (symbol == '%') {
-        str[len] = '%';
-        str[len + 1] = '\0';
-    } else if (symbol == 'c') {
-        str[len] = va_arg(*param, int);
-        str[len + 1] = '\0';
-    } else if (symbol == 'd' || symbol == 'i') {
-        // s21_itoi(str, &len, va_arg(*param, int));
-        s21_reverse(str);
-    } else if (symbol == 'f') {
-        double number = va_arg(*param, double);
-        // s21_ftoi(str, &len, (number - ((int) number)));
-        // s21_itoi(str, &len, (int) number);
-        s21_reverse(str);
-    } else if (symbol == 's') {
-        strcpy(str, va_arg(*param, char *));
-    } else if (symbol == 'u') {
-        // s21_utoi(str, &len, va_arg(*param, int));
-        s21_reverse(str);
-    } else {
-        status = 0;
-    }
-    return status;
-}
-int extractFormat(const char * str, int pos, char * format) {
-    int lenFormat = 0;
-    for (; strchr("1234567890-+", str[pos]); lenFormat += 1, pos += 1)
-        format[lenFormat] = str[pos];
-    format[lenFormat] = *strchr("cdifsu%%", str[pos]);
-    format[lenFormat += 1] = '\0';
-    return lenFormat;
-}
-void insertModifications(char * str, char * forma) {
-    int lenForma = strlen(forma);
-    for (int x = 0; x < lenForma - 1; x += 1) {
-        if (forma[x] == '+' && strchr("dif", forma[lenForma])) {
-            if (str[0] != '-') {
-                char aux[100] = "+";
-                strcat(aux, str);
-                strcpy(str, aux);
-            }
-        } else if (forma[x] == ' ' && strchr("dif", forma[lenForma])) {
-            char aux[100] = " ";
-            strcat(aux, str);
-            strcpy(str, aux);
-        } else if (forma[x] == '-'  && strchr("ciu", forma[lenForma])) {
-            char aux[100] = " ";
-            int result = 0;
-            for (int y = 0; strchr("123456789", forma[x + 1]); y += 1)
-                result = forma[x += 1] - '0';
-            for (int y = 0; y < result; y += 1)
-                aux[y] = ' ';
-            strcat(str, aux);
-        } else if (strchr("1234567890", forma[x])) {
-            char aux[100] = " ";
-            int result = 0;
-            for (int y = 0; strchr("123456789", forma[x]); y += 1, x += 1) {
-                // printf("QTE - %c\n", forma[x]);
-                // здесь нужно написать код так, чтоб он преобразовал многозначные числа (5 5 5)
-                result = forma[x + 1];
-            }
-            for (int y = 0; y < result; y += 1) {
-                aux[y] = ' ';
-                aux[y + 1] = '\0';
-            }
-            // printf("TEST - %d\n", result);
-            strcat(aux, str);
-            strcpy(str, aux);
-        } else if (forma[x] == '.') {
-
-        }
-    }
-}
-
 int s21_sprintf(char * str, const char * format, ...) {
 
     str[0] = '\0';
@@ -240,7 +159,7 @@ char * s21_ntoa(char * str, double number, int format) {
     int lenStr = 0, e = 0;
     // TODO: выдел память через malloc
     char storage[100] = "Hello, world!";
-    for (; pow(10, e) < number; e += 1);
+    for (; pow(10, e) < fabs(number); e += 1);
     strcat(str, s21_ftoa(storage, number * pow(10, -(e - 1)), 6));
     lenStr = strlen(str);
     str[lenStr] = format;
@@ -285,7 +204,7 @@ char * s21_itoa(char * str, int number, int format) {
         str[lenStr + 1] = '\0';
         s21_reverse(str);
     } else if (format == 16 || format == 32) {
-        s21_utoa(str, number < 0 ? UINT_MAX + number + 1 : number, format);
+        s21_utoa(str, (number < 0 ? INT_MAX + number + 1 : number), format);
     }
     return str;
 }
@@ -297,8 +216,8 @@ int main() {
     char TEST_c = '5';
     unsigned int TEST_d = -214748369;
     unsigned int TEST_i = -214748365;
-    double TEST_e = 3235.7536875368;
-    double TEST_E = 3235.7536875368;
+    double TEST_e = -32354324324324.7536875368;
+    double TEST_E = -32354324324324.7536875368;
     double TEST_f = -5.753;
     double TEST_g = -5.75301;
     double TEST_G = -5.753;
@@ -310,7 +229,7 @@ int main() {
     int TEST_p = 999;
     int TEST_n = 999;
 
-    int width = 5;
+    // int width = 5;
 
     sprintf(TEST_MESSAGE, "|%c|%d|%i|%e|%E|%f|%g|%G|%o|%s|%u|%x|%X|%p|%n|%%|", 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o, 
