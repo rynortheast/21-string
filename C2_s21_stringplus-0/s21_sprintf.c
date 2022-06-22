@@ -10,51 +10,37 @@ typedef struct {
     char type;
 } spec;
 
-int s21_sprintf(char * str, const char * format, ...);
-
-char * s21_conf(char * str, spec config, char symbol);
-
-char * s21_utoa(char * str, unsigned int number, int format);
-
-char * s21_ftoa(char * str, double number, int afterpoint);
-
-char * s21_ntoa(char * str, double number, int format);
-
-int searchModifiersForString(int x, const char * format, spec * config, va_list * params);
-char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * params);
+char * s21_reverse(char * str);
 char * s21_ptoa(char * str, int * variable);
 char * s21_itoa(char * str, int number, int format);
-char * s21_reverse(char * str);
+int s21_sprintf(char * str, const char * format, ...);
+char * s21_conf(char * str, spec config, char symbol);
+char * s21_ntoa(char * str, double number, int format);
+char * s21_ftoa(char * str, double number, int afterpoint);
+char * s21_utoa(char * str, unsigned int number, int format);
+char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * params);
+int searchModifiersForString(int x, const char * format, spec * config, va_list * params);
 
 int s21_sprintf(char * str, const char * format, ...) {
-
     str[0] = '\0';
     va_list params;
     va_start(params, format);
 
-    // TODO:
-    // необходим код, который будет создавать копию str,
-    // типа если в конце программы будет ошибка, то изначальная
-    // переменная должна остаться в том же виде.
-    // а нужно ли? вроде как говорили, что проверка на правильность не делается.
+    // TODO:    1. Если возникла ошибка, то изначальная строка должна остатсья в том же виде.
+    //          2. Необходимо считывать кол-во просканированных переменных.
 
     for (int x = 0; format[x] != '\0'; x += 1) {
-
         if (format[x] == '%') {
-
             spec config = {'0', 0, 0, '0'};
             x = searchModifiersForString(x, format, &config, &params);
             insertStringBySpecifier(str, format[x], config, &params);
-
         } else {
             int lenStr = strlen(str);
             str[lenStr] = format[x];
             str[lenStr + 1] = '\0';
         }
-
     }
-
-    return 1;
+    return strlen(str);
 }
 
 int searchModifiersForString(int x, const char * format, spec * config, va_list * params) {
@@ -76,7 +62,9 @@ int searchModifiersForString(int x, const char * format, spec * config, va_list 
 }
 
 char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * params) {
-    // TODO: нужно здесь создать маллок строку
+    // TODO:    1. Здесь необходимо выделять память динамически.
+    //          2. Необходимо обновить структуру, убрать switch.
+    //          3. Нужно использовать long вместо int.
     char storage[1000] = "\0";
     switch (symbol) {
         case 'c':
@@ -90,7 +78,6 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
             break;
         case 'e':
         case 'E':
-            // TODO: если число не входит в итог, то последнее округляется!
             strcat(str, s21_conf(s21_ntoa(storage, va_arg(*params, double), symbol), config, symbol));
             break;
         case 'f':
@@ -127,12 +114,11 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
 }
 
 char * s21_conf(char * str, spec config, char symbol) {
-
     if (strchr("gG", symbol)) {
+        // TODO:    1. Здесь можно сократить код, вставив в сам цикл.
         for (int x = (strlen(str) - 1); str[x] == '0'; x -= 1)
             str[x] = '\0';
     }
-
     return str;
 }
 
@@ -156,22 +142,20 @@ char * s21_ptoa(char * str, int * variable) {
 }
 
 char * s21_ntoa(char * str, double number, int format) {
-    int lenStr = 0, e = 0;
-    // TODO: выдел память через malloc
+    int e = 0;
+    // TODO:    1. Здесь необходимо выделять память динамически.
+    //          2. Необходимо как-то обновить здесь структуру.
     char storage[100] = "Hello, world!";
     for (; pow(10, e) < fabs(number); e += 1);
     strcat(str, s21_ftoa(storage, number * pow(10, -(e - 1)), 6));
-    lenStr = strlen(str);
-    str[lenStr] = format;
-    str[lenStr += 1] = '+';
-    e < 10 ? str[lenStr += 1] = '0' : 0;
-    str[lenStr + 1] = '\0';
+    format == 'e' ? strcat(str, "e+0") : strcat(str, "E+0");
+    str[strlen(str) + (e > 10 ? (-1) : 0)] = '\0';
     strcat(str, s21_itoa(storage, e - 1, 10));
     return str;
 }
 
 char * s21_ftoa(char * str, double number, int afterpoint) {
-    // TODO: надо бы выделять память через malloc
+    // TODO:    1. Здесь необходимо выделять память динамически.
     char storage[100] = "Hello, world!";
     strcpy(str, s21_itoa(storage, ((int) number), 10));
     number < 0 ? number *= (-1) : number;
@@ -231,15 +215,15 @@ int main() {
 
     // int width = 5;
 
-    sprintf(TEST_MESSAGE, "|%c|%d|%i|%e|%E|%f|%g|%G|%o|%s|%u|%x|%X|%p|%n|%%|", 
+    int one = sprintf(TEST_MESSAGE, "|%c|%d|%i|%e|%E|%f|%g|%G|%o|%s|%u|%x|%X|%p|%n|%%|", 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o, 
         TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
-    printf("\nORIGINAL - %s - %d\n", TEST_MESSAGE, TEST_n);
+    printf("\nORIGINAL - %s - %d - |%d|\n", TEST_MESSAGE, TEST_n, one);
 
-    s21_sprintf(TEST_MESSAGE, "|%c|%d|%i|%e|%E|%f|%g|%G|%o|%s|%u|%x|%X|%p|%n|%%|", 
+    int two = s21_sprintf(TEST_MESSAGE, "|%c|%d|%i|%e|%E|%f|%g|%G|%o|%s|%u|%x|%X|%p|%n|%%|", 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o, 
         TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
-    printf("__FAKE__ - %s - %d\n\n", TEST_MESSAGE, TEST_n);
+    printf("__FAKE__ - %s - %d - |%d|\n\n", TEST_MESSAGE, TEST_n, two);
 
     return 0;
 }
