@@ -198,24 +198,35 @@ int main() {
     char TEST_MESSAGE[500] = "Hello, World!!";
 
     char TEST_c = '5';
-    unsigned int TEST_d = -214748369;
-    unsigned int TEST_i = -214748365;
-    double TEST_e = -32354324324324.7536875368;
-    double TEST_E = -32354324324324.7536875368;
-    double TEST_f = -5.753;
-    double TEST_g = -5.75301;
-    double TEST_G = -5.753;
+    unsigned int TEST_d = 214748;
+    unsigned int TEST_i = 214749;
+    double TEST_e = 32354324324324.7536875368;
+    double TEST_E = 32354324324324.7536875368;
+    double TEST_f = 5.753;
+    double TEST_g = 5.753;
+    double TEST_G = 5.753;
     int TEST_o = 775;
-    char TEST_s[100] = "CHAMOMIL VAMIRYN";
+    char TEST_s[100] = "CHAMOMIL";
     int TEST_u = 747385742;
-    int TEST_x = -999;
-    int TEST_X = -998;
+    int TEST_x = 999;
+    int TEST_X = 998;
     int TEST_p = 999;
     int TEST_n = 999;
 
     // int width = 5;
 
-    int one = sprintf(TEST_MESSAGE, "|%c|%d|%i|%e|%E|%f|%g|%G|%o|%s|%u|%x|%X|%p|%n|%%|", 
+    //          |%c|%d|%i|%e|%E|%f|%g|%G|%o|%s|%u|%x|%X|%p|%n|%%|
+    //          |%-15c|%-15d|%-15i|%-15e|%-15E|%-15f|%-15g|%-15G|%-15o|%-15s|%-15u|%-15x|%-15X|%-30p|%-15n|%-15%|
+    //          |%15c|%15d|%15i|%15e|%15E|%15f|%15g|%15G|%15o|%15s|%15u|%15x|%15X|%30p|%15n|%15%|
+    //          |%+c|%+d|%+i|%+e|%+E|%+f|%+g|%+G|%+o|%+s|%+u|%+x|%+X|%+p|%+n|%+%|
+    //          |% c|% d|% i|% e|% E|% f|% g|% G|% o|% s|% u|% x|% X|% p|% n|% %|
+    //          |%#c|%#d|%#i|%#e|%#E|%#f|%#g|%#G|%#o|%#s|%#u|%#x|%#X|%#p|%#n|%#%|
+
+    //          1. Проверяем знаки и доп.символы.
+    //          2. Проверяем точность числа.
+    //          3. Настраиваем ширину.
+
+    int one = sprintf(TEST_MESSAGE, "|%#c|%20.10d|%#i|%#e|%#E|%#f|%#g|%#G|%#o|%#s|%#u|%#x|%#X|%#p|%#n|%#%|", 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o, 
         TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
     printf("\nORIGINAL - %s - %d - |%d|\n", TEST_MESSAGE, TEST_n, one);
