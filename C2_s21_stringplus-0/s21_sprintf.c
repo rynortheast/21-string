@@ -51,7 +51,7 @@ int searchModifiersForString(int x, const char * format, spec * config, va_list 
     for (; format[x] == '*'; x += 1)
         config -> width = va_arg(*params, int);
     if (format[x] == '.') {
-        for (; strchr("0123456789", format[x += 1]); x += 1)
+        for (x += 1; strchr("0123456789", format[x]); x += 1)
             config -> accuracy = (config -> accuracy * 10) + (format[x] - 48);
         for (; format[x] == '*'; x += 1)
             config -> accuracy = va_arg(*params, int);
@@ -101,7 +101,8 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
             strcat(str, s21_conf(s21_utoa(storage, va_arg(*params, int), symbol == 'x' ? 32 : 16), config, symbol));
             break;
         case 'p':
-            strcat(str, s21_reverse(s21_ptoa(storage, va_arg(*params, void *))));
+            // TODO:    1. Здесь надо убрать реверс!
+            strcat(str, s21_conf(s21_reverse(s21_ptoa(storage, va_arg(*params, void *))), config, symbol));
             break;
         case 'n':
             *(va_arg(*params, int *)) = strlen(str);
@@ -114,11 +115,25 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
 }
 
 char * s21_conf(char * str, spec config, char symbol) {
-    if (strchr("gG", symbol)) {
-        // TODO:    1. Здесь можно сократить код, вставив в сам цикл.
-        for (int x = (strlen(str) - 1); str[x] == '0'; x -= 1)
-            str[x] = '\0';
+    if (strchr("gG", symbol))
+        for (int x = (strlen(str) - 1); str[x] == '0'; x -= 1, str[x] = '\0');
+
+    if (config.flag == '+' && strchr("dieEfgG", symbol) && str[0] != '-') {
+        char * aux = malloc((strlen(str) + 1) * sizeof(char));
+        strcpy(aux, str);
+        str[0] = '+';
+        str[1] = '\0';
+        strcat(str, aux);
     }
+
+    if (symbol == 'p') {
+        printf("TEST\n");
+        int lenStr = 0;
+        for (int x = 0; str[x] == '0'; x += 1)
+            lenStr += 1;
+        strcpy(str, str + lenStr);
+    }
+
     return str;
 }
 
@@ -198,16 +213,16 @@ int main() {
     char TEST_MESSAGE[500] = "Hello, World!!";
 
     char TEST_c = '5';
-    unsigned int TEST_d = 214748;
+    unsigned int TEST_d = -214748;
     unsigned int TEST_i = 214749;
     double TEST_e = 32354324324324.7536875368;
-    double TEST_E = 32354324324324.7536875368;
+    double TEST_E = -32354324324324.7536875368;
     double TEST_f = 5.753;
-    double TEST_g = 5.753;
+    double TEST_g = -5.753;
     double TEST_G = 5.753;
     int TEST_o = 775;
     char TEST_s[100] = "CHAMOMIL";
-    int TEST_u = 747385742;
+    int TEST_u = 7473857;
     int TEST_x = 999;
     int TEST_X = 998;
     int TEST_p = 999;
@@ -218,7 +233,8 @@ int main() {
     //          |%c|%d|%i|%e|%E|%f|%g|%G|%o|%s|%u|%x|%X|%p|%n|%%|
     //          |%-15c|%-15d|%-15i|%-15e|%-15E|%-15f|%-15g|%-15G|%-15o|%-15s|%-15u|%-15x|%-15X|%-30p|%-15n|%-15%|
     //          |%15c|%15d|%15i|%15e|%15E|%15f|%15g|%15G|%15o|%15s|%15u|%15x|%15X|%30p|%15n|%15%|
-    //          |%+c|%+d|%+i|%+e|%+E|%+f|%+g|%+G|%+o|%+s|%+u|%+x|%+X|%+p|%+n|%+%|
+    //          |%.2c|%.2d|%.2i|%.2e|%.2E|%.2f|%.2g|%.2G|%.2o|%.2s|%.2u|%.2x|%.2X|%.2p|%.2n|%.2%|
+    //          |%+c|%+d|%+i|%+e|%+E|%+f|%+g|%+G|%+o|%+s|%+u|%+x|%+X|%+p|%+n|%+%|   -   dieEfgG
     //          |% c|% d|% i|% e|% E|% f|% g|% G|% o|% s|% u|% x|% X|% p|% n|% %|
     //          |%#c|%#d|%#i|%#e|%#E|%#f|%#g|%#G|%#o|%#s|%#u|%#x|%#X|%#p|%#n|%#%|
 
@@ -226,12 +242,12 @@ int main() {
     //          2. Проверяем точность числа.
     //          3. Настраиваем ширину.
 
-    int one = sprintf(TEST_MESSAGE, "|%#c|%20.10d|%#i|%#e|%#E|%#f|%#g|%#G|%#o|%#s|%#u|%#x|%#X|%#p|%#n|%#%|", 
+    int one = sprintf(TEST_MESSAGE, "|%.2c|%.2d|%.2i|%.2e|%.2E|%.2f|%.2g|%.2G|%.2o|%.2s|%.2u|%.2x|%.2X|%.2p|%.2n|%.2%|", 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o, 
         TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
     printf("\nORIGINAL - %s - %d - |%d|\n", TEST_MESSAGE, TEST_n, one);
 
-    int two = s21_sprintf(TEST_MESSAGE, "|%c|%d|%i|%e|%E|%f|%g|%G|%o|%s|%u|%x|%X|%p|%n|%%|", 
+    int two = s21_sprintf(TEST_MESSAGE, "|%.2c|%.2d|%.2i|%.2e|%.2E|%.2f|%.2g|%.2G|%.2o|%.2s|%.2u|%.2x|%.2X|%.2p|%.2n|%.2%|", 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o, 
         TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
     printf("__FAKE__ - %s - %d - |%d|\n\n", TEST_MESSAGE, TEST_n, two);
