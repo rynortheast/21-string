@@ -114,25 +114,21 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
     return str;
 }
 
+
+
 char * s21_conf(char * str, spec config, char symbol) {
-    if (strchr("gG", symbol))
-        for (int x = (strlen(str) - 1); str[x] == '0'; x -= 1, str[x] = '\0');
 
-    if (config.flag == '+' && strchr("dieEfgG", symbol) && str[0] != '-') {
-        char * aux = malloc((strlen(str) + 1) * sizeof(char));
-        strcpy(aux, str);
-        str[0] = '+';
-        str[1] = '\0';
-        strcat(str, aux);
+    if (config.flag != '0' || config.width != 0 || config.accuracy != 0 || config.type != '0') {
+        if (symbol == 'p') {
+            for (int x = 0; str[x] == '0'; x += 1)
+                str[x + 1] != '0' ? strcpy(str, str + x + 1) : 0;
+        } else if (strchr("gG", symbol)) {
+            for (int x = (strlen(str) - 1); str[x] == '0'; str[x] = '\0', x -= 1);
+        }
     }
 
-    if (symbol == 'p') {
-        printf("TEST\n");
-        int lenStr = 0;
-        for (int x = 0; str[x] == '0'; x += 1)
-            lenStr += 1;
-        strcpy(str, str + lenStr);
-    }
+    if (config.flag == '+' && strchr("dieEfgG", symbol) && str[0] != '-')
+        for (memmove(str + 1, str, strlen(str)); 1 == 0; str[0] = '+');
 
     return str;
 }
@@ -242,12 +238,12 @@ int main() {
     //          2. Проверяем точность числа.
     //          3. Настраиваем ширину.
 
-    int one = sprintf(TEST_MESSAGE, "|%.2c|%.2d|%.2i|%.2e|%.2E|%.2f|%.2g|%.2G|%.2o|%.2s|%.2u|%.2x|%.2X|%.2p|%.2n|%.2%|", 
+    int one = sprintf(TEST_MESSAGE, "|%+c|%+d|%+i|%+e|%+E|%+f|%+g|%+G|%+o|%+s|%+u|%+x|%+X|%+p|%+n|%+%|", 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o, 
         TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
     printf("\nORIGINAL - %s - %d - |%d|\n", TEST_MESSAGE, TEST_n, one);
 
-    int two = s21_sprintf(TEST_MESSAGE, "|%.2c|%.2d|%.2i|%.2e|%.2E|%.2f|%.2g|%.2G|%.2o|%.2s|%.2u|%.2x|%.2X|%.2p|%.2n|%.2%|", 
+    int two = s21_sprintf(TEST_MESSAGE, "|%+c|%+d|%+i|%+e|%+E|%+f|%+g|%+G|%+o|%+s|%+u|%+x|%+X|%+p|%+n|%+%|", 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o, 
         TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
     printf("__FAKE__ - %s - %d - |%d|\n\n", TEST_MESSAGE, TEST_n, two);
