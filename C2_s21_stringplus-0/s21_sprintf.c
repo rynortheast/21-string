@@ -31,7 +31,7 @@ int s21_sprintf(char * str, const char * format, ...) {
 
     for (int x = 0; format[x] != '\0'; x += 1) {
         if (format[x] == '%') {
-            spec config = {'0', 0, 0, '0'};
+            spec config = {'.', 0, 0, '.'};
             x = searchModifiersForString(x, format, &config, &params);
             insertStringBySpecifier(str, format[x], config, &params);
         } else {
@@ -68,9 +68,8 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
     char storage[1000] = "\0";
     switch (symbol) {
         case 'c':
-            int lenStr = strlen(str);
-            str[lenStr] = va_arg(*params, int);
-            str[lenStr + 1] = '\0';
+            for (memmove(storage + 1, storage, strlen(str)), storage[0] = va_arg(*params, int); 1 == 0;);
+            strcat(str, s21_conf(storage, config, symbol));
             break;
         case 'd':
         case 'i':
@@ -88,7 +87,7 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
             strcat(str, s21_conf(s21_ftoa(storage, va_arg(*params, double), 5), config, symbol));
             break;
         case 's':
-            strcat(str, va_arg(*params, char *));
+            strcat(str, s21_conf(va_arg(*params, char *), config, symbol));
             break;
         case 'o':
             strcat(str, s21_conf(s21_utoa(storage, va_arg(*params, unsigned int), 8), config, symbol));
@@ -118,7 +117,7 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
 
 char * s21_conf(char * str, spec config, char symbol) {
 
-    if (config.flag != '0' || config.width != 0 || config.accuracy != 0 || config.type != '0') {
+    if (config.flag != '.' || config.width != 0 || config.accuracy != 0 || config.type != '.') {
         if (symbol == 'p') {
             for (int x = 0; str[x] == '0'; x += 1)
                 str[x + 1] != '0' ? strcpy(str, str + x + 1) : 0;
@@ -132,6 +131,14 @@ char * s21_conf(char * str, spec config, char symbol) {
 
     if (config.flag == ' ' && strchr("dieEfgGu", symbol) && str[0] != '-')
         for (memmove(str + 1, str, strlen(str)), str[0] = ' '; 1 == 0;);
+
+    if (config.flag == '0') {
+        char * aux = str[0] == '-' ? str + 1 : str;
+        int countFill = config.width - strlen(str);
+        countFill = countFill > 0x0 ? countFill : 0;
+        char filler = strchr("cs", symbol) ? ' ' : '0';
+        for (memmove(aux + countFill, aux, strlen(aux) + 1); countFill != 0; aux[countFill - 1] = filler, countFill -= 1);
+    }
 
     return str;
 }
@@ -236,20 +243,21 @@ int main() {
     //          |%+c|%+d|%+i|%+e|%+E|%+f|%+g|%+G|%+o|%+s|%+u|%+x|%+X|%+p|%+n|%+%|   -   dieEfgG
     //          |% c|% d|% i|% e|% E|% f|% g|% G|% o|% s|% u|% x|% X|% p|% n|% %|   -   dieEfgGu
     //          |%#c|%#d|%#i|%#e|%#E|%#f|%#g|%#G|%#o|%#s|%#u|%#x|%#X|%#p|%#n|%#%|
+    //          |%015c|%015d|%015i|%015e|%015E|%015f|%015g|%015G|%015o|%015s|%015u|%015x|%015X|%015p|%015n|%015%|   -   dieEfgGuxXp
 
     //          1. Проверяем знаки и доп.символы.
     //          2. Проверяем точность числа.
     //          3. Настраиваем ширину.
 
-    int one = sprintf(TEST_MESSAGE, "|% c|% d|% i|% e|% E|% f|% g|% G|% o|% s|% u|% x|% X|% p|% n|% %|", 
+    int one = sprintf(TEST_MESSAGE, "|%015c|%015d|%015i|%015e|%015E|%015f|%015g|%015G|%015o|%015s|%015u|%015x|%015X|%015p|%015n|%015%|", 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o, 
         TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
     printf("\nORIGINAL - %s - %d - |%d|\n", TEST_MESSAGE, TEST_n, one);
 
-    int two = s21_sprintf(TEST_MESSAGE, "|% c|% d|% i|% e|% E|% f|% g|% G|% o|% s|% u|% x|% X|% p|% n|% %|", 
+    int two = s21_sprintf(TEST_MESSAGE, "|%015c|%015d|%015i|%015e|%015E|%015f|%015g|%015G|%015o|%015s|%015u|%015x|%015X|%015p|%015n|%015%|", 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o, 
         TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
-    printf("__FAKE__ - %s - %d - |%d|\n\n", TEST_MESSAGE, TEST_n, two);
+    printf("\n__FAKE__ - %s - %d - |%d|\n\n", TEST_MESSAGE, TEST_n, two);
 
     return 0;
 }
