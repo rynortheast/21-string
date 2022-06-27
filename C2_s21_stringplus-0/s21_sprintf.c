@@ -128,7 +128,10 @@ char * s21_conf(char * str, spec config, char symbol) {
     }
 
     if (config.flag == '+' && strchr("dieEfgG", symbol) && str[0] != '-')
-        for (memmove(str + 1, str, strlen(str)); 1 == 0; str[0] = '+');
+        for (memmove(str + 1, str, strlen(str)), str[0] = '+'; 1 == 0;);
+
+    if (config.flag == ' ' && strchr("dieEfgGu", symbol) && str[0] != '-')
+        for (memmove(str + 1, str, strlen(str)), str[0] = ' '; 1 == 0;);
 
     return str;
 }
@@ -209,16 +212,16 @@ int main() {
     char TEST_MESSAGE[500] = "Hello, World!!";
 
     char TEST_c = '5';
-    unsigned int TEST_d = -214748;
-    unsigned int TEST_i = 214749;
+    unsigned int TEST_d = 214748;
+    unsigned int TEST_i = -214749;
     double TEST_e = 32354324324324.7536875368;
     double TEST_E = -32354324324324.7536875368;
     double TEST_f = 5.753;
-    double TEST_g = -5.753;
-    double TEST_G = 5.753;
+    double TEST_g = 5.753;
+    double TEST_G = -5.753;
     int TEST_o = 775;
     char TEST_s[100] = "CHAMOMIL";
-    int TEST_u = 7473857;
+    int TEST_u = -7473857;
     int TEST_x = 999;
     int TEST_X = 998;
     int TEST_p = 999;
@@ -231,19 +234,19 @@ int main() {
     //          |%15c|%15d|%15i|%15e|%15E|%15f|%15g|%15G|%15o|%15s|%15u|%15x|%15X|%30p|%15n|%15%|
     //          |%.2c|%.2d|%.2i|%.2e|%.2E|%.2f|%.2g|%.2G|%.2o|%.2s|%.2u|%.2x|%.2X|%.2p|%.2n|%.2%|
     //          |%+c|%+d|%+i|%+e|%+E|%+f|%+g|%+G|%+o|%+s|%+u|%+x|%+X|%+p|%+n|%+%|   -   dieEfgG
-    //          |% c|% d|% i|% e|% E|% f|% g|% G|% o|% s|% u|% x|% X|% p|% n|% %|
+    //          |% c|% d|% i|% e|% E|% f|% g|% G|% o|% s|% u|% x|% X|% p|% n|% %|   -   dieEfgGu
     //          |%#c|%#d|%#i|%#e|%#E|%#f|%#g|%#G|%#o|%#s|%#u|%#x|%#X|%#p|%#n|%#%|
 
     //          1. Проверяем знаки и доп.символы.
     //          2. Проверяем точность числа.
     //          3. Настраиваем ширину.
 
-    int one = sprintf(TEST_MESSAGE, "|%+c|%+d|%+i|%+e|%+E|%+f|%+g|%+G|%+o|%+s|%+u|%+x|%+X|%+p|%+n|%+%|", 
+    int one = sprintf(TEST_MESSAGE, "|% c|% d|% i|% e|% E|% f|% g|% G|% o|% s|% u|% x|% X|% p|% n|% %|", 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o, 
         TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
     printf("\nORIGINAL - %s - %d - |%d|\n", TEST_MESSAGE, TEST_n, one);
 
-    int two = s21_sprintf(TEST_MESSAGE, "|%+c|%+d|%+i|%+e|%+E|%+f|%+g|%+G|%+o|%+s|%+u|%+x|%+X|%+p|%+n|%+%|", 
+    int two = s21_sprintf(TEST_MESSAGE, "|% c|% d|% i|% e|% E|% f|% g|% G|% o|% s|% u|% x|% X|% p|% n|% %|", 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o, 
         TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
     printf("__FAKE__ - %s - %d - |%d|\n\n", TEST_MESSAGE, TEST_n, two);
