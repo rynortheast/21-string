@@ -119,8 +119,7 @@ char * s21_conf(char * str, spec config, char symbol) {
 
     if (config.flag != ' ' || config.width != 0 || config.accuracy != 0 || config.type != ' ') {
         if (symbol == 'p') {
-            for (int x = 0; str[x] == '0'; x += 1)
-                str[x + 1] != '0' ? strcpy(str, str + x + 1) : 0;
+            strcpy(str, str + strspn(str, "0"));
         } else if (strchr("gG", symbol)) {
             for (int x = (strlen(str) - 1); str[x] == '0'; str[x] = '\0', x -= 1);
         }
@@ -140,11 +139,11 @@ char * s21_conf(char * str, spec config, char symbol) {
         for (memmove(aux + countFill, aux, strlen(aux) + 1); countFill != 0; aux[countFill - 1] = filler, countFill -= 1);
     }
 
-    if (config.width != 0) {
-        int countFill = config.width - strlen(str);
-        countFill = countFill > 0x0 ? countFill : 0;
-        for (memmove(str + countFill, str, strlen(str) + 1); countFill != 0; aux[countFill - 1] = ' ', countFill -= 1);
-    }
+    // if (config.width != 0) {
+    //     int countFill = config.width - strlen(str);
+    //     countFill = countFill > 0x0 ? countFill : 0;
+    //     for (memmove(str + countFill, str, strlen(str) + 1); countFill != 0; aux[countFill - 1] = ' ', countFill -= 1);
+    // }
 
     return str;
 }
