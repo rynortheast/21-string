@@ -80,7 +80,8 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
             strcat(str, s21_conf(s21_ntoa(storage, va_arg(*params, double), symbol), config, symbol));
             break;
         case 'f':
-            strcat(str, s21_conf(s21_ftoa(storage, va_arg(*params, double), 6), config, symbol));
+            int len = config.accuracy != 0 ? config.accuracy : 6;
+            strcat(str, s21_conf(s21_ftoa(storage, va_arg(*params, double), len), config, symbol));
             break;
         case 'g':
         case 'G':
@@ -187,7 +188,8 @@ char * s21_ftoa(char * str, double number, int afterpoint) {
     str[strlen(str) + 1] = '\0';
     str[strlen(str)] = '.';
     number -= (int) number;
-    strcat(str, s21_itoa(storage, round(number * pow(10, afterpoint)), 10));
+    // TODO:    1. Здесь не работает точность.
+    strcat(str, s21_itoa(storage, round(number * pow(10, 6)), 10));
     return str;
 }
 
@@ -227,7 +229,7 @@ int main() {
     unsigned int TEST_i = -214749;
     double TEST_e = 32354324324324.7536875368;
     double TEST_E = -32354324324324.7536875368;
-    double TEST_f = 5.753;
+    double TEST_f = 5.32354324324324;
     double TEST_g = 5.753;
     double TEST_G = -5.753;
     int TEST_o = 775;
@@ -248,17 +250,18 @@ int main() {
     //          |% c|% d|% i|% e|% E|% f|% g|% G|% o|% s|% u|% x|% X|% p|% n|% %|   -   dieEfgGu
     //          |%#c|%#d|%#i|%#e|%#E|%#f|%#g|%#G|%#o|%#s|%#u|%#x|%#X|%#p|%#n|%#%|
     //          |%015c|%015d|%015i|%015e|%015E|%015f|%015g|%015G|%015o|%015s|%015u|%015x|%015X|%015p|%015n|%015%|   -   dieEfgGuxXp
+    //          |%.15c|%.15d|%.15i|%.15e|%.15E|%.15f|%.15g|%.15G|%.15o|%.15s|%.15u|%.15x|%.15X|%.15p|%.15n|%.15%|
 
     //          1. Проверяем знаки и доп.символы.
     //          2. Проверяем точность числа.
     //          3. Настраиваем ширину.
 
-    int one = sprintf(TEST_MESSAGE, "|%-15c|%-15d|%-15i|%-15e|%-15E|%-15f|%-15g|%-15G|%-15o|%-15s|%-15u|%-15x|%-15X|%-30p|%-15n|%-15%|", 
+    int one = sprintf(TEST_MESSAGE, "|%.15c|%.15d|%.15i|%.15e|%.15E|%.15f|%.15g|%.15G|%.15o|%.15s|%.15u|%.15x|%.15X|%.15p|%.15n|%.15%|", 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o, 
         TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
     printf("\nORIGINAL - %s - %d - |%d|\n", TEST_MESSAGE, TEST_n, one);
 
-    int two = s21_sprintf(TEST_MESSAGE, "|%-15c|%-15d|%-15i|%-15e|%-15E|%-15f|%-15g|%-15G|%-15o|%-15s|%-15u|%-15x|%-15X|%-30p|%-15n|%-15%|", 
+    int two = s21_sprintf(TEST_MESSAGE, "|%.15c|%.15d|%.15i|%.15e|%.15E|%.15f|%.15g|%.15G|%.15o|%.15s|%.15u|%.15x|%.15X|%.15p|%.15n|%.15%|", 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o, 
         TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
     printf("\n__FAKE__ - %s - %d - |%d|\n\n", TEST_MESSAGE, TEST_n, two);
