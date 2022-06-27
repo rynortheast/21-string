@@ -31,7 +31,7 @@ int s21_sprintf(char * str, const char * format, ...) {
 
     for (int x = 0; format[x] != '\0'; x += 1) {
         if (format[x] == '%') {
-            spec config = {'.', 0, 0, '.'};
+            spec config = {' ', 0, 0, ' '};
             x = searchModifiersForString(x, format, &config, &params);
             insertStringBySpecifier(str, format[x], config, &params);
         } else {
@@ -117,7 +117,7 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
 
 char * s21_conf(char * str, spec config, char symbol) {
 
-    if (config.flag != '.' || config.width != 0 || config.accuracy != 0 || config.type != '.') {
+    if (config.flag != ' ' || config.width != 0 || config.accuracy != 0 || config.type != ' ') {
         if (symbol == 'p') {
             for (int x = 0; str[x] == '0'; x += 1)
                 str[x + 1] != '0' ? strcpy(str, str + x + 1) : 0;
@@ -249,12 +249,12 @@ int main() {
     //          2. Проверяем точность числа.
     //          3. Настраиваем ширину.
 
-    int one = sprintf(TEST_MESSAGE, "|%015c|%015d|%015i|%015e|%015E|%015f|%015g|%015G|%015o|%015s|%015u|%015x|%015X|%015p|%015n|%015%|", 
+    int one = sprintf(TEST_MESSAGE, "|%15c|%15d|%15i|%15e|%15E|%15f|%15g|%15G|%15o|%15s|%15u|%15x|%15X|%30p|%15n|%15%|", 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o, 
         TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
     printf("\nORIGINAL - %s - %d - |%d|\n", TEST_MESSAGE, TEST_n, one);
 
-    int two = s21_sprintf(TEST_MESSAGE, "|%015c|%015d|%015i|%015e|%015E|%015f|%015g|%015G|%015o|%015s|%015u|%015x|%015X|%015p|%015n|%015%|", 
+    int two = s21_sprintf(TEST_MESSAGE, "|%15c|%15d|%15i|%15e|%15E|%15f|%15g|%15G|%15o|%15s|%15u|%15x|%15X|%30p|%15n|%15%|", 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o, 
         TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
     printf("\n__FAKE__ - %s - %d - |%d|\n\n", TEST_MESSAGE, TEST_n, two);
