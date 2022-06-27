@@ -1,0 +1,29 @@
+
+# Created by https://www.gitignore.io/api/executable,visualstudiocode
+# Edit at https://www.gitignore.io/?templates=executable,visualstudiocode
+
+### Executable ###
+*.app
+*.bat
+*.cgi
+*.com
+*.exe
+*.gadget
+*.jar
+*.pif
+*.vb
+*.wsf
+
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+
+# End of https://www.gitignore.io/api/executable,visualstudiocode
