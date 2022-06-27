@@ -31,7 +31,7 @@ int s21_sprintf(char * str, const char * format, ...) {
 
     for (int x = 0; format[x] != '\0'; x += 1) {
         if (format[x] == '%') {
-            spec config = {' ', 0, 0, ' '};
+            spec config = {'=', 0, 0, '='};
             x = searchModifiersForString(x, format, &config, &params);
             insertStringBySpecifier(str, format[x], config, &params);
         } else {
@@ -117,33 +117,32 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
 
 char * s21_conf(char * str, spec config, char symbol) {
 
-    if (config.flag != ' ' || config.width != 0 || config.accuracy != 0 || config.type != ' ') {
-        if (symbol == 'p') {
+    if (config.flag != '=' || config.width != 0 || config.accuracy != 0 || config.type != '=') {
+        if (symbol == 'p')
             strcpy(str, str + strspn(str, "0"));
-        } else if (strchr("gG", symbol)) {
+        else if (strchr("gG", symbol))
             for (int x = (strlen(str) - 1); str[x] == '0'; str[x] = '\0', x -= 1);
-        }
     }
+
+    char * aux = str;
+    char filler = ' ';
+    int countFill = config.width - strlen(str);
+    countFill = countFill > 0x0 ? countFill : 0;
 
     if (config.flag == '+' && strchr("dieEfgG", symbol) && str[0] != '-')
         for (memmove(str + 1, str, strlen(str)), str[0] = '+'; 1 == 0;);
-
-    if (config.flag == ' ' && strchr("dieEfgGu", symbol) && str[0] != '-')
+    else if (config.flag == ' ' && strchr("dieEfgGu", symbol) && str[0] != '-')
         for (memmove(str + 1, str, strlen(str)), str[0] = ' '; 1 == 0;);
 
     if (config.flag == '0') {
-        char * aux = str[0] == '-' ? str + 1 : str;
-        int countFill = config.width - strlen(str);
-        countFill = countFill > 0x0 ? countFill : 0;
-        char filler = strchr("cs", symbol) ? ' ' : '0';
-        for (memmove(aux + countFill, aux, strlen(aux) + 1); countFill != 0; aux[countFill - 1] = filler, countFill -= 1);
+        aux[0] == '-' ? aux += 1 : 0;
+        strchr("cs", symbol) ? 0 : (filler = '0');
+    } else if (config.flag == '-') {
+        aux += strlen(aux);
     }
 
-    // if (config.width != 0) {
-    //     int countFill = config.width - strlen(str);
-    //     countFill = countFill > 0x0 ? countFill : 0;
-    //     for (memmove(str + countFill, str, strlen(str) + 1); countFill != 0; aux[countFill - 1] = ' ', countFill -= 1);
-    // }
+    if (countFill != 0)
+        for (memmove(aux + countFill, aux, strlen(aux) + 1); countFill != 0; aux[countFill - 1] = filler, countFill -= 1);
 
     return str;
 }
@@ -254,12 +253,12 @@ int main() {
     //          2. Проверяем точность числа.
     //          3. Настраиваем ширину.
 
-    int one = sprintf(TEST_MESSAGE, "|%15c|%15d|%15i|%15e|%15E|%15f|%15g|%15G|%15o|%15s|%15u|%15x|%15X|%30p|%15n|%15%|", 
+    int one = sprintf(TEST_MESSAGE, "|%-15c|%-15d|%-15i|%-15e|%-15E|%-15f|%-15g|%-15G|%-15o|%-15s|%-15u|%-15x|%-15X|%-30p|%-15n|%-15%|", 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o, 
         TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
     printf("\nORIGINAL - %s - %d - |%d|\n", TEST_MESSAGE, TEST_n, one);
 
-    int two = s21_sprintf(TEST_MESSAGE, "|%15c|%15d|%15i|%15e|%15E|%15f|%15g|%15G|%15o|%15s|%15u|%15x|%15X|%30p|%15n|%15%|", 
+    int two = s21_sprintf(TEST_MESSAGE, "|%-15c|%-15d|%-15i|%-15e|%-15E|%-15f|%-15g|%-15G|%-15o|%-15s|%-15u|%-15x|%-15X|%-30p|%-15n|%-15%|", 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o, 
         TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
     printf("\n__FAKE__ - %s - %d - |%d|\n\n", TEST_MESSAGE, TEST_n, two);
