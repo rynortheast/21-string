@@ -12,7 +12,7 @@ typedef struct {
 
 char * s21_reverse(char * str);
 char * s21_ptoa(char * str, int * variable);
-char * s21_itoa(char * str, int number, int format);
+char * s21_itoa(char * str, int number, int accuracy);
 int s21_sprintf(char * str, const char * format, ...);
 char * s21_conf(char * str, spec config, char symbol);
 char * s21_ntoa(char * str, double number, int format);
@@ -73,7 +73,7 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
             break;
         case 'd':
         case 'i':
-            strcat(str, s21_conf(s21_itoa(storage, va_arg(*params, int), 10), config, symbol));
+            strcat(str, s21_conf(s21_itoa(storage, va_arg(*params, int), config.accuracy), config, symbol));
             break;
         case 'e':
         case 'E':
@@ -125,25 +125,25 @@ char * s21_conf(char * str, spec config, char symbol) {
             for (int x = (strlen(str) - 1); str[x] == '0'; str[x] = '\0', x -= 1);
     }
 
-    char * aux = str;
-    char filler = ' ';
-    int countFill = config.width - strlen(str);
-    countFill = countFill > 0x0 ? countFill : 0;
+    // char * aux = str;
+    // char filler = ' ';
+    // int countFill = config.width - strlen(str);
+    // countFill = countFill > 0x0 ? countFill : 0;
 
-    if (config.flag == '+' && strchr("dieEfgG", symbol) && str[0] != '-')
-        for (memmove(str + 1, str, strlen(str)), str[0] = '+'; 1 == 0;);
-    else if (config.flag == ' ' && strchr("dieEfgGu", symbol) && str[0] != '-')
-        for (memmove(str + 1, str, strlen(str)), str[0] = ' '; 1 == 0;);
+    // if (config.flag == '+' && strchr("dieEfgG", symbol) && str[0] != '-')
+    //     for (memmove(str + 1, str, strlen(str)), str[0] = '+'; 1 == 0;);
+    // else if (config.flag == ' ' && strchr("dieEfgGu", symbol) && str[0] != '-')
+    //     for (memmove(str + 1, str, strlen(str)), str[0] = ' '; 1 == 0;);
 
-    if (config.flag == '0') {
-        aux[0] == '-' ? aux += 1 : 0;
-        strchr("cs", symbol) ? 0 : (filler = '0');
-    } else if (config.flag == '-') {
-        aux += strlen(aux);
-    }
+    // if (config.flag == '0') {
+    //     aux[0] == '-' ? aux += 1 : 0;
+    //     strchr("cs", symbol) ? 0 : (filler = '0');
+    // } else if (config.flag == '-') {
+    //     aux += strlen(aux);
+    // }
 
-    if (countFill != 0)
-        for (memmove(aux + countFill, aux, strlen(aux) + 1); countFill != 0; aux[countFill - 1] = filler, countFill -= 1);
+    // if (countFill != 0)
+    //     for (memmove(aux + countFill, aux, strlen(aux) + 1); countFill != 0; aux[countFill - 1] = filler, countFill -= 1);
 
     return str;
 }
@@ -176,22 +176,24 @@ char * s21_ntoa(char * str, double number, int format) {
     strcat(str, s21_ftoa(storage, number * pow(10, -(e - 1)), 6));
     format == 'e' ? strcat(str, "e+0") : strcat(str, "E+0");
     str[strlen(str) + (e > 10 ? (-1) : 0)] = '\0';
-    strcat(str, s21_itoa(storage, e - 1, 10));
+    strcat(str, s21_itoa(storage, e - 1, 0));
     return str;
 }
 
 char * s21_ftoa(char * str, double number, int afterpoint) {
     // TODO:    1. Здесь необходимо выделять память динамически.
     char storage[100] = "Hello, world!";
-    strcpy(str, s21_itoa(storage, ((int) number), 10));
+    strcpy(str, s21_itoa(storage, ((int) number), 0));
     number < 0 ? number *= (-1) : number;
     str[strlen(str) + 1] = '\0';
     str[strlen(str)] = '.';
     number -= (int) number;
     // TODO:    1. Здесь не работает точность.
-    strcat(str, s21_itoa(storage, round(number * pow(10, 6)), 10));
+    strcat(str, s21_itoa(storage, round(number * pow(10, 6)), 0));
     return str;
 }
+
+//  s21_utoa(str, (number < 0 ? INT_MAX + number + 1 : number), format);
 
 char * s21_utoa(char * str, unsigned int number, int format) {
     int lenStr = 0, type = 97;
@@ -204,19 +206,13 @@ char * s21_utoa(char * str, unsigned int number, int format) {
     return str;
 }
 
-char * s21_itoa(char * str, int number, int format) {
-    if (format == 10) {
-        int lenStr = 0, minus = 0;
-        minus = number < 0 ? number *= (-1) : 0;
-        for (; (number / format) != 0; number /= format, lenStr += 1)
-            str[lenStr] = (number % format) < 10 ? (number % format) + 48 : ((number % format) - 10) + 97;
-        str[lenStr] = number < 10 ? number + 48 : (number - 10) + 97;
-        minus != 0 ? str[lenStr += 1] = '-' : 0;
-        str[lenStr + 1] = '\0';
-        s21_reverse(str);
-    } else if (format == 16 || format == 32) {
-        s21_utoa(str, (number < 0 ? INT_MAX + number + 1 : number), format);
-    }
+char * s21_itoa(char * str, int number, int accuracy) {
+    int lenStr = 0, minus = number < 0 ? (number *= (-1)) : 0;
+    for (; (((number / 10) != 0) || (lenStr < accuracy)); number /= 10)
+        str[lenStr++] = (number % 10) + 48;
+    minus != 0 ? str[lenStr++] = '-' : 0;
+    str[lenStr] = '\0';
+    s21_reverse(str);
     return str;
 }
 
