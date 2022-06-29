@@ -75,7 +75,7 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
             break;
         case 'd':
         case 'i':
-            strcat(str, s21_conf(s21_itoa(storage, va_arg(*params, int), config.accuracy), config, symbol));
+            s21_conf(s21_itoa(str, va_arg(*params, int), config.accuracy), config, symbol);
             break;
         case 'e':
         case 'E':
