@@ -82,7 +82,7 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
             strcat(str, s21_conf(s21_ntoa(storage, va_arg(*params, double), symbol), config, symbol));
             break;
         case 'f':
-            int len = config.accuracy < 0 ? config.accuracy : 6;
+            int len = config.accuracy > 0 ? config.accuracy : 6;
             strcat(str, s21_conf(s21_ftoa(storage, va_arg(*params, double), len), config, symbol));
             break;
         case 'g':
@@ -184,15 +184,10 @@ char * s21_ntoa(char * str, double number, int format) {
 //      ДАНЯ! Необязательно создавать доп.переменную. Можно отправлять ту же STR, но с плюсом (str + x)!!!
 
 char * s21_ftoa(char * str, double number, int afterpoint) {
-    // TODO:    1. Здесь необходимо выделять память динамически.
-    char storage[100] = "Hello, world!";
-    strcpy(str, s21_itoa(storage, ((int) number), 1));
-    number < 0 ? number *= (-1) : number;
-    str[strlen(str) + 1] = '\0';
-    str[strlen(str)] = '.';
-    number -= (int) number;
-    // TODO:    1. Здесь не работает точность.
-    strcat(str, s21_itoa(storage, ((int) round(number * pow(10, 6))), 1));
+    strcat(s21_itoa(str, number, 1), ".");
+    for (number -= (int) number; number < 0; number *= (-1));
+    for (int lenStr = strlen(str), x = 1; x < afterpoint; x += 1, lenStr += 1)
+        s21_itoa(str + lenStr, ((round(number * pow(10, x + 1))) - (floor(number * pow(10, x)) * 10)), 1);
     return str;
 }
 
@@ -228,7 +223,7 @@ int main() {
     unsigned int TEST_i = -214749;
     double TEST_e = 32354324324324.7536875368;
     double TEST_E = -32354324324324.7536875368;
-    double TEST_f = 5.32354324324324;
+    double TEST_f = 5.323543000024324;
     double TEST_g = 5.32354324324324;
     double TEST_G = -5.753;
     int TEST_o = 775;
