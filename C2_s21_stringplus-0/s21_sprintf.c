@@ -31,7 +31,8 @@ int s21_sprintf(char * str, const char * format, ...) {
 
     for (int x = 0; format[x] != '\0'; x += 1) {
         if (format[x] == '%') {
-            spec config = {'=', 0, 0, '='};
+            //      1. Поменять равно на ИКС!
+            spec config = {'x', INT_MIN, INT_MIN, 'x'};
             x = searchModifiersForString(x, format, &config, &params);
             insertStringBySpecifier(str, format[x], config, &params);
         } else {
@@ -80,7 +81,7 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
             strcat(str, s21_conf(s21_ntoa(storage, va_arg(*params, double), symbol), config, symbol));
             break;
         case 'f':
-            int len = config.accuracy != 0 ? config.accuracy : 6;
+            int len = config.accuracy < 0 ? config.accuracy : 6;
             strcat(str, s21_conf(s21_ftoa(storage, va_arg(*params, double), len), config, symbol));
             break;
         case 'g':
@@ -118,7 +119,7 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
 
 char * s21_conf(char * str, spec config, char symbol) {
 
-    if (config.flag != '=' || config.width != 0 || config.accuracy != 0 || config.type != '=') {
+    if (config.flag != 'x' || config.width < 0 || config.accuracy < 0 || config.type != 'x') {
         if (symbol == 'p')
             strcpy(str, str + strspn(str, "0"));
         else if (strchr("gG", symbol))
@@ -180,6 +181,8 @@ char * s21_ntoa(char * str, double number, int format) {
     return str;
 }
 
+//      ДАНЯ! Необязательно создавать доп.переменную. Можно отправлять ту же STR, но с плюсом (str + x)!!!
+
 char * s21_ftoa(char * str, double number, int afterpoint) {
     // TODO:    1. Здесь необходимо выделять память динамически.
     char storage[100] = "Hello, world!";
@@ -226,7 +229,7 @@ int main() {
     double TEST_e = 32354324324324.7536875368;
     double TEST_E = -32354324324324.7536875368;
     double TEST_f = 5.32354324324324;
-    double TEST_g = 5.753;
+    double TEST_g = 5.32354324324324;
     double TEST_G = -5.753;
     int TEST_o = 775;
     char TEST_s[100] = "CHAMOMIL";
