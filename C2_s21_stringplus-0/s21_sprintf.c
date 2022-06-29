@@ -176,20 +176,20 @@ char * s21_ntoa(char * str, double number, int format) {
     strcat(str, s21_ftoa(storage, number * pow(10, -(e - 1)), 6));
     format == 'e' ? strcat(str, "e+0") : strcat(str, "E+0");
     str[strlen(str) + (e > 10 ? (-1) : 0)] = '\0';
-    strcat(str, s21_itoa(storage, e - 1, 0));
+    strcat(str, s21_itoa(storage, e - 1, 1));
     return str;
 }
 
 char * s21_ftoa(char * str, double number, int afterpoint) {
     // TODO:    1. Здесь необходимо выделять память динамически.
     char storage[100] = "Hello, world!";
-    strcpy(str, s21_itoa(storage, ((int) number), 0));
+    strcpy(str, s21_itoa(storage, ((int) number), 1));
     number < 0 ? number *= (-1) : number;
     str[strlen(str) + 1] = '\0';
     str[strlen(str)] = '.';
     number -= (int) number;
     // TODO:    1. Здесь не работает точность.
-    strcat(str, s21_itoa(storage, round(number * pow(10, 6)), 0));
+    strcat(str, s21_itoa(storage, ((int) round(number * pow(10, 6))), 1));
     return str;
 }
 
@@ -208,7 +208,7 @@ char * s21_utoa(char * str, unsigned int number, int format) {
 
 char * s21_itoa(char * str, int number, int accuracy) {
     int lenStr = 0, minus = number < 0 ? (number *= (-1)) : 0;
-    for (; (((number / 10) != 0) || (lenStr < accuracy)); number /= 10)
+    for (; ((lenStr < accuracy) || ((number / 10) != 0) || ((number % 10) != 0)); number /= 10)
         str[lenStr++] = (number % 10) + 48;
     minus != 0 ? str[lenStr++] = '-' : 0;
     str[lenStr] = '\0';
