@@ -34,7 +34,7 @@ int s21_sprintf(char * str, const char * format, ...) {
             //      1. Поменять равно на ИКС!
             spec config = {'x', INT_MIN, INT_MIN, 'x'};
             x = searchModifiersForString(x, format, &config, &params);
-            insertStringBySpecifier(str, format[x], config, &params);
+            insertStringBySpecifier(str + strlen(str), format[x], config, &params);
         } else {
             int lenStr = strlen(str);
             str[lenStr] = format[x];
@@ -67,10 +67,11 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
     //          2. Необходимо обновить структуру, убрать switch.
     //          3. Нужно использовать long вместо int.
     char storage[1000] = "\0";
+
     switch (symbol) {
         case 'c':
-            for (memmove(storage + 1, storage, strlen(str)), storage[0] = va_arg(*params, int); 1 == 0;);
-            strcat(str, s21_conf(storage, config, symbol));
+            for (memmove(str + 1, str, 1), str[0] = va_arg(*params, int); 1 == 0;);
+            s21_conf(str, config, symbol);
             break;
         case 'd':
         case 'i':
@@ -126,10 +127,9 @@ char * s21_conf(char * str, spec config, char symbol) {
             for (int x = (strlen(str) - 1); str[x] == '0'; str[x] = '\0', x -= 1);
     }
 
-    // char * aux = str;
-    // char filler = ' ';
-    // int countFill = config.width - strlen(str);
-    // countFill = countFill > 0x0 ? countFill : 0;
+    char * aux = str;
+    char filler = ' ';
+    int countFill = config.width > 0 ? config.width - strlen(str) : 0;
 
     // if (config.flag == '+' && strchr("dieEfgG", symbol) && str[0] != '-')
     //     for (memmove(str + 1, str, strlen(str)), str[0] = '+'; 1 == 0;);
@@ -143,8 +143,8 @@ char * s21_conf(char * str, spec config, char symbol) {
     //     aux += strlen(aux);
     // }
 
-    // if (countFill != 0)
-    //     for (memmove(aux + countFill, aux, strlen(aux) + 1); countFill != 0; aux[countFill - 1] = filler, countFill -= 1);
+    if (countFill > 0)
+        for (memmove(aux + countFill, aux, strlen(aux) + 1); countFill != 0; aux[countFill - 1] = filler, countFill -= 1);
 
     return str;
 }
@@ -255,12 +255,12 @@ int main() {
     //          2. Проверяем точность числа.
     //          3. Настраиваем ширину.
 
-    int one = sprintf(TEST_MESSAGE, "|%.15c|%.15d|%.15i|%.15e|%.15E|%.15f|%.15g|%.15G|%.15o|%.15s|%.15u|%.15x|%.15X|%.15p|%.15n|%.15%|", 
+    int one = sprintf(TEST_MESSAGE, "|%5.15c|%.15d|%.15i|%.15e|%.15E|%.15f|%.15g|%.15G|%.15o|%.15s|%.15u|%.15x|%.15X|%.15p|%.15n|%.15%|", 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o, 
         TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
     printf("\nORIGINAL - %s - %d - |%d|\n", TEST_MESSAGE, TEST_n, one);
 
-    int two = s21_sprintf(TEST_MESSAGE, "|%.15c|%.15d|%.15i|%.15e|%.15E|%.15f|%.15g|%.15G|%.15o|%.15s|%.15u|%.15x|%.15X|%.15p|%.15n|%.15%|", 
+    int two = s21_sprintf(TEST_MESSAGE, "|%5.15c|%.15d|%.15i|%.15e|%.15E|%.15f|%.15g|%.15G|%.15o|%.15s|%.15u|%.15x|%.15X|%.15p|%.15n|%.15%|", 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o, 
         TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
     printf("\n__FAKE__ - %s - %d - |%d|\n\n", TEST_MESSAGE, TEST_n, two);
