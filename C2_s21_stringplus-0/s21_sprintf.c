@@ -121,6 +121,8 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
 
 char * s21_conf(char * str, spec config, char symbol) {
 
+    // printf("TEST - %s\n", str);
+
     if (config.flag != 'x' || config.width < 0 || config.accuracy < 0 || config.type != 'x') {
         if (symbol == 'p')
             strcpy(str, str + strspn(str, "0"));
@@ -172,8 +174,6 @@ char * s21_ptoa(char * str, int * variable) {
 char * s21_ntoa(char * str, double number, int accuracy, int symbol) {
     int e = 0, t = 0, lenStr = 0;
     for (; pow(10, e) < fabs(number); e += 1, t += 1);
-    
-    printf("\nTEST - %d - %d\n", accuracy, e);
 
     s21_itoa(str, number * pow(10, -(e - 1)), 1);
 
@@ -200,6 +200,7 @@ char * s21_ntoa(char * str, double number, int accuracy, int symbol) {
         }
     }
 
+    str[lenStr] = '\0';
     strcat(str, (symbol == 'e' ? "e+0" : "E+0"));
     str[strlen(str) - (t > 10 ? (1) : 0)] = '\0';
     s21_itoa(str + strlen(str), t - 1, 1);
@@ -223,9 +224,6 @@ char * s21_ftoa(char * str, double number, int afterpoint) {
     if (minus == 1)
         strcat(str, "-");
     s21_reverse(str);
-
-    // for (int lenStr = strlen(str), x = 1; x < afterpoint; x += 1, lenStr += 1)
-    //     s21_itoa(str + lenStr, ((round(number * pow(10, x + 1))) - (floor(number * pow(10, x)) * 10)), 1);
 
     return str;
 }
