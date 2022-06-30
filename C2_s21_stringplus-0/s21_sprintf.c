@@ -173,39 +173,32 @@ char * s21_ptoa(char * str, int * variable) {
     return str;
 }
 
+//  s21_utoa(str, (number < 0 ? INT_MAX + number + 1 : number), format);
+
+char * s21_utoa(char * str, unsigned int number, int format) {
+    int lenStr = 0, type = 97;
+    format == 32 ? format /= 2 : (type = 65);
+    for (; (number / format) != 0; number /= format, lenStr += 1)
+        str[lenStr] = (number % format) < 10 ? (number % format) + 48 : ((number % format) - 10) + type;
+    str[lenStr] = number < 10 ? number + 48 : (number - 10) + type;
+    str[lenStr + 1] = '\0';
+    s21_reverse(str);
+    return str;
+}
+
 char * s21_ntoa(char * str, double number, int accuracy, int symbol) {
-    int e = 0, t = 0, lenStr = 0;
-    for (; pow(10, e) < fabs(number); e += 1, t += 1);
-
-    s21_itoa(str, number * pow(10, -(e - 1)), 1);
-
-    if (number < 0)
-        number *= (-1);
-
-    lenStr = strlen(str);
-
-    str[lenStr++] = '.';
-    
-    for (int aux = e - 2; (accuracy > 0 && aux >= 0); aux -= 1, accuracy -= 1) {
+    int lenStr = 0, lenNum = 0;
+    for (;pow(10, lenNum) < fabs(number); lenNum += 1);
+    s21_itoa(str, number * pow(10, -(lenNum -= 1)), 1);
+    for (lenStr = strlen(str), str[lenStr++] = '.'; number < 0; number *= (-1));
+    for (int aux = lenNum - 1; (accuracy > 0 && aux >= 0); accuracy -= 1, aux -= 1, str[lenStr] = '\0')
         str[lenStr++] = fmod(number * pow(10, -aux), 10) + 48;
-    }
-    
-    // printf("TEST_vor - %f\n", (number - floor(number)) * pow(10, 2));
-
-    str[lenStr] = '\0';
-
-    for (int x = 1; accuracy > 0; x += 1, accuracy -= 1) {
-        if (accuracy == 1) {
-            str[lenStr++] = fmod(round((number - floor(number)) * pow(10, x)), 10) + 48;
-        } else {
-            str[lenStr++] = fmod((number - floor(number)) * pow(10, x), 10) + 48;
-        }
-    }
-
-    str[lenStr] = '\0';
-    strcat(str, (symbol == 'e' ? "e+0" : "E+0"));
-    str[strlen(str) - (t > 10 ? (1) : 0)] = '\0';
-    s21_itoa(str + strlen(str), t - 1, 1);
+    for (int x = 1; accuracy > 0; x += 1, accuracy -= 1, str[lenStr] = '\0')
+        str[lenStr++] = fmod((number - trunc(number)) * pow(10, x),10) + 48;
+        //  fmod(round((number - floor(number)) * pow(10, x)), 10)
+    strcat(str, (symbol == 'e' ? "e+0" : "E+0"));       // Здесь может быть минус.
+    str[strlen(str) - (lenNum > 10 ? (1) : 0)] = '\0';  // Нужно по-другому это просчитывать. . . 
+    s21_itoa(str + strlen(str), lenNum, 1);
     return str;
 }
 
@@ -219,19 +212,6 @@ char * s21_ftoa(char * str, double number, int afterpoint) {
         str[lenStr++] = ((int) fmod(aux, 10)) + 48;
     s21_itoa(str + lenStr, fmod(aux, 10), 1);
     minus == 1 ? strcat(str, "-") : 0;
-    s21_reverse(str);
-    return str;
-}
-
-//  s21_utoa(str, (number < 0 ? INT_MAX + number + 1 : number), format);
-
-char * s21_utoa(char * str, unsigned int number, int format) {
-    int lenStr = 0, type = 97;
-    format == 32 ? format /= 2 : (type = 65);
-    for (; (number / format) != 0; number /= format, lenStr += 1)
-        str[lenStr] = (number % format) < 10 ? (number % format) + 48 : ((number % format) - 10) + type;
-    str[lenStr] = number < 10 ? number + 48 : (number - 10) + type;
-    str[lenStr + 1] = '\0';
     s21_reverse(str);
     return str;
 }
@@ -253,10 +233,10 @@ int main() {
     char TEST_c = '5';
     unsigned int TEST_d = 2147485655;
     unsigned int TEST_i = -214749;
-    double TEST_e = 3023423432432.00;
-    double TEST_E = -32354324324324.7536875368;
+    double TEST_e = -5.02342343243200;               //  Надо допилить с другими примерами:
+    double TEST_E = -5.23543243243247536875368;      //  0.02342343243200  -  0.23543243243247536875368
     double TEST_f = 543.2432432475368;
-    double TEST_g = 5.32354324324324;
+    double TEST_g = 5786876987.3235432432;
     double TEST_G = -5.753;
     int TEST_o = 775;
     char TEST_s[100] = "CHAMOMIL";
