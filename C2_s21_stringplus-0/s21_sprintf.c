@@ -170,60 +170,58 @@ char * s21_ptoa(char * str, int * variable) {
 }
 
 char * s21_ntoa(char * str, double number, int accuracy, int symbol) {
-    int e = 0;
-    for (; pow(10, e) < fabs(number); e += 1);
-    printf("TEST - %d - %f - %.15f\n", e, number, number * pow(10, -(e - 1)));
-    s21_ftoa(str, number * pow(10, -(e - 1)), accuracy);
+    int e = 0, t = 0, lenStr = 0;
+    for (; pow(10, e) < fabs(number); e += 1, t += 1);
+    
+    printf("\nTEST - %d - %d\n", accuracy, e);
+
+    s21_itoa(str, number * pow(10, -(e - 1)), 1);
+
+    if (number < 0)
+        number *= (-1);
+
+    lenStr = strlen(str);
+
+    str[lenStr++] = '.';
+    
+    for (int aux = e - 2; (accuracy > 0 && aux >= 0); aux -= 1, accuracy -= 1) {
+        str[lenStr++] = fmod(number * pow(10, -aux), 10) + 48;
+    }
+    
+    // printf("TEST_vor - %f\n", (number - floor(number)) * pow(10, 2));
+
+    str[lenStr] = '\0';
+
+    for (int x = 1; accuracy > 0; x += 1, accuracy -= 1) {
+        if (accuracy == 1) {
+            str[lenStr++] = fmod(round((number - floor(number)) * pow(10, x)), 10) + 48;
+        } else {
+            str[lenStr++] = fmod((number - floor(number)) * pow(10, x), 10) + 48;
+        }
+    }
+
     strcat(str, (symbol == 'e' ? "e+0" : "E+0"));
-    str[strlen(str) - (e > 10 ? (1) : 0)] = '\0';
-    s21_itoa(str + strlen(str), e - 1, 1);
+    str[strlen(str) - (t > 10 ? (1) : 0)] = '\0';
+    s21_itoa(str + strlen(str), t - 1, 1);
     return str;
 }
 
 //      ДАНЯ! Необязательно создавать доп.переменную. Можно отправлять ту же STR, но с плюсом (str + x)!!!
 
 char * s21_ftoa(char * str, double number, int afterpoint) {
-    
-    printf("TEST111 - %f | %f | %f\n", number, fmod(number, 10), number / 10);
-
-    // s21_itoa(str, number, 1);
-
-    int lenStr = 0, minus = 0; // здест скорее всего все ломается!
-
+    int lenStr = 0, minus = 0;
     if (number < 0) {
         number *= (-1);
         minus = 1;
     }
-
-    for (double aux = ((number - floor(number)) * pow(10, afterpoint)); (((aux / 10) > 1) || (fmod(aux, 10) > 1)); aux /= 10, str[lenStr] = '\0') {
-        // printf("TEST111 - %f | %f | %f\n", number, fmod(number, 10), number / 10);
+    for (double aux = ((number - floor(number)) * pow(10, afterpoint)); (((aux / 10) > 1) || (fmod(aux, 10) > 1)); aux /= 10, str[lenStr] = '\0')
         str[lenStr++] = ((int) fmod(aux, 10)) + 48;
-    }
-
     strcat(str, ".");
     lenStr = strlen(str);
-
-    for (double aux = number; (((aux / 10) > 1) || (fmod(aux, 10) > 1)); aux /= 10, str[lenStr] = '\0') {
-        // printf("TEST111 - %f | %f | %f\n", number, fmod(number, 10), number / 10);
+    for (double aux = number; (((aux / 10) > 1) || (fmod(aux, 10) > 1)); aux /= 10, str[lenStr] = '\0')
         str[lenStr++] = ((int) fmod(aux, 10)) + 48;
-    }
-
-    // for (double aux = number; )
-
-    // 6    324234     100000      number / pow(10, x), number - (pow(10, x) * y) 
-    // 5     24234
-    // 4      4234
-    // 3       234
-    // 2        34
-    // 1         4
-    // for (number -= floor(number); number < 0;); // number *= (-1) Очень огромное числов, чтоб превращать его в ИНТ!
-    
-    // printf("TEST222 - %f\n", (round(number * pow(10, afterpoint))));
-
-    if (minus == 1) {
+    if (minus == 1)
         strcat(str, "-");
-    }
-
     s21_reverse(str);
 
     // for (int lenStr = strlen(str), x = 1; x < afterpoint; x += 1, lenStr += 1)
@@ -262,7 +260,7 @@ int main() {
     char TEST_c = '5';
     unsigned int TEST_d = 2147485655;
     unsigned int TEST_i = -214749;
-    double TEST_e = 3.235432432432475;
+    double TEST_e = 3023423432432.00;
     double TEST_E = -32354324324324.7536875368;
     double TEST_f = 32354324324324.7536875368;
     double TEST_g = 5.32354324324324;
@@ -291,12 +289,12 @@ int main() {
     //          2. Проверяем точность числа.
     //          3. Настраиваем ширину.
 
-    int one = sprintf(TEST_MESSAGE, "|%5.15c|%.15d|%.15i|%.15e|%.15E|%.15f|%.15g|%.15G|%.15o|%.15s|%.15u|%.15x|%.15X|%.15p|%.15n|%.15%|", 
+    int one = sprintf(TEST_MESSAGE, "|%5.15c|%.15d|%.15i|%.8e|%.15E|%.15f|%.15g|%.15G|%.15o|%.15s|%.15u|%.15x|%.15X|%.15p|%.15n|%.15%|", 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o, 
         TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
     printf("\nORIGINAL - %s - %d - |%d|\n", TEST_MESSAGE, TEST_n, one);
 
-    int two = s21_sprintf(TEST_MESSAGE, "|%5.15c|%.15d|%.15i|%.15e|%.15E|%.15f|%.15g|%.15G|%.15o|%.15s|%.15u|%.15x|%.15X|%.15p|%.15n|%.15%|", 
+    int two = s21_sprintf(TEST_MESSAGE, "|%5.15c|%.15d|%.15i|%.8e|%.15E|%.15f|%.15g|%.15G|%.15o|%.15s|%.15u|%.15x|%.15X|%.15p|%.15n|%.15%|", 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o, 
         TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
     printf("\n__FAKE__ - %s - %d - |%d|\n\n", TEST_MESSAGE, TEST_n, two);
