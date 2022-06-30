@@ -15,9 +15,9 @@ char * s21_ptoa(char * str, int * variable);
 char * s21_itoa(char * str, int number, int accuracy);
 int s21_sprintf(char * str, const char * format, ...);
 char * s21_conf(char * str, spec config, char symbol);
-char * s21_ntoa(char * str, double number, int format);
 char * s21_ftoa(char * str, double number, int afterpoint);
 char * s21_utoa(char * str, unsigned int number, int format);
+char * s21_ntoa(char * str, double number, int accuracy, int symbol);
 char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * params);
 int searchModifiersForString(int x, const char * format, spec * config, va_list * params);
 
@@ -79,11 +79,12 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
             break;
         case 'e':
         case 'E':
-            strcat(str, s21_conf(s21_ntoa(storage, va_arg(*params, double), symbol), config, symbol));
+            int len = config.accuracy > 0 ? config.accuracy : 6;
+            s21_conf(s21_ntoa(str, va_arg(*params, double), len, symbol), config, symbol);
             break;
         case 'f':
-            int len = config.accuracy > 0 ? config.accuracy : 6;
-            strcat(str, s21_conf(s21_ftoa(storage, va_arg(*params, double), len), config, symbol));
+            int lens = config.accuracy > 0 ? config.accuracy : 6;
+            s21_conf(s21_ftoa(str, va_arg(*params, double), lens), config, symbol);
             break;
         case 'g':
         case 'G':
@@ -168,26 +169,66 @@ char * s21_ptoa(char * str, int * variable) {
     return str;
 }
 
-char * s21_ntoa(char * str, double number, int format) {
+char * s21_ntoa(char * str, double number, int accuracy, int symbol) {
     int e = 0;
-    // TODO:    1. Здесь необходимо выделять память динамически.
-    //          2. Необходимо как-то обновить здесь структуру.
-    char storage[100] = "Hello, world!";
     for (; pow(10, e) < fabs(number); e += 1);
-    strcat(str, s21_ftoa(storage, number * pow(10, -(e - 1)), 6));
-    format == 'e' ? strcat(str, "e+0") : strcat(str, "E+0");
-    str[strlen(str) + (e > 10 ? (-1) : 0)] = '\0';
-    strcat(str, s21_itoa(storage, e - 1, 1));
+    printf("TEST - %d - %f - %.15f\n", e, number, number * pow(10, -(e - 1)));
+    s21_ftoa(str, number * pow(10, -(e - 1)), accuracy);
+    strcat(str, (symbol == 'e' ? "e+0" : "E+0"));
+    str[strlen(str) - (e > 10 ? (1) : 0)] = '\0';
+    s21_itoa(str + strlen(str), e - 1, 1);
     return str;
 }
 
 //      ДАНЯ! Необязательно создавать доп.переменную. Можно отправлять ту же STR, но с плюсом (str + x)!!!
 
 char * s21_ftoa(char * str, double number, int afterpoint) {
-    strcat(s21_itoa(str, number, 1), ".");
-    for (number -= (int) number; number < 0; number *= (-1));
-    for (int lenStr = strlen(str), x = 1; x < afterpoint; x += 1, lenStr += 1)
-        s21_itoa(str + lenStr, ((round(number * pow(10, x + 1))) - (floor(number * pow(10, x)) * 10)), 1);
+    
+    printf("TEST111 - %f | %f | %f\n", number, fmod(number, 10), number / 10);
+
+    // s21_itoa(str, number, 1);
+
+    int lenStr = 0, minus = 0; // здест скорее всего все ломается!
+
+    if (number < 0) {
+        number *= (-1);
+        minus = 1;
+    }
+
+    for (double aux = ((number - floor(number)) * pow(10, afterpoint)); (((aux / 10) > 1) || (fmod(aux, 10) > 1)); aux /= 10, str[lenStr] = '\0') {
+        // printf("TEST111 - %f | %f | %f\n", number, fmod(number, 10), number / 10);
+        str[lenStr++] = ((int) fmod(aux, 10)) + 48;
+    }
+
+    strcat(str, ".");
+    lenStr = strlen(str);
+
+    for (double aux = number; (((aux / 10) > 1) || (fmod(aux, 10) > 1)); aux /= 10, str[lenStr] = '\0') {
+        // printf("TEST111 - %f | %f | %f\n", number, fmod(number, 10), number / 10);
+        str[lenStr++] = ((int) fmod(aux, 10)) + 48;
+    }
+
+    // for (double aux = number; )
+
+    // 6    324234     100000      number / pow(10, x), number - (pow(10, x) * y) 
+    // 5     24234
+    // 4      4234
+    // 3       234
+    // 2        34
+    // 1         4
+    // for (number -= floor(number); number < 0;); // number *= (-1) Очень огромное числов, чтоб превращать его в ИНТ!
+    
+    // printf("TEST222 - %f\n", (round(number * pow(10, afterpoint))));
+
+    if (minus == 1) {
+        strcat(str, "-");
+    }
+
+    s21_reverse(str);
+
+    // for (int lenStr = strlen(str), x = 1; x < afterpoint; x += 1, lenStr += 1)
+    //     s21_itoa(str + lenStr, ((round(number * pow(10, x + 1))) - (floor(number * pow(10, x)) * 10)), 1);
+
     return str;
 }
 
@@ -219,11 +260,11 @@ int main() {
     char TEST_MESSAGE[500] = "Hello, World!!";
 
     char TEST_c = '5';
-    unsigned int TEST_d = 214748;
+    unsigned int TEST_d = 2147485655;
     unsigned int TEST_i = -214749;
-    double TEST_e = 32354324324324.7536875368;
+    double TEST_e = 3.235432432432475;
     double TEST_E = -32354324324324.7536875368;
-    double TEST_f = 5.323543000024324;
+    double TEST_f = 32354324324324.7536875368;
     double TEST_g = 5.32354324324324;
     double TEST_G = -5.753;
     int TEST_o = 775;
