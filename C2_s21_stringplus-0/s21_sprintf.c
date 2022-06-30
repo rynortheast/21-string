@@ -88,10 +88,12 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
             break;
         case 'g':
         case 'G':
-            strcat(str, s21_conf(s21_ftoa(storage, va_arg(*params, double), 5), config, symbol));
+            int lenss = config.accuracy > 0 ? config.accuracy : 5;
+            s21_conf(s21_ftoa(str, va_arg(*params, double), lenss), config, symbol);
             break;
         case 's':
-            strcat(str, s21_conf(va_arg(*params, char *), config, symbol));
+            int lensss = config.accuracy > 0 ? config.accuracy : strlen(str);
+            s21_conf(strncat(str, va_arg(*params, char *), lensss), config, symbol);
             break;
         case 'o':
             strcat(str, s21_conf(s21_utoa(storage, va_arg(*params, unsigned int), 8), config, symbol));
@@ -207,8 +209,6 @@ char * s21_ntoa(char * str, double number, int accuracy, int symbol) {
     return str;
 }
 
-//      ДАНЯ! Необязательно создавать доп.переменную. Можно отправлять ту же STR, но с плюсом (str + x)!!!
-
 char * s21_ftoa(char * str, double number, int afterpoint) {
     int lenStr = 0, minus = 0;
     for (; number < 0; number *= (-1), minus = 1);
@@ -282,12 +282,12 @@ int main() {
     //          2. Проверяем точность числа.
     //          3. Настраиваем ширину.
 
-    int one = sprintf(TEST_MESSAGE, "|%5.15c|%.15d|%.15i|%.8e|%.15E|%.15f|%.15g|%.15G|%.15o|%.15s|%.15u|%.15x|%.15X|%.15p|%.15n|%.15%|", 
+    int one = sprintf(TEST_MESSAGE, "|%5.15c|%.15d|%.15i|%.8e|%.15E|%.15f|%.15g|%.15G|%.15o|%.3s|%.15u|%.15x|%.15X|%.15p|%.15n|%.15%|", 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o, 
         TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
     printf("\nORIGINAL - %s - %d - |%d|\n", TEST_MESSAGE, TEST_n, one);
 
-    int two = s21_sprintf(TEST_MESSAGE, "|%5.15c|%.15d|%.15i|%.8e|%.15E|%.15f|%.15g|%.15G|%.15o|%.15s|%.15u|%.15x|%.15X|%.15p|%.15n|%.15%|", 
+    int two = s21_sprintf(TEST_MESSAGE, "|%5.15c|%.15d|%.15i|%.8e|%.15E|%.15f|%.15g|%.15G|%.15o|%.3s|%.15u|%.15x|%.15X|%.15p|%.15n|%.15%|", 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o, 
         TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
     printf("\n__FAKE__ - %s - %d - |%d|\n\n", TEST_MESSAGE, TEST_n, two);
