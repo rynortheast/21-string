@@ -215,12 +215,19 @@ char * s21_ftoa(char * str, double number, int afterpoint) {
         number *= (-1);
         minus = 1;
     }
-    for (double aux = ((number - floor(number)) * pow(10, afterpoint)); (((aux / 10) > 1) || (fmod(aux, 10) > 1)); aux /= 10, str[lenStr] = '\0')
+    
+    double aux = ceil((number - trunc(number)) * pow(10, afterpoint) - 0.5);
+    for (; ((afterpoint > 0) || ((aux / 10) > 1) || (fmod(aux, 10) > 1)); afterpoint -= 1, aux /= 10, str[lenStr] = '\0')
         str[lenStr++] = ((int) fmod(aux, 10)) + 48;
+
     strcat(str, ".");
     lenStr = strlen(str);
-    for (double aux = number; (((aux / 10) > 1) || (fmod(aux, 10) > 1)); aux /= 10, str[lenStr] = '\0')
+
+    printf("TEST - %f\n", number);
+    for (aux = number; ((aux / 10) > 1); aux /= 10, str[lenStr] = '\0')
         str[lenStr++] = ((int) fmod(aux, 10)) + 48;
+    s21_itoa(str + lenStr, fmod(aux, 10), 1);
+
     if (minus == 1)
         strcat(str, "-");
     s21_reverse(str);
@@ -260,7 +267,7 @@ int main() {
     unsigned int TEST_i = -214749;
     double TEST_e = 3023423432432.00;
     double TEST_E = -32354324324324.7536875368;
-    double TEST_f = 32354324324324.7536875368;
+    double TEST_f = 543.2432432475368;
     double TEST_g = 5.32354324324324;
     double TEST_G = -5.753;
     int TEST_o = 775;
