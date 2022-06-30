@@ -211,27 +211,15 @@ char * s21_ntoa(char * str, double number, int accuracy, int symbol) {
 
 char * s21_ftoa(char * str, double number, int afterpoint) {
     int lenStr = 0, minus = 0;
-    if (number < 0) {
-        number *= (-1);
-        minus = 1;
-    }
-    
+    for (; number < 0; number *= (-1), minus = 1);
     double aux = ceil((number - trunc(number)) * pow(10, afterpoint) - 0.5);
     for (; ((afterpoint > 0) || ((aux / 10) > 1) || (fmod(aux, 10) > 1)); afterpoint -= 1, aux /= 10, str[lenStr] = '\0')
         str[lenStr++] = ((int) fmod(aux, 10)) + 48;
-
-    strcat(str, ".");
-    lenStr = strlen(str);
-
-    printf("TEST - %f\n", number);
-    for (aux = number; ((aux / 10) > 1); aux /= 10, str[lenStr] = '\0')
+    for (str[lenStr++] = '.', aux = number; ((aux / 10) > 1); aux /= 10, str[lenStr] = '\0')
         str[lenStr++] = ((int) fmod(aux, 10)) + 48;
     s21_itoa(str + lenStr, fmod(aux, 10), 1);
-
-    if (minus == 1)
-        strcat(str, "-");
+    minus == 1 ? strcat(str, "-") : 0;
     s21_reverse(str);
-
     return str;
 }
 
