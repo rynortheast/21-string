@@ -11,13 +11,13 @@ typedef struct {
 } spec;
 
 char * s21_reverse(char * str);
-char * s21_ptoa(char * str, int * variable);
 char * s21_itoa(char * str, int number, int accuracy);
 int s21_sprintf(char * str, const char * format, ...);
 char * s21_conf(char * str, spec config, char symbol);
+char * s21_ptoa(char * str, int * variable, int accuracy);
 char * s21_ftoa(char * str, double number, int afterpoint);
-char * s21_utoa(char * str, unsigned int number, int format);
 char * s21_ntoa(char * str, double number, int accuracy, int symbol);
+char * s21_utoa(char * str, unsigned int number, int format, int accuracy);
 char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * params);
 int searchModifiersForString(int x, const char * format, spec * config, va_list * params);
 
@@ -88,26 +88,29 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
             break;
         case 'g':
         case 'G':
-            int lenss = config.accuracy > 0 ? config.accuracy : 5;
-            s21_conf(s21_ftoa(str, va_arg(*params, double), lenss), config, symbol);
+            s21_conf(s21_ftoa(str, va_arg(*params, double), 5), config, symbol);
             break;
         case 's':
             int lensss = config.accuracy > 0 ? config.accuracy : strlen(str);
             s21_conf(strncat(str, va_arg(*params, char *), lensss), config, symbol);
             break;
         case 'o':
-            strcat(str, s21_conf(s21_utoa(storage, va_arg(*params, unsigned int), 8), config, symbol));
+            int len_2 = config.accuracy > 0 ? config.accuracy : 1;
+            strcat(str, s21_conf(s21_utoa(storage, va_arg(*params, unsigned int), 8, len_2), config, symbol));
             break;
         case 'u':
-            strcat(str, s21_conf(s21_utoa(storage, va_arg(*params, unsigned int), 10), config, symbol));
+            int lenssss = config.accuracy > 0 ? config.accuracy : 1;
+            strcat(str, s21_conf(s21_utoa(storage, va_arg(*params, unsigned int), 10, lenssss), config, symbol));
             break;
         case 'x':
         case 'X':
-            strcat(str, s21_conf(s21_utoa(storage, va_arg(*params, int), symbol == 'x' ? 32 : 16), config, symbol));
+            int len_1 = config.accuracy > 0 ? config.accuracy : 1;
+            strcat(str, s21_conf(s21_utoa(storage, va_arg(*params, int), symbol == 'x' ? 32 : 16, len_1), config, symbol));
             break;
         case 'p':
             // TODO:    1. Здесь надо убрать реверс!
-            strcat(str, s21_conf(s21_reverse(s21_ptoa(storage, va_arg(*params, void *))), config, symbol));
+            int len_3 = config.accuracy > 0 ? config.accuracy : 1;
+            strcat(str, s21_conf(s21_reverse(s21_ptoa(storage, va_arg(*params, void *), len_3)), config, symbol));
             break;
         case 'n':
             *(va_arg(*params, int *)) = strlen(str);
@@ -125,12 +128,12 @@ char * s21_conf(char * str, spec config, char symbol) {
 
     // printf("TEST - %s\n", str);
 
-    if (config.flag != 'x' || config.width < 0 || config.accuracy < 0 || config.type != 'x') {
-        if (symbol == 'p')
-            strcpy(str, str + strspn(str, "0"));
-        else if (strchr("gG", symbol))
-            for (int x = (strlen(str) - 1); str[x] == '0'; str[x] = '\0', x -= 1);
-    }
+    // if (config.flag != 'x' || config.width < 0 || config.accuracy < 0 || config.type != 'x') {
+    //     if (symbol == 'p')
+    //         strcpy(str, str + strspn(str, "0"));
+    //     else if (strchr("gG", symbol))
+    //         for (int x = (strlen(str) - 1); str[x] == '0'; str[x] = '\0', x -= 1);
+    // }
 
     char * aux = str;
     char filler = ' ';
@@ -164,8 +167,8 @@ char * s21_reverse(char * str) {
     return str;
 }
 
-char * s21_ptoa(char * str, int * variable) {
-    for (int * aux = variable, x = 0; x < 16; aux = ((void *) (((size_t) aux) >> 4)), x += 1) {
+char * s21_ptoa(char * str, int * variable, int accuracy) {
+    for (int * aux = variable, x = 0; x < accuracy; aux = ((void *) (((size_t) aux) >> 4)), x += 1) {
         unsigned int last_symbol = ((size_t) aux) % 0x10;
         last_symbol < 10 ? 
             (str[x] = ('0' + last_symbol)) : (str[x] = ('a' + (last_symbol - 10))); 
@@ -175,10 +178,10 @@ char * s21_ptoa(char * str, int * variable) {
 
 //  s21_utoa(str, (number < 0 ? INT_MAX + number + 1 : number), format);
 
-char * s21_utoa(char * str, unsigned int number, int format) {
+char * s21_utoa(char * str, unsigned int number, int format, int accuracy) {
     int lenStr = 0, type = 97;
     format == 32 ? format /= 2 : (type = 65);
-    for (; (number / format) != 0; number /= format, lenStr += 1)
+    for (; (lenStr < accuracy - 1) || (number / format) != 0; number /= format, lenStr += 1)
         str[lenStr] = (number % format) < 10 ? (number % format) + 48 : ((number % format) - 10) + type;
     str[lenStr] = number < 10 ? number + 48 : (number - 10) + type;
     str[lenStr + 1] = '\0';
@@ -236,8 +239,8 @@ int main() {
     double TEST_e = -5.02342343243200;               //  Надо допилить с другими примерами:
     double TEST_E = -5.23543243243247536875368;      //  0.02342343243200  -  0.23543243243247536875368
     double TEST_f = 543.2432432475368;
-    double TEST_g = 5786876987.3235432432;
-    double TEST_G = -5.753;
+    double TEST_g = 1.3235432432;
+    double TEST_G = -5.75342;
     int TEST_o = 775;
     char TEST_s[100] = "CHAMOMIL";
     int TEST_u = -7473857;
@@ -262,12 +265,12 @@ int main() {
     //          2. Проверяем точность числа.
     //          3. Настраиваем ширину.
 
-    int one = sprintf(TEST_MESSAGE, "|%5.15c|%.15d|%.15i|%.8e|%.15E|%.15f|%.15g|%.15G|%.15o|%.3s|%.15u|%.15x|%.15X|%.15p|%.15n|%.15%|", 
+    int one = sprintf(TEST_MESSAGE, "|%5.15c|%.15d|%.15i|%.8e|%.15E|%.15f|%g|%.15G|%.15o|%.3s|%.15u|%.15x|%.15X|%.15p|%.15n|%.15%|", 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o, 
         TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
     printf("\nORIGINAL - %s - %d - |%d|\n", TEST_MESSAGE, TEST_n, one);
 
-    int two = s21_sprintf(TEST_MESSAGE, "|%5.15c|%.15d|%.15i|%.8e|%.15E|%.15f|%.15g|%.15G|%.15o|%.3s|%.15u|%.15x|%.15X|%.15p|%.15n|%.15%|", 
+    int two = s21_sprintf(TEST_MESSAGE, "|%5.15c|%.15d|%.15i|%.8e|%.15E|%.15f|%g|%.15G|%.15o|%.3s|%.15u|%.15x|%.15X|%.15p|%.15n|%.15%|", 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o, 
         TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
     printf("\n__FAKE__ - %s - %d - |%d|\n\n", TEST_MESSAGE, TEST_n, two);
