@@ -63,10 +63,9 @@ int searchModifiersForString(int x, const char * format, spec * config, va_list 
 }
 
 char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * params) {
-    // TODO:    1. Здесь необходимо выделять память динамически.
+    // TODO:    
     //          2. Необходимо обновить структуру, убрать switch.
     //          3. Нужно использовать long вместо int.
-    char storage[1000] = "\0";
 
     switch (symbol) {
         case 'c':
@@ -96,21 +95,21 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
             break;
         case 'o':
             int len_2 = config.accuracy > 0 ? config.accuracy : 1;
-            strcat(str, s21_conf(s21_utoa(storage, va_arg(*params, unsigned int), 8, len_2), config, symbol));
+            s21_conf(s21_utoa(str, va_arg(*params, unsigned int), 8, len_2), config, symbol);
             break;
         case 'u':
             int lenssss = config.accuracy > 0 ? config.accuracy : 1;
-            strcat(str, s21_conf(s21_utoa(storage, va_arg(*params, unsigned int), 10, lenssss), config, symbol));
+            s21_conf(s21_utoa(str, va_arg(*params, unsigned int), 10, lenssss), config, symbol);
             break;
         case 'x':
         case 'X':
             int len_1 = config.accuracy > 0 ? config.accuracy : 1;
-            strcat(str, s21_conf(s21_utoa(storage, va_arg(*params, int), symbol == 'x' ? 32 : 16, len_1), config, symbol));
+            s21_conf(s21_utoa(str, va_arg(*params, int), symbol == 'x' ? 32 : 16, len_1), config, symbol);
             break;
         case 'p':
             // TODO:    1. Здесь надо убрать реверс!
-            int len_3 = config.accuracy > 0 ? config.accuracy : 1;
-            strcat(str, s21_conf(s21_reverse(s21_ptoa(storage, va_arg(*params, void *), len_3)), config, symbol));
+            int len_3 = config.accuracy > 0 ? config.accuracy : 16;
+            s21_conf(s21_reverse(s21_ptoa(str, va_arg(*params, void *), len_3)), config, symbol);
             break;
         case 'n':
             *(va_arg(*params, int *)) = strlen(str);
@@ -173,6 +172,7 @@ char * s21_ptoa(char * str, int * variable, int accuracy) {
         last_symbol < 10 ? 
             (str[x] = ('0' + last_symbol)) : (str[x] = ('a' + (last_symbol - 10))); 
     }
+    str[accuracy] = '\0';
     return str;
 }
 
@@ -265,12 +265,12 @@ int main() {
     //          2. Проверяем точность числа.
     //          3. Настраиваем ширину.
 
-    int one = sprintf(TEST_MESSAGE, "|%5.15c|%.15d|%.15i|%.8e|%.15E|%.15f|%g|%.15G|%.15o|%.3s|%.15u|%.15x|%.15X|%.15p|%.15n|%.15%|", 
+    int one = sprintf(TEST_MESSAGE, "|%5.15c|%.15d|%.15i|%.8e|%.15E|%.15f|%g|%.15G|%.15o|%.3s|%.15u|%.15x|%.15X|%p|%.15n|%.15%|", 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o, 
         TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
     printf("\nORIGINAL - %s - %d - |%d|\n", TEST_MESSAGE, TEST_n, one);
 
-    int two = s21_sprintf(TEST_MESSAGE, "|%5.15c|%.15d|%.15i|%.8e|%.15E|%.15f|%g|%.15G|%.15o|%.3s|%.15u|%.15x|%.15X|%.15p|%.15n|%.15%|", 
+    int two = s21_sprintf(TEST_MESSAGE, "|%5.15c|%.15d|%.15i|%.8e|%.15E|%.15f|%g|%.15G|%.15o|%.3s|%.15u|%.15x|%.15X|%p|%.15n|%.15%|", 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o, 
         TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
     printf("\n__FAKE__ - %s - %d - |%d|\n\n", TEST_MESSAGE, TEST_n, two);
