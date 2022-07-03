@@ -16,7 +16,7 @@ int s21_sprintf(char * str, const char * format, ...);
 char * s21_conf(char * str, spec config, char symbol);
 char * s21_ptoa(char * str, int * variable, int accuracy);
 char * s21_ftoa(char * str, double number, int afterpoint);
-char * s21_ntoa(char * str, double number, int accuracy, int symbol);
+char * s21_ntoa(char * str, long double number, int accuracy, int symbol);
 char * s21_utoa(char * str, unsigned int number, int format, int accuracy);
 char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * params);
 int searchModifiersForString(int x, const char * format, spec * config, va_list * params);
@@ -189,19 +189,19 @@ char * s21_utoa(char * str, unsigned int number, int format, int accuracy) {
     return str;
 }
 
-char * s21_ntoa(char * str, double number, int accuracy, int symbol) {
-    int lenStr = 0, lenNum = 0;
-    for (;pow(10, lenNum) < fabs(number); lenNum += 1);
-    s21_itoa(str, number * pow(10, -(lenNum -= 1)), 1);
-    for (lenStr = strlen(str), str[lenStr++] = '.'; number < 0; number *= (-1));
-    for (int aux = lenNum - 1; (accuracy > 0 && aux >= 0); accuracy -= 1, aux -= 1, str[lenStr] = '\0')
-        str[lenStr++] = fmod(number * pow(10, -aux), 10) + 48;
-    for (int x = 1; accuracy > 0; x += 1, accuracy -= 1, str[lenStr] = '\0')
-        str[lenStr++] = fmod((number - trunc(number)) * pow(10, x),10) + 48;
-        //  fmod(round((number - floor(number)) * pow(10, x)), 10)
-    strcat(str, (symbol == 'e' ? "e+0" : "E+0"));       // Здесь может быть минус.
-    str[strlen(str) - (lenNum > 10 ? (1) : 0)] = '\0';  // Нужно по-другому это просчитывать. . . 
-    s21_itoa(str + strlen(str), lenNum, 1);
+char * s21_ntoa(char * str, long double number, int accuracy, int symbol) {
+    int lenStr = 0, lenNum = 0, result = 0;
+    for (int aux = lenNum = fabsl(number) < 1 ? 1 : fabsl(number) < 10 ? 0 : (-1); aux != 0; lenNum += aux)
+        aux = ((fabsl(number) * powl(10, lenNum)) < 1 || 10 < fabsl(number) * powl(10, lenNum)) ? aux : 0;
+    strcat(s21_itoa(str, number * powl(10, lenNum), 1), ".");
+    for (lenStr = strlen(str); number < 0; number *= (-1));
+    for (result = lenNum; (accuracy != 0 && (lenNum + 1) <= 0); accuracy -= 1)
+        s21_itoa(str + (lenStr++), fmodl((number * powl(10, lenNum += 1)), 10), 1);
+    for (int aux = lenNum + 1; accuracy != 0; accuracy -= 1)
+        s21_itoa(str + (lenStr++), fmodl((number * powl(10, (aux++))), 10), 1);
+    str[lenStr++] = symbol;
+    result <= 0 ? str[lenStr++] = '+' : '-';
+    s21_itoa(str + (lenStr), -result, 2);
     return str;
 }
 
@@ -236,8 +236,8 @@ int main() {
     char TEST_c = '5';
     unsigned int TEST_d = 2147485655;
     unsigned int TEST_i = -214749;
-    double TEST_e = -5.02342343243200;               //  Надо допилить с другими примерами:
-    double TEST_E = -5.23543243243247536875368;      //  0.02342343243200  -  0.23543243243247536875368
+    double TEST_e = -23423434320.0;               //  Надо допилить с другими примерами:
+    double TEST_E = -42354324324324753687536.8;      //  0.02342343243200  -  0.23543243243247536875368
     double TEST_f = 543.2432432475368;
     double TEST_g = 1.3235432432;
     double TEST_G = -5.75342;
@@ -265,12 +265,12 @@ int main() {
     //          2. Проверяем точность числа.
     //          3. Настраиваем ширину.
 
-    int one = sprintf(TEST_MESSAGE, "|%5.15c|%.15d|%.15i|%.8e|%.15E|%.15f|%g|%.15G|%.15o|%.3s|%.15u|%.15x|%.15X|%p|%.15n|%.15%|", 
+    int one = sprintf(TEST_MESSAGE, "|%5.15c|%.15d|%.15i|%.15e|%.15E|%.15f|%g|%.15G|%.15o|%.3s|%.15u|%.15x|%.15X|%p|%.15n|%.15%|", 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o, 
         TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
     printf("\nORIGINAL - %s - %d - |%d|\n", TEST_MESSAGE, TEST_n, one);
 
-    int two = s21_sprintf(TEST_MESSAGE, "|%5.15c|%.15d|%.15i|%.8e|%.15E|%.15f|%g|%.15G|%.15o|%.3s|%.15u|%.15x|%.15X|%p|%.15n|%.15%|", 
+    int two = s21_sprintf(TEST_MESSAGE, "|%5.15c|%.15d|%.15i|%.15e|%.15E|%.15f|%g|%.15G|%.15o|%.3s|%.15u|%.15x|%.15X|%p|%.15n|%.15%|", 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o, 
         TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
     printf("\n__FAKE__ - %s - %d - |%d|\n\n", TEST_MESSAGE, TEST_n, two);
