@@ -15,7 +15,7 @@ char * s21_itoa(char * str, int number, int accuracy);
 int s21_sprintf(char * str, const char * format, ...);
 char * s21_conf(char * str, spec config, char symbol);
 char * s21_ptoa(char * str, int * variable, int accuracy);
-char * s21_ftoa(char * str, double number, int afterpoint);
+char * s21_ftoa(char * str, long double number, int afterpoint);
 char * s21_ntoa(char * str, long double number, int accuracy, int symbol);
 char * s21_utoa(char * str, unsigned int number, int format, int accuracy);
 char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * params);
@@ -205,15 +205,15 @@ char * s21_ntoa(char * str, long double number, int accuracy, int symbol) {
     return str;
 }
 
-char * s21_ftoa(char * str, double number, int afterpoint) {
+char * s21_ftoa(char * str, long double number, int afterpoint) {
     int lenStr = 0, minus = 0;
     for (; number < 0; number *= (-1), minus = 1);
-    double aux = ceil((number - trunc(number)) * pow(10, afterpoint) - 0.5);
-    for (; ((afterpoint > 0) || ((aux / 10) > 1) || (fmod(aux, 10) > 1)); afterpoint -= 1, aux /= 10, str[lenStr] = '\0')
-        str[lenStr++] = ((int) fmod(aux, 10)) + 48;
+    double aux = ceill((number - truncl(number)) * powl(10, afterpoint) - 0.5); //  FIXME: возможно тут косяк с округлением. . .
+    for (; ((afterpoint > 0) || ((aux / 10) > 1) || (fmodl(aux, 10) > 1)); afterpoint -= 1, aux /= 10, str[lenStr] = '\0')
+        str[lenStr++] = ((int) fmodl(aux, 10)) + 48;
     for (str[lenStr++] = '.', aux = number; ((aux / 10) > 1); aux /= 10, str[lenStr] = '\0')
-        str[lenStr++] = ((int) fmod(aux, 10)) + 48;
-    s21_itoa(str + lenStr, fmod(aux, 10), 1);
+        str[lenStr++] = ((int) fmodl(aux, 10)) + 48;
+    s21_itoa(str + lenStr, fmodl(aux, 10), 1);
     minus == 1 ? strcat(str, "-") : 0;
     s21_reverse(str);
     return str;
@@ -238,7 +238,7 @@ int main() {
     unsigned int TEST_i = -214749;
     double TEST_e = -23423434320.0;               //  Надо допилить с другими примерами:
     double TEST_E = -42354324324324753687536.8;      //  0.02342343243200  -  0.23543243243247536875368
-    double TEST_f = 543.2432432475368;
+    double TEST_f = 54324324324.75368;
     double TEST_g = 1.3235432432;
     double TEST_G = -5.75342;
     int TEST_o = 775;
