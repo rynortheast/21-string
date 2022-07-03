@@ -11,10 +11,10 @@ typedef struct {
 } spec;
 
 char * s21_reverse(char * str);
-char * s21_itoa(char * str, int number, int accuracy);
 int s21_sprintf(char * str, const char * format, ...);
 char * s21_conf(char * str, spec config, char symbol);
 char * s21_ptoa(char * str, int * variable, int accuracy);
+char * s21_itoa(char * str, long int number, int accuracy);
 char * s21_ftoa(char * str, long double number, int afterpoint);
 char * s21_ntoa(char * str, long double number, int accuracy, int symbol);
 char * s21_utoa(char * str, unsigned int number, int format, int accuracy);
@@ -219,7 +219,7 @@ char * s21_ftoa(char * str, long double number, int afterpoint) {
     return str;
 }
 
-char * s21_itoa(char * str, int number, int accuracy) {
+char * s21_itoa(char * str, long int number, int accuracy) {
     int lenStr = 0, minus = number < 0 ? (number *= (-1)) : 0;
     for (; ((lenStr < accuracy) || ((number / 10) != 0) || ((number % 10) != 0)); number /= 10)
         str[lenStr++] = (number % 10) + 48;
