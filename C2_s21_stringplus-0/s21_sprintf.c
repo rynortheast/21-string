@@ -15,6 +15,7 @@ int s21_sprintf(char * str, const char * format, ...);
 char * s21_conf(char * str, spec config, char symbol);
 char * s21_ptoa(char * str, int * variable, int accuracy);
 char * s21_itoa(char * str, long int number, int accuracy);
+char * s21_gtoa(char * str, long double number, int accuracy);
 char * s21_ftoa(char * str, long double number, int afterpoint);
 char * s21_ntoa(char * str, long double number, int accuracy, int symbol);
 char * s21_utoa(char * str, unsigned long int number, int format, int accuracy);
@@ -83,7 +84,8 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
             break;
         case 'g':
         case 'G':
-            s21_conf(s21_ftoa(str, va_arg(*params, double), 5), config, symbol);
+            int len_10 = config.accuracy > 0 ? config.accuracy : 6;
+            s21_conf(s21_gtoa(str, va_arg(*params, double), len_10), config, symbol);
             break;
         case 's':
             int lensss = config.accuracy > 0 ? config.accuracy : strlen(str);
@@ -215,6 +217,15 @@ char * s21_ftoa(char * str, long double number, int afterpoint) {
     return str;
 }
 
+char * s21_gtoa(char * str, long double number, int accuracy) {
+    int lenStr = 0, lenNum = 0;
+    for (int aux = lenNum = fabsl(number) < 1 ? 1 : fabsl(number) < 10 ? 0 : (-1); aux != 0; lenNum += aux)
+        aux = ((fabsl(number) * powl(10, lenNum)) < 1 || 10 < fabsl(number) * powl(10, lenNum)) ? aux : 0;
+    lenNum = lenNum <= 0 ? -(lenNum - 1) : lenNum - 1;
+    accuracy < lenNum ? s21_ntoa(str, number, accuracy - 1, 'E') : s21_ftoa(str, number, accuracy - lenNum);
+    return str;
+}
+
 char * s21_itoa(char * str, long int number, int accuracy) {
     int lenStr = 0, minus = number < 0 ? (number *= (-1)) : 0;
     for (; ((lenStr < accuracy) || ((number / 10) != 0) || ((number % 10) != 0)); number /= 10)
@@ -232,10 +243,10 @@ int main() {
     char TEST_c = '5';
     unsigned int TEST_d = -21475;
     unsigned int TEST_i = -214749;
-    double TEST_e = -23423434320.0;               //  Надо допилить с другими примерами:
-    double TEST_E = -42354324324324753687536.8;      //  0.02342343243200  -  0.23543243243247536875368
-    double TEST_f = 54324324324.75368;
-    double TEST_g = 10.32323323;
+    double TEST_e = -5123.75342;               //  Надо допилить с другими примерами:
+    double TEST_E = -0.000032323323;      //  0.02342343243200  -  0.23543243243247536875368
+    double TEST_f = -5123.75342;
+    double TEST_g = 1.32323323;
     double TEST_G = -5.75342;
     int TEST_o = 775;
     char TEST_s[100] = "CHAMOMIL";
@@ -261,12 +272,12 @@ int main() {
     //          2. Проверяем точность числа.
     //          3. Настраиваем ширину.
 
-    int one = sprintf(TEST_MESSAGE, "|%5.15c|%d|%.15i|%.15e|%.15E|%.15f|%g|%.15G|%.15o|%.3s|%.15u|%.15x|%.15X|%p|%.15n|%.15%|", 
+    int one = sprintf(TEST_MESSAGE, "|%5.15c|%d|%.15i|%.3e|%.3E|%.15f|%.3g|%.3G|%.15o|%.3s|%.15u|%.15x|%.15X|%p|%.15n|%.15%|", 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o, 
         TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
     printf("\nORIGINAL - %s - %d - |%d|\n", TEST_MESSAGE, TEST_n, one);
 
-    int two = s21_sprintf(TEST_MESSAGE, "|%5.15c|%d|%.15i|%.15e|%.15E|%.15f|%g|%.15G|%.15o|%.3s|%.15u|%.15x|%.15X|%p|%.15n|%.15%|", 
+    int two = s21_sprintf(TEST_MESSAGE, "|%5.15c|%d|%.15i|%.3e|%.3E|%.15f|%.3g|%.3G|%.15o|%.3s|%.15u|%.15x|%.15X|%p|%.15n|%.15%|", 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o, 
         TEST_s, TEST_u, TEST_x, TEST_X, &TEST_p, &TEST_n);
     printf("\n__FAKE__ - %s - %d - |%d|\n\n", TEST_MESSAGE, TEST_n, two);
