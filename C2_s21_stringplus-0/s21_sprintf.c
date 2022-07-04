@@ -61,54 +61,54 @@ int searchModifiersForString(int x, const char * format, spec * config, va_list 
 
 char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * params) {
 
-    str += strlen(str);
+    int indent = strlen(str);
 
     switch (symbol) {
         case 'c':
-            memmove(str + 1, str, 1);
-            str[0] = va_arg(*params, int);
-            s21_conf(str, config, symbol);
+            memmove(str + indent + 1, str + indent, 1);
+            str[0 + indent] = va_arg(*params, int);
+            s21_conf(str + indent, config, symbol);
             break;
         case 'd':
         case 'i': 
-            s21_conf(s21_itoa(str, va_arg(*params, int), config.accuracy), config, symbol);
+            s21_conf(s21_itoa(str + indent, va_arg(*params, int), config.accuracy), config, symbol);
             break;
         case 'e':
         case 'E':
             int len = config.accuracy > 0 ? config.accuracy : 6;
-            s21_conf(s21_ntoa(str, va_arg(*params, double), len, symbol), config, symbol);
+            s21_conf(s21_ntoa(str + indent, va_arg(*params, double), len, symbol), config, symbol);
             break;
         case 'f':
             int lens = config.accuracy > 0 ? config.accuracy : 6;
-            s21_conf(s21_ftoa(str, va_arg(*params, double), lens), config, symbol);
+            s21_conf(s21_ftoa(str + indent, va_arg(*params, double), lens), config, symbol);
             break;
         case 'g':
         case 'G':
             int len_10 = config.accuracy > 0 ? config.accuracy : 6;
-            s21_conf(s21_gtoa(str, va_arg(*params, double), len_10), config, symbol);
+            s21_conf(s21_gtoa(str + indent, va_arg(*params, double), len_10), config, symbol);
             break;
         case 's':
             int lensss = config.accuracy > 0 ? config.accuracy : strlen(str);
-            s21_conf(strncat(str, va_arg(*params, char *), lensss), config, symbol);
+            s21_conf(strncat(str + indent, va_arg(*params, char *), lensss), config, symbol);
             break;
         case 'o':
             int len_2 = config.accuracy > 0 ? config.accuracy : 1;
-            s21_conf(s21_utoa(str, va_arg(*params, unsigned int), 8, len_2), config, symbol);
+            s21_conf(s21_utoa(str + indent, va_arg(*params, unsigned int), 8, len_2), config, symbol);
             break;
         case 'u':
             //  s21_utoa(str, (number < 0 ? INT_MAX + number + 1 : number), format);
             int lenssss = config.accuracy > 0 ? config.accuracy : 1;
-            s21_conf(s21_utoa(str, va_arg(*params, unsigned int), 10, lenssss), config, symbol);
+            s21_conf(s21_utoa(str + indent, va_arg(*params, unsigned int), 10, lenssss), config, symbol);
             break;
         case 'x':
         case 'X':
             int len_1 = config.accuracy > 0 ? config.accuracy : 1;
-            s21_conf(s21_utoa(str, va_arg(*params, int), symbol == 'x' ? 32 : 16, len_1), config, symbol);
+            s21_conf(s21_utoa(str + indent, va_arg(*params, int), symbol == 'x' ? 32 : 16, len_1), config, symbol);
             break;
         case 'p':
             // TODO:    1. Здесь надо убрать реверс!
             int len_3 = config.accuracy > 0 ? config.accuracy : 16;
-            s21_conf(s21_ptoa(str, va_arg(*params, void *), len_3), config, symbol);
+            s21_conf(s21_ptoa(str + indent, va_arg(*params, void *), len_3), config, symbol);
             break;
         case 'n':
             *(va_arg(*params, int *)) = strlen(str);
@@ -120,8 +120,6 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
 
     return str;
 }
-
-
 
 char * s21_conf(char * str, spec config, char symbol) {
 
