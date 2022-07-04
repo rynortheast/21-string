@@ -192,8 +192,10 @@ char * s21_ntoa(char * str, long double number, int accuracy, int symbol) {
     strcat(s21_itoa(str, number * powl(10, lenNum), 1), ".");
     for (lenStr = strlen(str); number < 0; number *= (-1));
     for (result = lenNum; (accuracy != 0 && (lenNum + 1) <= 0); accuracy -= 1)
+        accuracy == 1 ? s21_itoa(str + (lenStr++), fmodl((roundl(number) * powl(10, lenNum += 1)), 10), 1) :
         s21_itoa(str + (lenStr++), fmodl((number * powl(10, lenNum += 1)), 10), 1);
     for (int aux = lenNum + 1; accuracy != 0; accuracy -= 1)
+        accuracy == 1 ? s21_itoa(str + (lenStr++), roundl(fmodl((number * powl(10, (aux++))), 10)), 1) :
         s21_itoa(str + (lenStr++), fmodl((number * powl(10, (aux++))), 10), 1);
     str[lenStr++] = symbol;
     result <= 0 ? str[lenStr++] = '+' : '-';
@@ -241,7 +243,7 @@ int main() {
     char TEST_c = '5';
     unsigned int TEST_d = -21475;
     unsigned int TEST_i = -214749;
-    double TEST_e = -5123.75342;               //  Надо допилить с другими примерами:
+    double TEST_e = -512.75342;               //  Надо допилить с другими примерами:
     double TEST_E = -0.000032323323;      //  0.02342343243200  -  0.23543243243247536875368
     double TEST_f = -5123.75342;
     double TEST_g = 1.32323323;
