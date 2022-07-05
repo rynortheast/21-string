@@ -14,6 +14,7 @@ char * s21_reverse(char * str);
 char * s21_ctos(char * str, char symbol);
 int s21_sprintf(char * str, const char * format, ...);
 char * s21_conf(char * str, spec config, char symbol);
+char * s21_stos(char * str, char * data, int accuracy);
 char * s21_ptoa(char * str, int * variable, int accuracy);
 char * s21_itoa(char * str, long int number, int accuracy);
 char * s21_gtoa(char * str, long double number, int accuracy, int symbol);
@@ -88,9 +89,7 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
             s21_conf(s21_gtoa(str + indent, va_arg(*params, double), lenNum, symbol), config, symbol);
             break;
         case 's':
-            char * newStr = va_arg(*params, char *);
-            lenNum = config.accuracy < 0 ? strlen(newStr) : config.accuracy;
-            s21_conf(strncat(str + indent, newStr, lenNum), config, symbol);
+            s21_conf(s21_stos(str + indent, va_arg(*params, char *), config.accuracy), config, symbol);
             break;
         case 'o':
             s21_conf(s21_utoa(str + indent, va_arg(*params, unsigned int), 8, lenNum), config, symbol);
@@ -118,6 +117,12 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
 char * s21_ctos(char * str, char symbol) {
     memmove(str + 1, str, 1);
     str[0] = symbol;
+    return str;
+}
+
+char * s21_stos(char * str, char * data, int accuracy) {
+    accuracy = accuracy < 0 ? strlen(data) : accuracy;
+    strncat(str, data, accuracy);
     return str;
 }
 
