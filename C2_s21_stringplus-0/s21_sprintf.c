@@ -11,6 +11,7 @@ typedef struct {
 } spec;
 
 char * s21_reverse(char * str);
+char * s21_ctos(char * str, char symbol);
 int s21_sprintf(char * str, const char * format, ...);
 char * s21_conf(char * str, spec config, char symbol);
 char * s21_ptoa(char * str, int * variable, int accuracy);
@@ -61,20 +62,15 @@ int searchModifiersForString(int x, const char * format, spec * config, va_list 
 }
 
 char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * params) {
-
     int indent = strlen(str), lenNum = config.accuracy;
-
     if (lenNum < 0) {
         strchr("diouxX", symbol) ? lenNum = 0 : 0;
         strchr("eEfgG", symbol) ? lenNum = 6 : 0;
         strchr("p", symbol) ? lenNum = 16 : 0;
     }
-
     switch (symbol) {
         case 'c':
-            memmove(str + indent + 1, str + indent, 1);
-            str[0 + indent] = va_arg(*params, int);
-            s21_conf(str + indent, config, symbol);
+            s21_conf(s21_ctos(str + indent, va_arg(*params, int)) , config, symbol);
             break;
         case 'd':
         case 'i': 
@@ -116,9 +112,12 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
             strcat(str, "%");
             break;
     }
+    return str;
+}
 
-    // printf("TEST - %d - %c - %s\n", lenNum, symbol, str + indent);
-
+char * s21_ctos(char * str, char symbol) {
+    memmove(str + 1, str, 1);
+    str[0] = symbol;
     return str;
 }
 
@@ -189,7 +188,8 @@ char * s21_utoa(char * str, unsigned long int number, int format, int accuracy) 
 }
 
 char * s21_ntoa(char * str, long double number, int accuracy, int symbol, int kostyl_2) {
-    int lenStr = 0, lenNum = 0, result = 0, kostyl = accuracy; // FIXME: выкидывает ноль если точность нулевая. 
+    // FIXME: NTOA - kostyl_2 - Добавлен для удаление лишних нулей и точек в конце строки для %G.
+    int lenStr = 0, lenNum = 0, result = 0, kostyl = accuracy; //  FIXME: FTOA - kostyl_1 - Если точность равна нулю, то не добавляет точку и окргляет число до целого.
     for (int aux = lenNum = fabsl(number) < 1 ? 1 : fabsl(number) < 10 ? 0 : (-1); aux != 0; lenNum += aux)
         aux = ((fabsl(number) * powl(10, lenNum)) < 1 || 10 < fabsl(number) * powl(10, lenNum)) ? aux : 0;
     s21_itoa(str, number * powl(10, lenNum), 1);
@@ -209,10 +209,11 @@ char * s21_ntoa(char * str, long double number, int accuracy, int symbol, int ko
     return str;
 }
 
-char * s21_ftoa(char * str, long double number, int afterpoint, int kostyl_2) {
-    int lenStr = 0, minus = 0, kostyl = afterpoint; //  FIXME: Не округляется целое число при 0 точности.
+char * s21_ftoa(char * str, long double number, int afterpoint, int kostyl_2) { //  FIXME: Структура кода полное г..., нужно полностью переписать.
+    // FIXME: FTOA - kostyl_2 - Добавлен для удаление лишних нулей и точек в конце строки для %G.
+    int lenStr = 0, minus = 0, kostyl = afterpoint; //  FIXME: FTOA - kostyl_1 - Если точность равна нулю, то не добавляет точку и окргляет число до целого.
     for (; number < 0; number *= (-1), minus = 1);
-    double aux = ceill((number - truncl(number)) * powl(10, afterpoint) - 0.5); //  FIXME: возможно тут косяк с округлением. . .
+    double aux = ceill((number - truncl(number)) * powl(10, afterpoint) - 0.5);
     for (; ((afterpoint != 0) || ((aux / 10) > 1) || (fmodl(aux, 10) > 1)); afterpoint -= 1, aux /= 10, str[lenStr] = '\0')
         str[lenStr++] = ((int) fmodl(aux, 10)) + 48;
     kostyl != 0 ? str[lenStr++] = '.' : 0;
@@ -227,7 +228,7 @@ char * s21_ftoa(char * str, long double number, int afterpoint, int kostyl_2) {
     return str;
 }
 
-char * s21_gtoa(char * str, long double number, int accuracy, int symbol) { // FIXME: пример ниже.
+char * s21_gtoa(char * str, long double number, int accuracy, int symbol) { //  FIXME: Структура кода полное г...., нужно переделать.
     int lenStr = 0, lenNum = 0;
     accuracy == 0 ? accuracy = 1 : 0;
     for (int aux = lenNum = fabsl(number) < 1 ? 1 : fabsl(number) < 10 ? 0 : (-1); aux != 0; lenNum += aux)
