@@ -12,6 +12,7 @@ typedef struct {
 
 char * s21_reverse(char * str);
 char * s21_ctos(char * str, char symbol);
+int setBaseAccuracyValue(int accuracy, int symbol);
 int s21_sprintf(char * str, const char * format, ...);
 char * s21_conf(char * str, spec config, char symbol);
 char * s21_stos(char * str, char * data, int accuracy);
@@ -62,55 +63,40 @@ int searchModifiersForString(int x, const char * format, spec * config, va_list 
     return x;
 }
 
+int setBaseAccuracyValue(int accuracy, int symbol) {
+    if (accuracy < 0) {
+        strchr("diouxX", symbol) ? accuracy = 0 : 0;
+        strchr("eEfgG", symbol) ? accuracy = 6 : 0;
+        strchr("p", symbol) ? accuracy = 16 : 0;
+    }
+    return accuracy;
+}
+
 char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * params) {
-    int indent = strlen(str), lenNum = config.accuracy;
-    if (lenNum < 0) {
-        strchr("diouxX", symbol) ? lenNum = 0 : 0;
-        strchr("eEfgG", symbol) ? lenNum = 6 : 0;
-        strchr("p", symbol) ? lenNum = 16 : 0;
-    }
-    switch (symbol) {
-        case 'c':
-            s21_conf(s21_ctos(str + indent, va_arg(*params, int)) , config, symbol);
-            break;
-        case 'd':
-        case 'i': 
-            s21_conf(s21_itoa(str + indent, va_arg(*params, int), lenNum), config, symbol);
-            break;
-        case 'e':
-        case 'E':
-            s21_conf(s21_ntoa(str + indent, va_arg(*params, double), lenNum, symbol, 0), config, symbol);
-            break;
-        case 'f':
-            s21_conf(s21_ftoa(str + indent, va_arg(*params, double), lenNum, 0), config, symbol);
-            break;
-        case 'g':
-        case 'G':
-            s21_conf(s21_gtoa(str + indent, va_arg(*params, double), lenNum, symbol), config, symbol);
-            break;
-        case 's':
-            s21_conf(s21_stos(str + indent, va_arg(*params, char *), config.accuracy), config, symbol);
-            break;
-        case 'o':
-            s21_conf(s21_utoa(str + indent, va_arg(*params, unsigned int), 8, lenNum), config, symbol);
-            break;
-        case 'u':
-            s21_conf(s21_utoa(str + indent, va_arg(*params, unsigned int), 10, lenNum), config, symbol);
-            break;
-        case 'x':
-        case 'X':
-            s21_conf(s21_utoa(str + indent, va_arg(*params, int), symbol == 'x' ? 32 : 16, lenNum), config, symbol);
-            break;
-        case 'p':
-            s21_conf(s21_ptoa(str + indent, va_arg(*params, void *), lenNum), config, symbol);
-            break;
-        case 'n':
-            *(va_arg(*params, int *)) = strlen(str);
-            break;
-        case '%':
-            strcat(str, "%");
-            break;
-    }
+    int indent = strlen(str), accuracy = setBaseAccuracyValue(config.accuracy, symbol);
+    if (symbol == '%')              //  %%
+        strcat(str, "%");
+    else if (symbol == 'n')         //  %n
+        *(va_arg(*params, int *)) = strlen(str);
+    else if (symbol == 'c')         //  %c
+        s21_ctos(str + indent, va_arg(*params, int));
+    else if (strchr("di", symbol))  //  %d %i
+        s21_itoa(str + indent, va_arg(*params, int), accuracy);
+    else if (symbol == 'p')         //  %p
+        s21_ptoa(str + indent, va_arg(*params, void *), accuracy);
+    else if (symbol == 's')         //  %s
+        s21_stos(str + indent, va_arg(*params, char *), accuracy);
+    else if (symbol == 'f')         //  %f
+        s21_ftoa(str + indent, va_arg(*params, double), accuracy, 0);
+    else if (strchr("gG", symbol))  //  %g %G
+        s21_gtoa(str + indent, va_arg(*params, double), accuracy, symbol);
+    else if (strchr("eE", symbol))  //  %e %E
+        s21_ntoa(str + indent, va_arg(*params, double), accuracy, symbol, 0);
+    else if (strchr("xX", symbol))  //  %x %X
+        s21_utoa(str + indent, va_arg(*params, int), symbol == 'x' ? 32 : 16, accuracy);
+    else if (strchr("ou", symbol))  //  %o %u
+        s21_utoa(str + indent, va_arg(*params, unsigned int), symbol == 'o' ? 8 : 10, accuracy);
+    strchr("n%", symbol) ? 0 : s21_conf(str + indent, config, symbol);
     return str;
 }
 
