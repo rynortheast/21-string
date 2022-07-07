@@ -1,6 +1,7 @@
 #include "s21_string.h"
 #include <string.h>
 #include <stdarg.h>
+#include <locale.h>
 #include <math.h>
 
 typedef struct {
@@ -18,15 +19,14 @@ char * s21_conf(char * str, spec config, char symbol);
 char * s21_stos(char * str, char * data, int accuracy);
 char * s21_ptoa(char * str, int * variable, int accuracy, char flag);
 char * s21_itoa(char * str, long int number, int accuracy, char flag);
-char * s21_gtoa(char * str, long double number, int accuracy, char flag, int symbol);
-char * s21_ftoa(char * str, long double number, int afterpoint, char flag, int kostyl_2);
-char * s21_utoa(char * str, unsigned long int number, int format, int accuracy, char flag);
-char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * params);
-char * s21_ntoa(char * str, long double number, int accuracy, char flag, int symbol, int kostyl_2);
-int searchModifiersForString(int x, const char * format, spec * config, va_list * params);
-
 char * s21_itoa_short(char * str, short int number, int accuracy, char flag);
+char * s21_gtoa(char * str, long double number, int accuracy, char flag, int symbol);
+char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * params);
+char * s21_ftoa(char * str, long double number, int afterpoint, char flag, int kostyl_2);
+int searchModifiersForString(int x, const char * format, spec * config, va_list * params);
+char * s21_utoa(char * str, unsigned long int number, int format, int accuracy, char flag);
 char * s21_utoa_short(char * str, unsigned short int number, int format, int accuracy, char flag);
+char * s21_ntoa(char * str, long double number, int accuracy, char flag, int symbol, int kostyl_2);
 
 int s21_sprintf(char * str, const char * format, ...) {
     str[0] = '\0';
@@ -123,27 +123,22 @@ char * insertStringBySpecifier(char * str, char symbol, spec config, va_list * p
 }
 
 char * s21_conf(char * str, spec config, char symbol) {
-
     if (config.flag != 'x' || config.width >= 0 || config.type != 'x') {
         if (symbol == 'p')
             config.flag != '#' ? strcpy(str, str + strspn(str, "0")) : 0;
         else if (strchr("gG", symbol) && config.flag != '#')
             for (int x = (strlen(str) - 1); str[x] == '0'; str[x] = '\0', x -= 1);
     }
-
     char * aux = str;
     char filler = ' ';
     int countFill = config.width > 0 ? config.width - strlen(str) : 0;
-
     if (config.flag == '0') {
         aux[0] == '-' ? aux += 1 : 0;
         strchr("cs", symbol) ? 0 : (filler = '0');
     } else if (config.flag == '-')
         aux += strlen(aux);
-
     if (countFill > 0)
         for (memmove(aux + countFill, aux, strlen(aux) + 1); countFill != 0; aux[countFill - 1] = filler, countFill -= 1);
-
     return str;
 }
 
@@ -154,7 +149,7 @@ char * s21_ctos(char * str, char symbol) {
 }
 
 char * s21_stos(char * str, char * data, int accuracy) {
-    accuracy = accuracy < 0 ? strlen(data) : accuracy;
+    accuracy < 0 ? accuracy = strlen(data) : 0;
     strncat(str, data, accuracy);
     return str;
 }
@@ -248,7 +243,7 @@ char * s21_ftoa(char * str, long double number, int afterpoint, char flag, int k
 }
 
 char * s21_gtoa(char * str, long double number, int accuracy, char flag, int symbol) { //  FIXME: Структура кода полное г...., нужно переделать.
-    int lenStr = 0, lenNum = 0;
+    int lenNum = 0;
     accuracy == 0 ? accuracy = 1 : 0;
     for (int aux = lenNum = fabsl(number) < 1 ? 1 : fabsl(number) < 10 ? 0 : (-1); aux != 0; lenNum += aux)
         aux = ((fabsl(number) * powl(10, lenNum)) < 1 || 10 < fabsl(number) * powl(10, lenNum)) ? aux : 0;
@@ -274,10 +269,12 @@ char * s21_itoa(char * str, long int number, int accuracy, char flag) {
 
 int main() {
     
-    wchar_t TEST_MESSAGE[500] = L"Hello, World!!";
+    setlocale(LC_ALL, "Rus");
+
+    char TEST_MESSAGE[500] = "Hello, World!!";
 
     char TEST_c = '5';
-    unsigned int TEST_d = 21475;
+    short int TEST_d = 21475;
     short int TEST_i = 50000;
     double TEST_e = 544123.43214;
     double TEST_E = 542314.4231;
@@ -285,7 +282,7 @@ int main() {
     double TEST_g = 134323.32400;
     double TEST_G = 24324.3243000;
     int TEST_o = 775;
-    char TEST_s[100] = "ПРИВЕТ";
+    char TEST_s[100] = "CHAMOMIL";
     int TEST_u = 3857;
     int TEST_x = 999000000;
     int TEST_X = 998;
@@ -309,7 +306,7 @@ int main() {
     //          |%lc|%ld|%li|%le|%lE|%lf|%lg|%lG|%lo|%ls|%lu|%lx|%lX|%lp|%ln|%l%|
     //          |%Lc|%Ld|%Li|%Le|%LE|%Lf|%Lg|%LG|%Lo|%Ls|%Lu|%Lx|%LX|%Lp|%Ln|%L%|
 
-    char DATA[1000] = "|%lc|%ld|%li|%le|%lE|%lf|%lg|%lG|%lo|%ls|%lu|%lx|%lX|%lp|%ln|%l%|";
+    char DATA[1000] = "|%hc|%hd|%hi|%he|%hE|%hf|%hg|%hG|%ho|%hs|%hu|%hx|%hX|%hp|%hn|%h%|";
 
     int one = sprintf(TEST_MESSAGE, DATA, 
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o, 
@@ -350,16 +347,3 @@ char * s21_itoa_short(char * str, short int number, int accuracy, char flag) {
     s21_reverse(str);
     return str;
 }
-
-// char * s21_ctos_w(char * str, wchar_t symbol) {
-//     str[0] = symbol;
-//     str[1] = L'\0';
-//     return str;
-// }
-
-// char * s21_stos_w(char * str, char * data, int accuracy) {
-//     accuracy = accuracy < 0 ? strlen(data) : accuracy;
-//     for (int x = 0; x < accuracy; )
-//     strncat(str, data, accuracy);
-//     return str;
-// }
