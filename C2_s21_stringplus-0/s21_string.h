@@ -1,14 +1,56 @@
 #ifndef SRC_S21_STRING_H_
 #define SRC_S21_STRING_H_
 
+#include <stdarg.h>
+#include <limits.h>
+#include <locale.h>
 #include <stdlib.h>
-#include <string.h>
+// #include <string.h>
 #include <stdio.h>
+#include <math.h>
 
-#define s21_NULL ((void*)0) 
+#define s21_NULL ((void*)0)
 typedef long unsigned s21_size_t;
+struct mods{
+    int len;
+    int skip;
+    int h;
+    int l;
+    int ll;
+};
+typedef struct mods mods;
 
-const char * s21_strerror(int errnum);
+typedef struct {
+    char flag[5];
+    int width;
+    int accuracy;
+    char type;
+} spec;
+
+char * s21_reverse(char * str);
+int s21_ctos(char * str, char symbol, char * flag, int accuracy);
+int setBaseAccuracyValue(int accuracy, int symbol);
+int s21_sprintf(char * str, const char * format, ...);
+char * s21_conf(char * str, spec config, char symbol);
+char * s21_stos(char * str, char * data, int accuracy);
+char * s21_ptoa(char * str, int * variable);
+char * s21_itoa(char * str, int number, int accuracy, char * flag);
+char * s21_itoa_long(char * str, long int number, int accuracy, char * flag);
+char * s21_itoa_short(char * str, short int number, int accuracy, char * flag);
+char * s21_gtoa_long(char * str, long double number, int accuracy, char * flag, int symbol);
+char * s21_gtoa(char * str, double number, int accuracy, char * flag, int symbol);
+int insertStringBySpecifier(char * str, char symbol, spec config, va_list * params);
+char * s21_ftoa_long(char * str, long double number, int afterpoint, char * flag, int kostyl_2);
+char * s21_ftoa(char * str, double number, int afterpoint, char * flag, int kostyl_2);
+int searchModifiersForString(int x, const char * format, spec * config, va_list * params);
+char * s21_utoa(char * str, unsigned int number, int format, int accuracy, char * flag);
+char * s21_utoa_long(char * str, unsigned long int number, int format, int accuracy, char * flag);
+char * s21_utoa_short(char * str, unsigned short int number, int format, int accuracy, char * flag);
+char * s21_ntoa_long(char * str, long double number, int accuracy, char * flag, int symbol, int kostyl_2);
+char * s21_ntoa(char * str, double number, int accuracy, char * flag, int symbol, int kostyl_2);
+
+char * s21_strerror(int errnum);
+void s21_errnum_str(char *str, int num);
 s21_size_t s21_strlen(const char * str);
 char * s21_strtok(char * str, const char * key);
 char * s21_strchr(const char * str, int symbol);
@@ -32,4 +74,31 @@ void* s21_to_lower(const char *str);
 void *s21_insert(const char *src, const char *str, s21_size_t start_index);
 void *s21_trim(const char *src, const char *trim_chars);
 
+int s21_sscanf(const char* str, const char* format, ...);
+int spec_process(const char* str, const char *format, int* j, int* i, va_list* args, int *check);
+int mod_process(const char* str, mods *md);
+int s21_reverse_num(int x);
+int s21_cnt_offset(const char *str, const char *src);
+long long s21_atoi(const char *str, int limit);
+long long s21_oct_atoi(const char *str, int limit);
+long long s21_hex_atoi(const char *str, int limit);
+long double s21_atof(const char *str, int limit);
+int s21_check_num(const char *str, const char *src, int limit);
+int s21_check_space(const char * str, const char * format, int i, int * j);
+int ok_sym(const char sym);
+int define_sign(const char sym, int *idx);
+mods init_default_mods();
+int is_default(mods md);
+char * s21_strncat(char * str_main, const char * str_aux, s21_size_t accuracy);
+// long long s21_limits(long long num, long long min, long long max);
+int specnumber(const char *str, va_list *args, mods md, int base);
+int specc(const char *str, char *result, mods md);
+int specfloat(const char *str, va_list *args, mods md);
+void specn(long long j, va_list *args, mods md);
+int specp(const char *str, va_list *args, mods md);
+int specs(const char *str, va_list *args, mods md);
+long long atoi_by_base(int base, const char *str, int limit);
+int offset_by_base(int base, const char *str, int limit);
+int s21_is_digit(const char sym);
+char s21_sym_to_lower(const char sym);
 #endif  // SRC_S21_STRING_H_
