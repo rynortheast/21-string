@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "s21_string.h"
+#include "../s21_string.h"
 
 #define BUFF_SIZE 512
 

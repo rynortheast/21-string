@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
-#include "s21_string.h"
+#include "../s21_string.h"
 
 START_TEST(memchr_1) {
 #line 8

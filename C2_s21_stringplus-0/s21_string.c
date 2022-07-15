@@ -37,10 +37,26 @@ char * s21_strncat(char * str_main, const char * str_aux, s21_size_t accuracy) {
 }
 
 int s21_strcmp(const char * str_1, const char * str_2) {
-    int counter = 0;
-    while (str_1[counter] && str_2[counter] && (str_1[counter] == str_2[counter]))
-        counter += 1;
-    return str_1[counter] > str_2[counter] ? 1 : str_1[counter] < str_2[counter] ? (-1) : 0;
+    int result = 0;
+    s21_size_t n = s21_strlen(str_2);
+    for (s21_size_t counter = 0; counter <= n; counter += 1) {
+        if (str_1[counter] == str_2[counter]) {
+            if (str_1[counter] != '\0')
+                continue;
+            break;
+        } else {
+            if (str_1[counter] == '\0' || str_2[counter] == '\0')
+                result = str_1[counter] == '\0' ? (-1) : 1;
+            else
+                result = str_1[counter] - str_2[counter];
+        }
+        break;
+    }
+    return result;
+    // int counter = 0;
+    // while (str_1[counter] && str_2[counter] && (str_1[counter] == str_2[counter]))
+    //     counter += 1;
+    // return str_1[counter] > str_2[counter] ? 1 : str_1[counter] < str_2[counter] ? (-1) : 0;
 }
 
 int s21_strncmp(const char * str_1, const char * str_2, s21_size_t n) {
@@ -431,17 +447,17 @@ static const char *myerror[] = {
 };
 #endif
 
-// char *s21_strerror(int errnum) {
-//     char *res = NULL;
-//     static char buf[512] = {'\0'};
-//     if (errnum <= MIN_ERRLIST || errnum >= MAX_ERRLIST) {
-//         s21_sprintf(buf, "Unknown error: %d", errnum);
-//         res = buf;
-//     } else {
-//         res = (char *)myerror[errnum];
-//     }
-//     return res;
-// }
+char *s21_strerror(int errnum) {
+    char *res = NULL;
+    static char buf[512] = {'\0'};
+    if (errnum <= MIN_ERRLIST || errnum >= MAX_ERRLIST) {
+        s21_sprintf(buf, "Unknown error %d", errnum);
+        res = buf;
+    } else {
+        res = (char *)myerror[errnum];
+    }
+    return res;
+}
 
 
 void *s21_memchr(const void *str, int c, s21_size_t n) {

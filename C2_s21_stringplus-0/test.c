@@ -1,5 +1,6 @@
 #include "s21_string.h"
 #include <string.h>
+#include <limits.h>
 #include <stdio.h>
 #include <check.h>
 
@@ -142,8 +143,6 @@ END_TEST
 START_TEST(S21_STRTOK) {
     char str[30] = "abc cde,llf.ggg";
     char str2[30] = "abc cde,llf.ggg";
-    // char *ptr = strtok(str, " .,");
-    // char *ptr2 = s21_strtok(str2, " .,");
     ck_assert_int_eq(strcmp(s21_strtok(str, " .,"), strtok(str2, " .,")), 0);
     ck_assert_int_eq(strcmp(s21_strtok(NULL, " .,"), strtok(NULL, " .,")), 0);
     ck_assert_int_eq(strcmp(s21_strtok(NULL, " .,"), strtok(NULL, " .,")), 0);
@@ -352,7 +351,7 @@ START_TEST(S21_SPRINTF) {
     s21_sprintf(MESSAGE_2, "%-15c|%-15d|%-15i|%-15e|%-15E|%-15f|%-15g|%-15G|%-15o%-15s%-15u%-15x%-15X%-30p",
         TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o,
         TEST_s, TEST_u, TEST_x, TEST_X, TEST_p);
-    ck_assert_msg(strcmp(MESSAGE_1, MESSAGE_2) == 0, strcat(strcat(MESSAGE_1, "\ntes:0: "), MESSAGE_2));
+    // ck_assert_msg(strcmp(MESSAGE_1, MESSAGE_2) == 0, strcat(strcat(MESSAGE_1, "\ntes:0: "), MESSAGE_2));
     ck_assert_msg(strcmp(MESSAGE_1, MESSAGE_2) == 0, "TEST #2.1 - FAILED!");
 
     sprintf(MESSAGE_1, "|%c|%+d|%+i|%+e|%+E|%+f|%+g|%+G|%o|%s|%u|%x|%X|%p|%n|%%|",
@@ -393,10 +392,10 @@ START_TEST(S21_SPRINTF) {
 
     int TEST_width = 15;
     sprintf(MESSAGE_1, "|%15c|%15d|%15i|%15e|%15E|%15f|%15g|%15G|%15o|%15s|%15u|%15x|%15X|%30p|%n|%%|",
-        TEST_c, TEST_d, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o,
+        TEST_c, INT_MIN, TEST_i, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o,
         TEST_s, TEST_u, TEST_x, TEST_X, TEST_p, &TEST_n_1);
     s21_sprintf(MESSAGE_2, "|%15c|%15d|%15i|%*e|%15E|%15f|%15g|%15G|%15o|%15s|%15u|%15x|%15X|%30p|%n|%%|",
-        TEST_c, TEST_d, TEST_i, TEST_width, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o,
+        TEST_c, INT_MIN, TEST_i, TEST_width, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_o,
         TEST_s, TEST_u, TEST_x, TEST_X, TEST_p, &TEST_n_2);
     ck_assert_msg(strcmp(MESSAGE_1, MESSAGE_2) == 0, "TEST #7.1 - FAILED!");
     ck_assert_msg(TEST_n_1 == TEST_n_2, "TEST #7.2 - FAILED!");
@@ -429,44 +428,33 @@ START_TEST(S21_SPRINTF) {
     ck_assert_msg(strcmp(MESSAGE_1, MESSAGE_2) == 0, "TEST #10.1 - FAILED!");
     ck_assert_msg(TEST_n_1 == TEST_n_2, "TEST #10.2 - FAILED!");
 
-    short int TEST_dd = -21475;
     short int TEST_ii = -10000;
     short int TEST_oo = -775;
     short int TEST_uu = -3857;
     short int TEST_xx = -10900;
     short int TEST_XX = -998;
-    short int TEST_n_11 = -999;
-    short int TEST_n_22 = -999;
-    sprintf(MESSAGE_1, "|%c|%hd|%hi|%e|%E|%f|%g|%G|%ho|%s|%hu|%hx|%hX|%p|%hn|%%|",
-        TEST_c, TEST_dd, TEST_ii, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_oo,
-        TEST_s, TEST_uu, TEST_xx, TEST_XX, TEST_p, &TEST_n_11);
-    s21_sprintf(MESSAGE_2, "|%c|%hd|%hi|%e|%E|%f|%g|%G|%ho|%s|%hu|%hx|%hX|%p|%hn|%%|",
-        TEST_c, TEST_dd, TEST_ii, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_oo,
-        TEST_s, TEST_uu, TEST_xx, TEST_XX, TEST_p, &TEST_n_22);
+    sprintf(MESSAGE_1, "|%c|%hd|%hi|%e|%E|%f|%g|%G|%ho|%s|%hu|%hx|%hX|%p|%n|%%|",
+        TEST_c, SHRT_MIN, TEST_ii, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_oo,
+        TEST_s, TEST_uu, TEST_xx, TEST_XX, TEST_p, &TEST_n_1);
+    s21_sprintf(MESSAGE_2, "|%c|%hd|%hi|%e|%E|%f|%g|%G|%ho|%s|%hu|%hx|%hX|%p|%n|%%|",
+        TEST_c, SHRT_MIN, TEST_ii, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_oo,
+        TEST_s, TEST_uu, TEST_xx, TEST_XX, TEST_p, &TEST_n_2);
     ck_assert_msg(strcmp(MESSAGE_1, MESSAGE_2) == 0, "TEST #11.1 - FAILED!");
-    ck_assert_msg(TEST_n_11 == TEST_n_22, "TEST #11.2 - FAILED!");
+    ck_assert_msg(TEST_n_1 == TEST_n_2, "TEST #11.2 - FAILED!");
 
-    // wchar_t MESSAGE_3[500] = L"TEST";
-    // wchar_t MESSAGE_4[500] = L"TEST";
-
-    // wchar_t TEST_ccc = L'Й';
-    long int TEST_ddd = -21475;
     long int TEST_iii = -50000;
-    // wchar_t TEST_sss[20] = L"ПРИВЕТ";
     long int TEST_ooo = -775;
     long int TEST_uuu = -3857;
     long int TEST_xxx = -9990000;
     long int TEST_XXX = -998;
-    long int TEST_n_111 = -999;
-    long int TEST_n_222 = -999;
-    sprintf(MESSAGE_1, "|%c|%ld|%li|%e|%E|%f|%g|%G|%lo|%s|%lu|%lx|%lX|%p|%ln|%%|",
-        TEST_c, TEST_ddd, TEST_iii, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_ooo,
-        TEST_s, TEST_uuu, TEST_xxx, TEST_XXX, TEST_p, &TEST_n_111);
-    s21_sprintf(MESSAGE_2, "|%c|%ld|%li|%e|%E|%f|%g|%G|%lo|%s|%lu|%lx|%lX|%p|%ln|%%|",
-        TEST_c, TEST_ddd, TEST_iii, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_ooo,
-        TEST_s, TEST_uuu, TEST_xxx, TEST_XXX, TEST_p, &TEST_n_222);
+    sprintf(MESSAGE_1, "|%c|%ld|%li|%e|%E|%f|%g|%G|%lo|%s|%lu|%lx|%lX|%p|%n|%%|",
+        TEST_c, LONG_MIN, TEST_iii, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_ooo,
+        TEST_s, TEST_uuu, TEST_xxx, TEST_XXX, TEST_p, &TEST_n_1);
+    s21_sprintf(MESSAGE_2, "|%c|%ld|%li|%e|%E|%f|%g|%G|%lo|%s|%lu|%lx|%lX|%p|%n|%%|",
+        TEST_c, LONG_MIN, TEST_iii, TEST_e, TEST_E, TEST_f, TEST_g, TEST_G, TEST_ooo,
+        TEST_s, TEST_uuu, TEST_xxx, TEST_XXX, TEST_p, &TEST_n_2);
     ck_assert_msg(strcmp(MESSAGE_1, MESSAGE_2) == 0, "TEST #12.1 - FAILED!");
-    ck_assert_msg(TEST_n_111 == TEST_n_222, "TEST #12.2 - FAILED!");
+    ck_assert_msg(TEST_n_1 == TEST_n_2, "TEST #12.2 - FAILED!");
 
     long double TEST_ee = -544123.43214;
     long double TEST_EE = -542314.4231;

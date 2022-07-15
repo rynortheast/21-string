@@ -28,11 +28,11 @@ typedef struct {
 } spec;
 
 char * s21_reverse(char * str);
-int s21_ctos(char * str, char symbol, char * flag, int accuracy);
+int s21_ctos(char * str, va_list * params, char * flag, int accuracy, char type);
 int setBaseAccuracyValue(int accuracy, int symbol);
 int s21_sprintf(char * str, const char * format, ...);
 char * s21_conf(char * str, spec config, char symbol);
-char * s21_stos(char * str, char * data, int accuracy);
+char * s21_stos(char * str, va_list * params, int accuracy, char type);
 char * s21_ptoa(char * str, int * variable);
 char * s21_itoa(char * str, int number, int accuracy, char * flag);
 char * s21_itoa_long(char * str, long int number, int accuracy, char * flag);
