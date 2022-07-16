@@ -1,14 +1,26 @@
-// Напишите функцию банкомат которая принимает на вход число и возвращает объект в формате  {номинал_купюры : количество_купюр}.
-// Если банкомат не может выдать данную сумму, то выводится ошибка 'Incorrect value'.
-// Купюры должны выдаться оптимальным образом (вместо 5 купюр номиналом 1000 выдается одна 5000).
-// За раз банкомат может выдавать не более 20 купюр, если купюр для выдачи не хватает то выводится ошибка 'Limit exceeded'
 
 function atm(sum) {
-  const banknots = [5000, 2000, 1000, 500, 200, 100, 50];
+    const banknots = [5000, 2000, 1000, 500, 200, 100, 50];
+    let result = "Incorrect value";
+    if (sum % 50 == 0) {
+        let countCurrency = 0;
+        result = banknots.reduce((obj, a) => {
+            if ((sum / a) >= 1) {
+                obj[a] = Math.floor(sum / a);
+                countCurrency += obj[a];
+                sum -= obj[a] * a;
+            }
+            return obj;
+        }, {});
+        result = countCurrency > 20 ? "limit exceeded" : result;
+    }
+    return result;
 }
+  
+let result_1 = atm(8350);      // {5000 : 1, 2000 : 1, 1000 : 1, 200 : 1, 100 : 1, 50 : 1 }
+let result_2 = atm(2570);      // Incorrect value
+let result_3 = atm(100050);    // limit exceeded
 
-atm(8350); // {5000 : 1, 2000 : 1, 1000 : 1, 200 : 1, 100 : 1, 50 : 1 }
-atm(2570); // Incorrect value
-atm(100050); // limit exceeded
-
-
+// console.log(result_1);
+// console.log(result_2);
+// console.log(result_3);
