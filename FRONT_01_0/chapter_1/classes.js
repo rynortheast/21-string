@@ -1,20 +1,24 @@
-/*
-
-У экземпляра класса должны присутствовать св-ва:
--name string
--grade string Для простоты предположим, что система грейдов будет иметь значения от L1 до L4
--hardSkills string[]
--company string
-
-
-Так же должны иметься три метода:
-
--changeCompany(newCompanyName) - сотрудник может сменить компанию, либо же просто уволиться
--upGrade(newGradeName) - сотрудник может повысить квалификацию
--addSkill(newSkillName) - сотрудник может дополнить список своих скиллов.
-*/
-
 
 export class Empleyee {
-
+    constructor(name, grade, hardSkills, company) {
+        this.name = name;
+        this.grade = grade;
+        this.company = company;
+        this.hardSkills = hardSkills;
+    }
+    addSkill(newSkillName) {this.hardSkills.push(newSkillName);}
+    changeCompany(newCompanyName) {this.company = newCompanyName;}
+    upGrade() {this.grade[1] != '4' ? this.grade = "L" + (Number(this.grade[1]) + 1) : 0;}
+    viewCard() {
+        console.log(`\nИнформация о работнике:\nИмя: ${this.name}\nУровень: ` +
+        `${this.grade}\nКомпания: ${this.company}\nНавыки: ${this.hardSkills}\n`);
+    }
 }
+
+let chamomil = new Empleyee("RV304", "L2", ["fuss"], "MGYpi");
+chamomil.viewCard();
+
+chamomil.changeCompany("YANDEX.EDA");
+chamomil.addSkill("irritability");
+chamomil.upGrade();
+chamomil.viewCard();
