@@ -15,6 +15,8 @@ function minus(a) {return (b) => a - b;}
 function divide(a) {return (b) => a / b;}
 function mult(a) {return (b) => a * b;}
 
+// let result = four();
+// let result = five(mult(three()));
 let result = one(mult(three(plus(four())))); // В итоге вернется 7
 
-console.log(`Результат: ${result}`);
+// console.log(`Результат: ${result}`);

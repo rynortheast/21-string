@@ -1,12 +1,16 @@
-// Напишите функцию, которая будет принимать координаты числа в треугольника Паскаля и будет возвращать значение по координатам
-// Если вы не знаете, что такое треугольник Паскаля, советую прочитать перед выполнение задания
-// https://cdn.fishki.net/upload/post/201502/04/1414683/947eb978f710426fd0702fd119da506b.gif тут можно посмотреть наглядно принцип работы
-// Считай, что начальные координаты 0,0
-// Тут, возможно, поможет рекурсия
+"use strict";
 
 function paskalsTriangle(x, y) {
-
+    return (x == y || x == 0) ? 1 : paskalsTriangle(x - 1, y - 1) + paskalsTriangle(x, y - 1);
 }
 
+let result = paskalsTriangle(3, 6); // 3
 
-paskalsTriangle(2,3) // 3
+// console.log(`Результат: ${result}`);
+
+// for (let y = 0; y <= 8; y += 1) {
+//     let line = [];
+//     for (let x = 0; x != (y + 1); x += 1)
+//         line.push(paskalsTriangle(x, y));
+//     console.log(line.join(', '));
+// }
