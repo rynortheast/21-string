@@ -1,4 +1,3 @@
-"use strict";
 
 function one(callback) {return callback ? callback(1) : 1;}
 function two(callback) {return callback ? callback(2) : 2;}
@@ -15,8 +14,8 @@ function minus(a) {return (b) => a - b;}
 function divide(a) {return (b) => a / b;}
 function mult(a) {return (b) => a * b;}
 
-// let result = four();
-// let result = five(mult(three()));
-let result = one(mult(three(plus(four())))); // В итоге вернется 7
+let result = four();                        //  Вернет - 4
+result = five(mult(three()));               //  Вернет - 15
+result = one(mult(three(plus(four()))));    //  Вернет - 7
 
 // console.log(`Результат: ${result}`);

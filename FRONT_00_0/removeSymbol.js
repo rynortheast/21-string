@@ -6,6 +6,6 @@ function removeString(message, symbol) {
     return message.join('');
 }
 
-let result = removeString("Большое и интересное сообщение", "е");
+let result = removeString("Hello World!", "l"); //  Вернет - Helo Word!
 
 // console.log(`Результат: ${result}`);

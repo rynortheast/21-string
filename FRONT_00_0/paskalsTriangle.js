@@ -1,10 +1,9 @@
-"use strict";
 
 function paskalsTriangle(x, y) {
     return (x == y || x == 0) ? 1 : paskalsTriangle(x - 1, y - 1) + paskalsTriangle(x, y - 1);
 }
 
-let result = paskalsTriangle(3, 6); // 3
+let result = paskalsTriangle(3, 6);     //  Вернет - 3
 
 // console.log(`Результат: ${result}`);
 
