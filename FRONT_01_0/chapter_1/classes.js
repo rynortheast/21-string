@@ -1,10 +1,10 @@
 
 export class Empleyee {
-    constructor(name, grade, hardSkills, company) {
+    constructor(name, grade, company) {
         this.name = name;
         this.grade = grade;
+        this.hardSkills = [];
         this.company = company;
-        this.hardSkills = hardSkills;
     }
     addSkill(newSkillName) {this.hardSkills.push(newSkillName);}
     changeCompany(newCompanyName) {this.company = newCompanyName;}
@@ -15,10 +15,10 @@ export class Empleyee {
     }
 }
 
-let chamomil = new Empleyee("RV304", "L2", ["fuss"], "MGYpi");
-chamomil.viewCard();
+// let chamomil = new Empleyee("RV304", "L2", "MGYpi");
+// chamomil.viewCard();
 
-chamomil.changeCompany("YANDEX.EDA");
-chamomil.addSkill("irritability");
-chamomil.upGrade();
-chamomil.viewCard();
+// chamomil.changeCompany("YANDEX.EDA");
+// chamomil.addSkill("irritability");
+// chamomil.upGrade();
+// chamomil.viewCard();
