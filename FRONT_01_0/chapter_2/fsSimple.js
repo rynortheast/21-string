@@ -23,7 +23,7 @@ const readAndWriteAsyncAwait = async () => {
     const saveResult = (data) => {result = data};
     let data = fs.readFile("./files/fsSimple/file1.txt", (error, data) => {
         error == null ? fs.writeFile("./files/fsSimple/file2.txt", data, 
-        (error) => {error == null ? saveResult("3 : Файл file2.txt успешно обновлен!!") : 0}) : 0;
+        (error) => {error == null ? 0 : saveResult("Провал!")}) : saveResult("Провал!");
     });
     return result;
 };
