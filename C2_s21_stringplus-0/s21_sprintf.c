@@ -19,6 +19,7 @@ int s21_sprintf(char * str, const char * format, ...) {
             str[counter += 1] = '\0';
         }
     }
+    va_end(params);
     return counter;
 }
 
@@ -154,7 +155,7 @@ int s21_ctos(char * str, va_list * params, char * flag, int accuracy, char type)
             str[x] = ' ';
         counter = accuracy;
     }
-    for (; flag[0] == 'o' && counter < (accuracy); str[counter] = '\0')
+    for (int x = counter; flag[0] == 'o' && x < (accuracy); x += 1)
         str[counter++] = ' ';
     return counter;
 }
@@ -183,7 +184,8 @@ char * s21_reverse(char * str) {
 char * s21_ptoa(char * str, int * variable) {
     int * aux = variable;
     if (aux == NULL) {
-        s21_strcat(str, "(nil)");
+        // OSS == 1 ? s21_strcat(str, "(nil)") : s21_strcat(str, "0x0");
+        s21_strcat(str, "0x0");
     } else {
         for (int x = s21_strlen(str); aux != 0; aux = ((void*) (((size_t) aux) >> 4)), x += 1) {
             unsigned int last_symbol = ((size_t) aux) % 0x10;
@@ -213,9 +215,11 @@ char * s21_utoa(char * str, unsigned int number, int format, int accuracy, char 
 
 char * s21_ntoa_long(char * str, long double number, int accuracy, char * flag, int symbol, int kostyl_2) {
     int lenStr = 0, lenNum = 0, result = 0, kostyl = accuracy;
+    char flagX[10] = "xxxxx";
+    char flag1[10] = "xoxxx";
     if (number != 0) {
-        for (int aux = lenNum = fabsl(number) < 1 ? 1 : fabsl(number) < 10 ? 0 : (-1); aux != 0; lenNum += aux)
-            aux = ((fabsl(number) * powl(10, lenNum)) < 1 || 10 < fabsl(number) * powl(10, lenNum)) ? aux : 0;
+        for (int aux = lenNum = fabsl(number) < 1?1 : fabsl(number) < 10?0 : (-1); aux!= 0; lenNum += aux)
+            aux = ((fabsl(number) * powl(10, lenNum)) < 1 || 10 <fabsl(number)*powl(10, lenNum))?aux:0;
     }
     s21_itoa(str, (kostyl == 0 ? (roundl(number * powl(10, lenNum))) : (number * powl(10, lenNum))), 1, flag);
     (kostyl != 0 || flag[3] == 'o') ? s21_strcat(str, (localeconv() -> decimal_point)) : 0;
@@ -223,15 +227,15 @@ char * s21_ntoa_long(char * str, long double number, int accuracy, char * flag, 
         continue;
     for (result = lenNum; (accuracy != 0 && (lenNum + 1) <= 0); accuracy -= 1) {
         if (accuracy == 1)
-            s21_itoa(str + (lenStr++), roundl(fmodl((roundl(number) * powl(10, lenNum += 1)), 10)), 1, "xxxxx");
+            s21_itoa(str+(lenStr++), roundl(fmodl((roundl(number)*powl(10, lenNum += 1)), 10)), 1, flagX);
         else
-            s21_itoa(str + (lenStr++), fmodl((number * powl(10, lenNum += 1)), 10), 1, "xxxxx");
+            s21_itoa(str + (lenStr++), fmodl((number * powl(10, lenNum += 1)), 10), 1, flagX);
     }
     for (int aux = lenNum + 1; accuracy != 0; accuracy -= 1) {
         if (accuracy == 1)
-            s21_itoa(str + (lenStr++), roundl(fmodl((number * powl(10, (aux++))), 10)), 1, "xxxxx");
+            s21_itoa(str + (lenStr++), roundl(fmodl((number * powl(10, (aux++))), 10)), 1, flagX);
         else
-            s21_itoa(str + (lenStr++), fmodl((number * powl(10, (aux++))), 10), 1, "xxxxx");
+            s21_itoa(str + (lenStr++), fmodl((number * powl(10, (aux++))), 10), 1, flagX);
     }
     if (kostyl_2 == 1 && flag[3] != 'o') {
         for (int x = s21_strlen(str) - 1; s21_strchr("0.", str[x]); str[x--] = '\0')
@@ -242,11 +246,12 @@ char * s21_ntoa_long(char * str, long double number, int accuracy, char * flag, 
     lenStr = s21_strlen(str);
     str[lenStr++] = symbol;
     str[lenStr] = '\0';
-    s21_itoa(str + (lenStr), -result, 2, "xoxxx");
+    s21_itoa(str + (lenStr), -result, 2, flag1);
     return str;
 }
 
 char * s21_ftoa_long(char * str, long double number, int afterpoint, char * flag, int kostyl_2) {
+    char flagX[10] = "xxxxx";
     int lenStr = 0, minus = 0, kostyl = afterpoint, k3 = 0;
     for (; number < 0; number *= (-1), minus = 1)
         continue;
@@ -260,7 +265,7 @@ char * s21_ftoa_long(char * str, long double number, int afterpoint, char * flag
     kostyl == 0 ? number = roundl(number) : 0;
     for (aux = k3 == 1 ? round(number) : number; ((aux / 10) >= 1); aux /= 10, str[lenStr] = '\0')
         str[lenStr++] = ((int) fmodl(aux, 10)) + 48;
-    s21_itoa(str + lenStr, fmodl(aux, 10), 1, "xxxxx");
+    s21_itoa(str + lenStr, fmodl(aux, 10), 1, flagX);
     minus == 1 ? s21_strcat(str, "-") : 0;
     lenStr = s21_strlen(str);
     if (str[lenStr - 1] != '-' && (flag[1] == 'o' || flag[2] == 'o')) {
@@ -283,8 +288,8 @@ char * s21_gtoa_long(char * str, long double number, int accuracy, char * flag, 
     if (number == 0) {
         s21_ftoa_long(str, number, accuracy - 1, flag, 1);
     } else {
-        for (int aux = lenNum = fabsl(number) < 1 ? 1 : fabsl(number) < 10 ? 0 : (-1); aux != 0; lenNum += aux)
-            aux = ((fabsl(number) * powl(10, lenNum)) < 1 || 10 < fabsl(number) * powl(10, lenNum)) ? aux : 0;
+        for (int aux = lenNum = fabsl(number) < 1?1 : fabsl(number) < 10?0 : (-1); aux != 0; lenNum += aux)
+            aux = ((fabsl(number) * powl(10, lenNum)) < 1 || 10 < fabsl(number)*powl(10, lenNum)) ? aux : 0;
         if (lenNum <= 0)
             (accuracy + lenNum <= 0) ? s21_ntoa_long(str, number, accuracy - 1, flag, symbol - 2, 1) :
             s21_ftoa_long(str, number, (accuracy - 1) + lenNum, flag, 1);
@@ -376,6 +381,8 @@ char * s21_itoa_short(char * str, short int number, int accuracy, char * flag) {
 }
 
 char * s21_ntoa(char * str, double number, int accuracy, char * flag, int symbol, int kostyl_2) {
+    char flagX[10] = "xxxxx";
+    char flag1[10] = "xoxxx";
     int lenStr = 0, lenNum = 0, result = 0, kostyl = accuracy;
     if (number != 0) {
         for (int aux = lenNum = fabs(number) < 1 ? 1 : fabs(number) < 10 ? 0 : (-1); aux != 0; lenNum += aux)
@@ -387,13 +394,13 @@ char * s21_ntoa(char * str, double number, int accuracy, char * flag, int symbol
         continue;
     for (result = lenNum; (accuracy != 0 && (lenNum + 1) <= 0); accuracy -= 1) {
         if (accuracy == 1)
-            s21_itoa(str + (lenStr++), fmod((round(number) * pow(10, lenNum += 1)), 10), 1, "xxxxx");
+            s21_itoa(str + (lenStr++), fmod((round(number) * pow(10, lenNum += 1)), 10), 1, flagX);
         else
-            s21_itoa(str + (lenStr++), fmod((number * pow(10, lenNum += 1)), 10), 1, "xxxxx");
+            s21_itoa(str + (lenStr++), fmod((number * pow(10, lenNum += 1)), 10), 1, flagX);
     }
     for (int aux = lenNum + 1; accuracy != 0; accuracy -= 1)
-        accuracy == 1 ? s21_itoa(str + (lenStr++), round(fmod((number * pow(10, (aux++))), 10)), 1, "xxxxx") :
-        s21_itoa(str + (lenStr++), fmod((number * pow(10, (aux++))), 10), 1, "xxxxx");
+        accuracy == 1 ? s21_itoa(str + (lenStr++), round(fmod((number * pow(10, (aux++))), 10)), 1, flagX) :
+        s21_itoa(str + (lenStr++), fmod((number * pow(10, (aux++))), 10), 1, flagX);
     if (kostyl_2 == 1 && flag[3] != 'o') {
         for (int x = s21_strlen(str) - 1; s21_strchr("0", str[x]); str[x--] = '\0')
             continue;
@@ -403,11 +410,12 @@ char * s21_ntoa(char * str, double number, int accuracy, char * flag, int symbol
     lenStr = s21_strlen(str);
     str[lenStr++] = symbol;
     str[lenStr] = '\0';
-    s21_itoa(str + (lenStr), -result, 2, "xoxxx");
+    s21_itoa(str + (lenStr), -result, 2, flag1);
     return str;
 }
 
 char * s21_ftoa(char * str, double number, int afterpoint, char * flag, int kostyl_2) {
+    char flagX[10] = "xxxxx";
     int lenStr = 0, minus = 0, kostyl = afterpoint, k3 = 0;
     for (; number < 0; number *= (-1), minus = 1)
         continue;
@@ -421,7 +429,7 @@ char * s21_ftoa(char * str, double number, int afterpoint, char * flag, int kost
     kostyl == 0 ? number = round(number) : 0;
     for (aux = k3 == 1 ? round(number) : number; (aux / 10 >= 1); aux /= 10, str[lenStr] = '\0')
         str[lenStr++] = ((int) fmod(aux, 10)) + 48;
-    s21_itoa(str + lenStr, fmod(aux, 10), 1, "xxxxx");
+    s21_itoa(str + lenStr, fmod(aux, 10), 1, flagX);
     minus == 1 ? s21_strcat(str, "-") : 0;
     lenStr = s21_strlen(str);
     if (str[lenStr - 1] != '-' && (flag[1] == 'o' || flag[2] == 'o')) {

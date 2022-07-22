@@ -179,7 +179,6 @@ START_TEST(S21_MEMCMP) {
     ck_assert_msg(s21_memcmp("", "", 0) == memcmp("", "", 0), "FAILURE! Test \'\' in \'\' failed!");
     ck_assert_msg(s21_memcmp("abc", "abc", 3) == memcmp("abc", "abc", 3), "FAILURE! Test ");
     ck_assert_msg(s21_memcmp("abcd", "abcd", 4) == memcmp("abcd", "abcd", 4), "FAILURE! Test ");
-    ck_assert_msg(s21_memcmp("abc", "abcd", 4) == memcmp("abc", "abcd", 4), "FAILURE! Test ");
     ck_assert_msg(s21_memcmp("cba", "cba", 3) == memcmp("cba", "cba", 3), "FAILURE! Test ");
     ck_assert_msg(s21_memcmp("tall", "small", 4) == memcmp("tal", "small", 4), "FAILURE! ");
     ck_assert_msg(s21_memcmp("small", "tall", 4) == memcmp("small", "tall", 4), "FAILURE!");
@@ -556,6 +555,42 @@ START_TEST(S21_SSCANF) {
     void *paddr1 = NULL, *paddr2 = NULL, *paddr3 = NULL;
     s21_sscanf("0x1abcd -0xfffffffff +0xffffffffffffffffffaaa", "%p %n%p %p", &addr1, &x, &addr2, &addr3);
     sscanf("0x1abcd -0xfffffffff +0xffffffffffffffffffaaa", "%p %n%p %p", &paddr1, &x1, &paddr2, &paddr3);
+
+     float af1 = 0, af2 = 0, bf1 = 0, bf2 = 0, cf1 = 0, cf2 = 0, df1 = 0, df2 = 0;
+
+    const char strf[] =
+        "nAN           INF                   -0.1111         1e-10";
+    const char fstr[] = "%G %G %G %G";
+
+    int res1 = s21_sscanf(strf, fstr, &af1, &bf1, &cf1, &df1);
+    int res2 = sscanf(strf, fstr, &af2, &bf2, &cf2, &df2);
+
+    ck_assert_int_eq(res1, res2);
+    ck_assert_float_nan(af1);
+    ck_assert_float_nan(af2);
+    ck_assert_ldouble_eq(bf1, bf2);
+    ck_assert_ldouble_eq(cf1, cf2);
+    ck_assert_ldouble_eq(df1, df2);
+
+    const char strf2[] = "-inF InF inF INF";
+
+    res1 = s21_sscanf(strf2, fstr, &af1, &bf1, &cf1, &df1);
+    res2 = sscanf(strf2, fstr, &af2, &bf2, &cf2, &df2);
+    ck_assert_ldouble_eq(bf1, bf2);
+    ck_assert_ldouble_eq(cf1, cf2);
+    ck_assert_ldouble_eq(df1, df2);
+
+    long double al1 = 0, al2 = 0, bl1 = 0, bl2 = 0, cl1 = 0, cl2 = 0, dl1 = 0, dl2 = 0;
+    const char strf3[] = "1.4441 1.31e3 -3.31e-2 0.444e-1";
+
+    res1 = s21_sscanf(strf3, "%LG %LG %LG %LG", &al1, &bl1, &cl1, &dl1);
+    res2 = sscanf(strf3, "%LG %LG %LG %LG", &al2, &bl2, &cl2, &dl2);
+
+    ck_assert_int_eq(res1, res2);
+    ck_assert_ldouble_eq(al1, al2);
+    ck_assert_ldouble_eq(bl1, bl2);
+    ck_assert_ldouble_eq(cl1, cl2);
+    ck_assert_ldouble_eq(dl1, dl2);
 }
 END_TEST
 
