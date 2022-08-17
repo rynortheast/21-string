@@ -1,3 +1,6 @@
+
+
+
 all: s21_string.a gcov_report test
 
 s21_string.a: s21_string.h s21_string.c s21_sprintf.c s21_sscanf.c
