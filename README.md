@@ -1,7 +1,7 @@
 
 # S21_string
 
-<div align="center">PREVIEW_WILL_BE_ADDED_LATER.png</div>
+<div align="center"><img src="assets/preview.png"></div>
 
 ## Table of contents
 * [About](#about)
