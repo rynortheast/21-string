@@ -1,43 +1,14 @@
 
-# S21_string
+# 21-string
 
 <div align="center"><img src="assets/preview.png"></div>
 
-## Table of contents
-* [About](#about)
-* [Goal & requirements](#goal--requirements)
-* [Key learnings](#key-learnings)
-* [Building](#building)
-* [Overview of implemented code](#overview-of-implemented-code)
-    * [string.h Types](#stringh-types)
-    * [string.h Macro](#stringh-Macro)
-    * [string.h Functions](#stringh-Functions)
-    * [sprintf & sscanf](#sprintf--sscanf)
-    * [sprintf & sscanf Specifiers](#sprintf--sscanf-specifiers)
-    * [sprintf Flags](#sprintf-flags)
-    * [sprintf & sscanf Width Description](#sprintf--sscanf-width-description)
-    * [sprintf Precision Description](#sprintf-precision-description)
-    * [sprintf & sscanf Length Description](#sprintf--sscanf-length-description)
-* [Credits](#credits)
+***
 
-## About 
+Implementation of some functions of string.h library with tests. The goal of this project is to understand how string processing functions work using C language. In the course of the work, analyze the existing auxiliary functions of string processing, determine how other data types are translated into strings.
 
-Implementation of some functions of `string.h` library with tests.
-
-## Goal & requirements 
-
-The goal of this project is to understand how string processing functions work using C language. In the course of the work, analyze the existing auxiliary functions of string processing, determine how other data types are translated into strings.
-
-## Key learnings
-
-- Working with arrays of characters
-- Working with pointers of `void` type
-- Functions with variable number of arguments
-- Algorithms for processing other types of data to translate them into an array of characters
-- Unit-testing with Check framework
-- Evaluating test coverage with gcov
-
-## Overview of implemented code
+<details>
+<summary>[ SPOILER ] Overview of implemented code</summary>
 
 ### string.h Types
 
@@ -136,7 +107,12 @@ The goal of this project is to understand how string processing functions work u
 | 2 | l | The argument is interpreted as a long int or unsigned long int for integer specifiers (i, d, o, u, x and X), and as a wide character or wide character string for specifiers c and s. | ✅ | ☑️ |
 | 3 | L | The argument is interpreted as a long double (only applies to floating point specifiers − e, E, f, g and G). | ✅ | ☑️ |
 
-## Building
+</details>
+
+Developer: [RV-304 (@rynortheast)](https://github.com/rynortheast) ✅, [Artem Kain (@artemxgod)](https://github.com/artemxgod) ☑️
+Thanks to 21-SCHOOL for provided assignment and special learning conditions ✌️🔥
+
+## Usage
 
 1. Clone this repository via
     - SSH `git@github.com:rynortheast/S21_string.git` or
@@ -145,8 +121,3 @@ The goal of this project is to understand how string processing functions work u
 3. Run `make test` to build project and run main tests
 4. Run `make auxTest` to build project and run aux tests
 5. Run `make s21_string.a` to build a static lib
-
-## Credits
-
-- Developer: [RV-304 (@rynortheast)](https://github.com/rynortheast) ✅, [Artem Kain (@artemxgod)](https://github.com/artemxgod) ☑️
-- 21-SCHOOL for providing this task as a part of our curriculum ✌️🔥
