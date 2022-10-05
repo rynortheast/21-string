@@ -109,8 +109,8 @@ Implementation of some functions of string.h library with tests. The goal of thi
 
 </details>
 
-Developer: [RV-304 (@rynortheast)](https://github.com/rynortheast) ✅, [Artem Kain (@artemxgod)](https://github.com/artemxgod) ☑️
-Thanks to 21-SCHOOL for provided assignment and special learning conditions ✌️🔥
+— Developer: [RV-304 (@rynortheast)](https://github.com/rynortheast) ✅, [Artem Kain (@artemxgod)](https://github.com/artemxgod) ☑️  
+— Thanks to 21-SCHOOL for provided assignment and special learning conditions ✌️🔥
 
 ## Usage
 
