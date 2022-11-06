@@ -1,13 +1,13 @@
 #ifndef SRC_S21_STRING_H_
 #define SRC_S21_STRING_H_
 
-#include <stdarg.h>
+#include <ctype.h>
 #include <limits.h>
 #include <locale.h>
-#include <stdlib.h>
-#include <stdio.h>
 #include <math.h>
-#include <ctype.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <wchar.h>
 
 #define s21_NULL ((void *)0)
@@ -49,17 +49,27 @@ char *s21_ptoa(char *str, int *variable);
 char *s21_itoa(char *str, int number, int accuracy, char *flag);
 char *s21_itoa_long(char *str, long int number, int accuracy, char *flag);
 char *s21_itoa_short(char *str, short int number, int accuracy, char *flag);
-char *s21_gtoa_long(char *str, long double number, int accuracy, char *flag, int symbol);
+char *s21_gtoa_long(char *str, long double number, int accuracy, char *flag,
+                    int symbol);
 char *s21_gtoa(char *str, double number, int accuracy, char *flag, int symbol);
-int insertStringBySpecifier(char *str, char symbol, spec config, va_list *params);
-char *s21_ftoa_long(char *str, long double number, int afterpoint, char *flag, int kostyl_2);
-char *s21_ftoa(char *str, double number, int afterpoint, char *flag, int kostyl_2);
-int searchModifiersForString(int x, const char *format, spec *config, va_list *params);
-char *s21_utoa(char *str, unsigned int number, int format, int accuracy, char *flag);
-char *s21_utoa_long(char *str, unsigned long int number, int format, int accuracy, char *flag);
-char *s21_utoa_short(char *str, unsigned short int number, int format, int accuracy, char *flag);
-char *s21_ntoa_long(char *str, long double number, int accuracy, char *flag, int symbol, int kostyl_2);
-char *s21_ntoa(char *str, double number, int accuracy, char *flag, int symbol, int kostyl_2);
+int insertStringBySpecifier(char *str, char symbol, spec config,
+                            va_list *params);
+char *s21_ftoa_long(char *str, long double number, int afterpoint, char *flag,
+                    int kostyl_2);
+char *s21_ftoa(char *str, double number, int afterpoint, char *flag,
+               int kostyl_2);
+int searchModifiersForString(int x, const char *format, spec *config,
+                             va_list *params);
+char *s21_utoa(char *str, unsigned int number, int format, int accuracy,
+               char *flag);
+char *s21_utoa_long(char *str, unsigned long int number, int format,
+                    int accuracy, char *flag);
+char *s21_utoa_short(char *str, unsigned short int number, int format,
+                     int accuracy, char *flag);
+char *s21_ntoa_long(char *str, long double number, int accuracy, char *flag,
+                    int symbol, int kostyl_2);
+char *s21_ntoa(char *str, double number, int accuracy, char *flag, int symbol,
+               int kostyl_2);
 
 char *s21_strerror(int errnum);
 void s21_errnum_str(char *str, int num);
@@ -82,7 +92,7 @@ int s21_memcmp(const void *str1, const void *str2, s21_size_t n);
 int s21_strncmp(const char *str_1, const char *str_2, s21_size_t n);
 char *s21_strncpy(char *str_main, const char *str_aux, s21_size_t n);
 void *s21_to_upper(const char *str);
-char * s21_strncat(char * str_main, const char * str_aux, s21_size_t accuracy);
+char *s21_strncat(char *str_main, const char *str_aux, s21_size_t accuracy);
 void *s21_to_lower(const char *str);
 void *s21_insert(const char *src, const char *str, s21_size_t start_index);
 void *s21_trim(const char *src, const char *trim_chars);

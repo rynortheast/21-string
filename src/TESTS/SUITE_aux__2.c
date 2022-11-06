@@ -9,7 +9,6 @@
 
 #define BUFF_SIZE 512
 
-
 START_TEST(s21_memchr_test) {
   char *str = "This is a test";
 
@@ -450,15 +449,15 @@ START_TEST(s21_strtok_test) {
 END_TEST
 
 START_TEST(s21_to_upper_test) {
-  char *str1 = (char*)s21_to_upper("slish! a nu vstal!");
+  char *str1 = (char *)s21_to_upper("slish! a nu vstal!");
   char *str2 = "SLISH! A NU VSTAL!";
   ck_assert_str_eq(str1, str2);
   free(str1);
-  char *str3 = (char*)s21_to_upper("AAAAA14353423AA!!!");
+  char *str3 = (char *)s21_to_upper("AAAAA14353423AA!!!");
   char *str4 = "AAAAA14353423AA!!!";
   ck_assert_str_eq(str3, str4);
   free(str3);
-  char *str7 = (char*)s21_to_upper("KomM hieR! scHneLl!");
+  char *str7 = (char *)s21_to_upper("KomM hieR! scHneLl!");
   char *str8 = "KOMM HIER! SCHNELL!";
   ck_assert_str_eq(str7, str8);
   free(str7);
@@ -466,17 +465,17 @@ START_TEST(s21_to_upper_test) {
 END_TEST
 
 START_TEST(s21_to_lower_test) {
-  char *str1 = (char*)s21_to_lower("SLISH! A NU VSTAL!");
+  char *str1 = (char *)s21_to_lower("SLISH! A NU VSTAL!");
   char *str2 = "slish! a nu vstal!";
   ck_assert_str_eq(str1, str2);
   free(str1);
 
-  char *str3 = (char*)s21_to_lower("aaa14353423aa!!!");
+  char *str3 = (char *)s21_to_lower("aaa14353423aa!!!");
   char *str4 = "aaa14353423aa!!!";
   ck_assert_str_eq(str3, str4);
   free(str3);
 
-  char *str7 = (char*)s21_to_lower("KomM hieR! scHneLl!");
+  char *str7 = (char *)s21_to_lower("KomM hieR! scHneLl!");
   char *str8 = "komm hier! schnell!";
   ck_assert_str_eq(str7, str8);
   free(str7);
@@ -484,26 +483,26 @@ START_TEST(s21_to_lower_test) {
 END_TEST
 
 START_TEST(s21_trim_test) {
-  char *str = (char*)s21_trim("****skat-riba*****", "*");
+  char *str = (char *)s21_trim("****skat-riba*****", "*");
   char *str2 = "skat-riba";
   ck_assert_str_eq(str, str2);
   free(str);
-  char *str3 = (char*)s21_trim("Sloniki", "iki");
+  char *str3 = (char *)s21_trim("Sloniki", "iki");
   char *str4 = "Slon";
   ck_assert_str_eq(str3, str4);
   free(str3);
 
-  char *str5 = (char*)s21_trim("", "999");
+  char *str5 = (char *)s21_trim("", "999");
   char *str6 = "";
   ck_assert_str_eq(str5, str6);
   free(str5);
 
-  char *str7 = (char*)s21_trim("1", "huli*5682");
+  char *str7 = (char *)s21_trim("1", "huli*5682");
   char *str8 = "1";
   ck_assert_str_eq(str7, str8);
   free(str7);
 
-  char *str9 = (char*)s21_trim("66236934599", "69");
+  char *str9 = (char *)s21_trim("66236934599", "69");
   char *str10 = "2369345";
   ck_assert_str_eq(str9, str10);
   free(str9);
@@ -511,19 +510,19 @@ START_TEST(s21_trim_test) {
 END_TEST
 
 START_TEST(s21_insert_test) {
-  char *str1 = (char*)s21_insert("Sloniki", "iki", 2);
+  char *str1 = (char *)s21_insert("Sloniki", "iki", 2);
   char *str2 = "Slikioniki";
   ck_assert_str_eq(str1, str2);
   free(str1);
-  char *str3 = (char*)s21_insert("salo", "ska", 3);
+  char *str3 = (char *)s21_insert("salo", "ska", 3);
   char *str4 = "salskao";
   ck_assert_str_eq(str3, str4);
   free(str3);
-  char *str5 = (char*)s21_insert("", "help", 5);
+  char *str5 = (char *)s21_insert("", "help", 5);
   char *str6 = s21_NULL;
   fail_unless(str5 == str6);
   free(str5);
-  char *str7 = (char*)s21_insert("help!", "111", 5);
+  char *str7 = (char *)s21_insert("help!", "111", 5);
   char *str8 = "help!111";
   ck_assert_str_eq(str7, str8);
   free(str7);
@@ -640,7 +639,6 @@ START_TEST(SPRINTFTestLaslhyn34) {
 }
 END_TEST
 
-
 START_TEST(SPRINTFTestLaslhyn37) {
   char data[100];
   char data1[100];
@@ -721,7 +719,6 @@ START_TEST(SPRINTFTestLaslhyn45) {
   ck_assert_str_eq(data, data1);
 }
 END_TEST
-
 
 START_TEST(SPRINTFTestLaslhyn47) {
   char data[100];
@@ -2781,7 +2778,6 @@ START_TEST(test_sprintf30) {
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
-
 
 START_TEST(sprintf_pr_1) {
   char test_original[1024] = "";
@@ -5171,8 +5167,10 @@ END_TEST
 START_TEST(sprintf_2724) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%3.15d] - l.%d\n, [%3.15d]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%3.15d] - l.%d\n, [%3.15d]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%3.15d] - l.%d\n, [%3.15d]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%3.15d] - l.%d\n, [%3.15d]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5180,8 +5178,10 @@ END_TEST
 START_TEST(sprintf_2725) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%3.15d] - l.%d\n, [%3.15d]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%3.15d] - l.%d\n, [%3.15d]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%3.15d] - l.%d\n, [%3.15d]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%3.15d] - l.%d\n, [%3.15d]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5225,8 +5225,10 @@ END_TEST
 START_TEST(sprintf_2730) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%15.0d] - l.%d\n, [%15.0d]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%15.0d] - l.%d\n, [%15.0d]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%15.0d] - l.%d\n, [%15.0d]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%15.0d] - l.%d\n, [%15.0d]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5234,8 +5236,10 @@ END_TEST
 START_TEST(sprintf_2731) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%15.0d] - l.%d\n, [%15.0d]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%15.0d] - l.%d\n, [%15.0d]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%15.0d] - l.%d\n, [%15.0d]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%15.0d] - l.%d\n, [%15.0d]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5252,8 +5256,10 @@ END_TEST
 START_TEST(sprintf_2733) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%15.5d] - l.%d\n, [%15.5d]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%15.5d] - l.%d\n, [%15.5d]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%15.5d] - l.%d\n, [%15.5d]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%15.5d] - l.%d\n, [%15.5d]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5261,8 +5267,10 @@ END_TEST
 START_TEST(sprintf_2734) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%15.5d] - l.%d\n, [%15.5d]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%15.5d] - l.%d\n, [%15.5d]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%15.5d] - l.%d\n, [%15.5d]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%15.5d] - l.%d\n, [%15.5d]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5279,8 +5287,10 @@ END_TEST
 START_TEST(sprintf_2736) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%15.20d] - l.%d\n, [%15.20d]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%15.20d] - l.%d\n, [%15.20d]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%15.20d] - l.%d\n, [%15.20d]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%15.20d] - l.%d\n, [%15.20d]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5288,8 +5298,10 @@ END_TEST
 START_TEST(sprintf_2737) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%15.20d] - l.%d\n, [%15.20d]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%15.20d] - l.%d\n, [%15.20d]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%15.20d] - l.%d\n, [%15.20d]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%15.20d] - l.%d\n, [%15.20d]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5315,8 +5327,10 @@ END_TEST
 START_TEST(sprintf_2740) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-3.0d] - l.%d\n, [%-3.0d]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-3.0d] - l.%d\n, [%-3.0d]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-3.0d] - l.%d\n, [%-3.0d]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-3.0d] - l.%d\n, [%-3.0d]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5333,8 +5347,10 @@ END_TEST
 START_TEST(sprintf_2742) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-3.5d] - l.%d\n, [%-3.5d]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-3.5d] - l.%d\n, [%-3.5d]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-3.5d] - l.%d\n, [%-3.5d]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-3.5d] - l.%d\n, [%-3.5d]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5342,8 +5358,10 @@ END_TEST
 START_TEST(sprintf_2743) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-3.5d] - l.%d\n, [%-3.5d]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-3.5d] - l.%d\n, [%-3.5d]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-3.5d] - l.%d\n, [%-3.5d]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-3.5d] - l.%d\n, [%-3.5d]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5360,8 +5378,10 @@ END_TEST
 START_TEST(sprintf_2745) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-3.15d] - l.%d\n, [%-3.15d]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-3.15d] - l.%d\n, [%-3.15d]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-3.15d] - l.%d\n, [%-3.15d]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-3.15d] - l.%d\n, [%-3.15d]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5369,8 +5389,10 @@ END_TEST
 START_TEST(sprintf_2746) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-3.15d] - l.%d\n, [%-3.15d]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-3.15d] - l.%d\n, [%-3.15d]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-3.15d] - l.%d\n, [%-3.15d]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-3.15d] - l.%d\n, [%-3.15d]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5468,8 +5490,10 @@ END_TEST
 START_TEST(sprintf_2757) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%+3.5d] - l.%d\n, [%+3.5d]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%+3.5d] - l.%d\n, [%+3.5d]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%+3.5d] - l.%d\n, [%+3.5d]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%+3.5d] - l.%d\n, [%+3.5d]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5477,8 +5501,10 @@ END_TEST
 START_TEST(sprintf_2758) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%+3.5d] - l.%d\n, [%+3.5d]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%+3.5d] - l.%d\n, [%+3.5d]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%+3.5d] - l.%d\n, [%+3.5d]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%+3.5d] - l.%d\n, [%+3.5d]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5495,8 +5521,10 @@ END_TEST
 START_TEST(sprintf_2760) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%+3.15d] - l.%d\n, [%+3.15d]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%+3.15d] - l.%d\n, [%+3.15d]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%+3.15d] - l.%d\n, [%+3.15d]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%+3.15d] - l.%d\n, [%+3.15d]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5504,8 +5532,10 @@ END_TEST
 START_TEST(sprintf_2761) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%+3.15d] - l.%d\n, [%+3.15d]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%+3.15d] - l.%d\n, [%+3.15d]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%+3.15d] - l.%d\n, [%+3.15d]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%+3.15d] - l.%d\n, [%+3.15d]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5549,8 +5579,10 @@ END_TEST
 START_TEST(sprintf_2766) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%+15.0d] - l.%d\n, [%+15.0d]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%+15.0d] - l.%d\n, [%+15.0d]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%+15.0d] - l.%d\n, [%+15.0d]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%+15.0d] - l.%d\n, [%+15.0d]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5558,8 +5590,10 @@ END_TEST
 START_TEST(sprintf_2767) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%+15.0d] - l.%d\n, [%+15.0d]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%+15.0d] - l.%d\n, [%+15.0d]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%+15.0d] - l.%d\n, [%+15.0d]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%+15.0d] - l.%d\n, [%+15.0d]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5576,8 +5610,10 @@ END_TEST
 START_TEST(sprintf_2769) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%+15.5d] - l.%d\n, [%+15.5d]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%+15.5d] - l.%d\n, [%+15.5d]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%+15.5d] - l.%d\n, [%+15.5d]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%+15.5d] - l.%d\n, [%+15.5d]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5585,8 +5621,10 @@ END_TEST
 START_TEST(sprintf_2770) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%+15.5d] - l.%d\n, [%+15.5d]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%+15.5d] - l.%d\n, [%+15.5d]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%+15.5d] - l.%d\n, [%+15.5d]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%+15.5d] - l.%d\n, [%+15.5d]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5603,8 +5641,10 @@ END_TEST
 START_TEST(sprintf_2772) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%+15.20d] - l.%d\n, [%+15.20d]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%+15.20d] - l.%d\n, [%+15.20d]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%+15.20d] - l.%d\n, [%+15.20d]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%+15.20d] - l.%d\n, [%+15.20d]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5612,8 +5652,10 @@ END_TEST
 START_TEST(sprintf_2773) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%+15.20d] - l.%d\n, [%+15.20d]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%+15.20d] - l.%d\n, [%+15.20d]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%+15.20d] - l.%d\n, [%+15.20d]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%+15.20d] - l.%d\n, [%+15.20d]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5684,8 +5726,10 @@ END_TEST
 START_TEST(sprintf_2781) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, " - %d - [%% 3.0d] - l.%d\n, [% 3.0d]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, " - %d - [%% 3.0d] - l.%d\n, [% 3.0d]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, " - %d - [%% 3.0d] - l.%d\n, [% 3.0d]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, " - %d - [%% 3.0d] - l.%d\n, [% 3.0d]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5693,8 +5737,10 @@ END_TEST
 START_TEST(sprintf_2782) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, " - %d - [%% 3.0d] - l.%d\n, [% 3.0d]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, " - %d - [%% 3.0d] - l.%d\n, [% 3.0d]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, " - %d - [%% 3.0d] - l.%d\n, [% 3.0d]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, " - %d - [%% 3.0d] - l.%d\n, [% 3.0d]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5711,8 +5757,10 @@ END_TEST
 START_TEST(sprintf_2784) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%% 3.2d] - l.%d\n, [% 3.2d]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%% 3.2d] - l.%d\n, [% 3.2d]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%% 3.2d] - l.%d\n, [% 3.2d]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%% 3.2d] - l.%d\n, [% 3.2d]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5720,8 +5768,10 @@ END_TEST
 START_TEST(sprintf_2785) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%% 3.2d] - l.%d\n, [% 3.2d]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%% 3.2d] - l.%d\n, [% 3.2d]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%% 3.2d] - l.%d\n, [% 3.2d]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%% 3.2d] - l.%d\n, [% 3.2d]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5738,8 +5788,10 @@ END_TEST
 START_TEST(sprintf_2786_2) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%% 3.5d] - l.%d\n, [% 3.5d]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%% 3.5d] - l.%d\n, [% 3.5d]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%% 3.5d] - l.%d\n, [% 3.5d]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%% 3.5d] - l.%d\n, [% 3.5d]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5747,8 +5799,10 @@ END_TEST
 START_TEST(sprintf_2787) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%% 3.5d] - l.%d\n, [% 3.5d]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%% 3.5d] - l.%d\n, [% 3.5d]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%% 3.5d] - l.%d\n, [% 3.5d]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%% 3.5d] - l.%d\n, [% 3.5d]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5765,8 +5819,10 @@ END_TEST
 START_TEST(sprintf_2789) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%% 3.15d] - l.%d\n, [% 3.15d]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%% 3.15d] - l.%d\n, [% 3.15d]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%% 3.15d] - l.%d\n, [% 3.15d]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%% 3.15d] - l.%d\n, [% 3.15d]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5774,8 +5830,10 @@ END_TEST
 START_TEST(sprintf_2790) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%% 3.15d] - l.%d\n, [% 3.15d]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%% 3.15d] - l.%d\n, [% 3.15d]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%% 3.15d] - l.%d\n, [% 3.15d]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%% 3.15d] - l.%d\n, [% 3.15d]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5819,8 +5877,10 @@ END_TEST
 START_TEST(sprintf_2795) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%% 15.0d] - l.%d\n, [% 15.0d]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%% 15.0d] - l.%d\n, [% 15.0d]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%% 15.0d] - l.%d\n, [% 15.0d]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%% 15.0d] - l.%d\n, [% 15.0d]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5828,8 +5888,10 @@ END_TEST
 START_TEST(sprintf_2796) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%% 15.0d] - l.%d\n, [% 15.0d]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%% 15.0d] - l.%d\n, [% 15.0d]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%% 15.0d] - l.%d\n, [% 15.0d]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%% 15.0d] - l.%d\n, [% 15.0d]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5846,8 +5908,10 @@ END_TEST
 START_TEST(sprintf_2798) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%% 15.5d] - l.%d\n, [% 15.5d]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%% 15.5d] - l.%d\n, [% 15.5d]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%% 15.5d] - l.%d\n, [% 15.5d]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%% 15.5d] - l.%d\n, [% 15.5d]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5855,8 +5919,10 @@ END_TEST
 START_TEST(sprintf_2799) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%% 15.5d] - l.%d\n, [% 15.5d]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%% 15.5d] - l.%d\n, [% 15.5d]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%% 15.5d] - l.%d\n, [% 15.5d]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%% 15.5d] - l.%d\n, [% 15.5d]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5873,8 +5939,10 @@ END_TEST
 START_TEST(sprintf_2801) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%% 15.20d] - l.%d\n, [% 15.20d]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%% 15.20d] - l.%d\n, [% 15.20d]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%% 15.20d] - l.%d\n, [% 15.20d]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%% 15.20d] - l.%d\n, [% 15.20d]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5882,8 +5950,10 @@ END_TEST
 START_TEST(sprintf_2802) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%% 15.20d] - l.%d\n, [% 15.20d]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%% 15.20d] - l.%d\n, [% 15.20d]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%% 15.20d] - l.%d\n, [% 15.20d]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%% 15.20d] - l.%d\n, [% 15.20d]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5954,8 +6024,10 @@ END_TEST
 START_TEST(sprintf_2809) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%3.0hd] - l.%d\n, [%3.0hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%3.0hd] - l.%d\n, [%3.0hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%3.0hd] - l.%d\n, [%3.0hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%3.0hd] - l.%d\n, [%3.0hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5963,8 +6035,10 @@ END_TEST
 START_TEST(sprintf_2810) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%3.0hd] - l.%d\n, [%3.0hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%3.0hd] - l.%d\n, [%3.0hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%3.0hd] - l.%d\n, [%3.0hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%3.0hd] - l.%d\n, [%3.0hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5981,8 +6055,10 @@ END_TEST
 START_TEST(sprintf_2812) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%3.2hd] - l.%d\n, [%3.2hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%3.2hd] - l.%d\n, [%3.2hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%3.2hd] - l.%d\n, [%3.2hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%3.2hd] - l.%d\n, [%3.2hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -5990,8 +6066,10 @@ END_TEST
 START_TEST(sprintf_2813) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%3.2hd] - l.%d\n, [%3.2hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%3.2hd] - l.%d\n, [%3.2hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%3.2hd] - l.%d\n, [%3.2hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%3.2hd] - l.%d\n, [%3.2hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6008,8 +6086,10 @@ END_TEST
 START_TEST(sprintf_2815) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%3.5hd] - l.%d\n, [%3.5hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%3.5hd] - l.%d\n, [%3.5hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%3.5hd] - l.%d\n, [%3.5hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%3.5hd] - l.%d\n, [%3.5hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6017,8 +6097,10 @@ END_TEST
 START_TEST(sprintf_2816) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%3.5hd] - l.%d\n, [%3.5hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%3.5hd] - l.%d\n, [%3.5hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%3.5hd] - l.%d\n, [%3.5hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%3.5hd] - l.%d\n, [%3.5hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6035,8 +6117,10 @@ END_TEST
 START_TEST(sprintf_2818) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%3.15hd] - l.%d\n, [%3.15hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%3.15hd] - l.%d\n, [%3.15hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%3.15hd] - l.%d\n, [%3.15hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%3.15hd] - l.%d\n, [%3.15hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6044,8 +6128,10 @@ END_TEST
 START_TEST(sprintf_2819) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%3.15hd] - l.%d\n, [%3.15hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%3.15hd] - l.%d\n, [%3.15hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%3.15hd] - l.%d\n, [%3.15hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%3.15hd] - l.%d\n, [%3.15hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6062,8 +6148,10 @@ END_TEST
 START_TEST(sprintf_2821) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%15hd] - l.%d\n, [%15hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%15hd] - l.%d\n, [%15hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%15hd] - l.%d\n, [%15hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%15hd] - l.%d\n, [%15hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6071,8 +6159,10 @@ END_TEST
 START_TEST(sprintf_2822) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%15hd] - l.%d\n, [%15hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%15hd] - l.%d\n, [%15hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%15hd] - l.%d\n, [%15hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%15hd] - l.%d\n, [%15hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6089,8 +6179,10 @@ END_TEST
 START_TEST(sprintf_2824) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%15.0hd] - l.%d\n, [%15.0hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%15.0hd] - l.%d\n, [%15.0hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%15.0hd] - l.%d\n, [%15.0hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%15.0hd] - l.%d\n, [%15.0hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6098,8 +6190,10 @@ END_TEST
 START_TEST(sprintf_2825) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%15.0hd] - l.%d\n, [%15.0hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%15.0hd] - l.%d\n, [%15.0hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%15.0hd] - l.%d\n, [%15.0hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%15.0hd] - l.%d\n, [%15.0hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6116,8 +6210,10 @@ END_TEST
 START_TEST(sprintf_2827) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%15.5hd] - l.%d\n, [%15.5hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%15.5hd] - l.%d\n, [%15.5hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%15.5hd] - l.%d\n, [%15.5hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%15.5hd] - l.%d\n, [%15.5hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6125,8 +6221,10 @@ END_TEST
 START_TEST(sprintf_2828) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%15.5hd] - l.%d\n, [%15.5hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%15.5hd] - l.%d\n, [%15.5hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%15.5hd] - l.%d\n, [%15.5hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%15.5hd] - l.%d\n, [%15.5hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6143,8 +6241,10 @@ END_TEST
 START_TEST(sprintf_2830) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%15.20hd] - l.%d\n, [%15.20hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%15.20hd] - l.%d\n, [%15.20hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%15.20hd] - l.%d\n, [%15.20hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%15.20hd] - l.%d\n, [%15.20hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6152,8 +6252,10 @@ END_TEST
 START_TEST(sprintf_2831) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%15.20hd] - l.%d\n, [%15.20hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%15.20hd] - l.%d\n, [%15.20hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%15.20hd] - l.%d\n, [%15.20hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%15.20hd] - l.%d\n, [%15.20hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6197,8 +6299,10 @@ END_TEST
 START_TEST(sprintf_2836) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-3hd] - l.%d\n, [%-3hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-3hd] - l.%d\n, [%-3hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-3hd] - l.%d\n, [%-3hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-3hd] - l.%d\n, [%-3hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6206,8 +6310,10 @@ END_TEST
 START_TEST(sprintf_2837) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-3hd] - l.%d\n, [%-3hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-3hd] - l.%d\n, [%-3hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-3hd] - l.%d\n, [%-3hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-3hd] - l.%d\n, [%-3hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6224,8 +6330,10 @@ END_TEST
 START_TEST(sprintf_2839) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-3.0hd] - l.%d\n, [%-3.0hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-3.0hd] - l.%d\n, [%-3.0hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-3.0hd] - l.%d\n, [%-3.0hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-3.0hd] - l.%d\n, [%-3.0hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6233,8 +6341,10 @@ END_TEST
 START_TEST(sprintf_2840) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-3.0hd] - l.%d\n, [%-3.0hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-3.0hd] - l.%d\n, [%-3.0hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-3.0hd] - l.%d\n, [%-3.0hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-3.0hd] - l.%d\n, [%-3.0hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6251,8 +6361,10 @@ END_TEST
 START_TEST(sprintf_2842) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-3.2hd] - l.%d\n, [%-3.2hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-3.2hd] - l.%d\n, [%-3.2hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-3.2hd] - l.%d\n, [%-3.2hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-3.2hd] - l.%d\n, [%-3.2hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6260,8 +6372,10 @@ END_TEST
 START_TEST(sprintf_2843) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-3.2hd] - l.%d\n, [%-3.2hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-3.2hd] - l.%d\n, [%-3.2hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-3.2hd] - l.%d\n, [%-3.2hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-3.2hd] - l.%d\n, [%-3.2hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6278,8 +6392,10 @@ END_TEST
 START_TEST(sprintf_2845) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-3.5hd] - l.%d\n, [%-3.5hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-3.5hd] - l.%d\n, [%-3.5hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-3.5hd] - l.%d\n, [%-3.5hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-3.5hd] - l.%d\n, [%-3.5hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6287,8 +6403,10 @@ END_TEST
 START_TEST(sprintf_2846) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-3.5hd] - l.%d\n, [%-3.5hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-3.5hd] - l.%d\n, [%-3.5hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-3.5hd] - l.%d\n, [%-3.5hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-3.5hd] - l.%d\n, [%-3.5hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6305,8 +6423,10 @@ END_TEST
 START_TEST(sprintf_2848) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-3.15hd] - l.%d\n, [%-3.15hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-3.15hd] - l.%d\n, [%-3.15hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-3.15hd] - l.%d\n, [%-3.15hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-3.15hd] - l.%d\n, [%-3.15hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6314,8 +6434,10 @@ END_TEST
 START_TEST(sprintf_2849) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-3.15hd] - l.%d\n, [%-3.15hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-3.15hd] - l.%d\n, [%-3.15hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-3.15hd] - l.%d\n, [%-3.15hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-3.15hd] - l.%d\n, [%-3.15hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6359,8 +6481,10 @@ END_TEST
 START_TEST(sprintf_2854) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%+3hd] - l.%d\n, [%+3hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%+3hd] - l.%d\n, [%+3hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%+3hd] - l.%d\n, [%+3hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%+3hd] - l.%d\n, [%+3hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6368,8 +6492,10 @@ END_TEST
 START_TEST(sprintf_2855) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%+3hd] - l.%d\n, [%+3hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%+3hd] - l.%d\n, [%+3hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%+3hd] - l.%d\n, [%+3hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%+3hd] - l.%d\n, [%+3hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6386,8 +6512,10 @@ END_TEST
 START_TEST(sprintf_2857) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%+3.0hd] - l.%d\n, [%+3.0hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%+3.0hd] - l.%d\n, [%+3.0hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%+3.0hd] - l.%d\n, [%+3.0hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%+3.0hd] - l.%d\n, [%+3.0hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6395,8 +6523,10 @@ END_TEST
 START_TEST(sprintf_2858) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%+3.0hd] - l.%d\n, [%+3.0hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%+3.0hd] - l.%d\n, [%+3.0hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%+3.0hd] - l.%d\n, [%+3.0hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%+3.0hd] - l.%d\n, [%+3.0hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6413,8 +6543,10 @@ END_TEST
 START_TEST(sprintf_2860) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%+3.5hd] - l.%d\n, [%+3.5hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%+3.5hd] - l.%d\n, [%+3.5hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%+3.5hd] - l.%d\n, [%+3.5hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%+3.5hd] - l.%d\n, [%+3.5hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6422,8 +6554,10 @@ END_TEST
 START_TEST(sprintf_2861) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%+3.5hd] - l.%d\n, [%+3.5hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%+3.5hd] - l.%d\n, [%+3.5hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%+3.5hd] - l.%d\n, [%+3.5hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%+3.5hd] - l.%d\n, [%+3.5hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6440,8 +6574,10 @@ END_TEST
 START_TEST(sprintf_2863) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%+3.15hd] - l.%d\n, [%+3.15hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%+3.15hd] - l.%d\n, [%+3.15hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%+3.15hd] - l.%d\n, [%+3.15hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%+3.15hd] - l.%d\n, [%+3.15hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6449,8 +6585,10 @@ END_TEST
 START_TEST(sprintf_2864) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%+3.15hd] - l.%d\n, [%+3.15hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%+3.15hd] - l.%d\n, [%+3.15hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%+3.15hd] - l.%d\n, [%+3.15hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%+3.15hd] - l.%d\n, [%+3.15hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6467,8 +6605,10 @@ END_TEST
 START_TEST(sprintf_2866) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%+15hd] - l.%d\n, [%+15hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%+15hd] - l.%d\n, [%+15hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%+15hd] - l.%d\n, [%+15hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%+15hd] - l.%d\n, [%+15hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6476,8 +6616,10 @@ END_TEST
 START_TEST(sprintf_2867) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%+15hd] - l.%d\n, [%+15hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%+15hd] - l.%d\n, [%+15hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%+15hd] - l.%d\n, [%+15hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%+15hd] - l.%d\n, [%+15hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6494,8 +6636,10 @@ END_TEST
 START_TEST(sprintf_2869) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%+15.0hd] - l.%d\n, [%+15.0hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%+15.0hd] - l.%d\n, [%+15.0hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%+15.0hd] - l.%d\n, [%+15.0hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%+15.0hd] - l.%d\n, [%+15.0hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6503,8 +6647,10 @@ END_TEST
 START_TEST(sprintf_2870) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%+15.0hd] - l.%d\n, [%+15.0hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%+15.0hd] - l.%d\n, [%+15.0hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%+15.0hd] - l.%d\n, [%+15.0hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%+15.0hd] - l.%d\n, [%+15.0hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6521,8 +6667,10 @@ END_TEST
 START_TEST(sprintf_2872) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%+15.5hd] - l.%d\n, [%+15.5hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%+15.5hd] - l.%d\n, [%+15.5hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%+15.5hd] - l.%d\n, [%+15.5hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%+15.5hd] - l.%d\n, [%+15.5hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6530,8 +6678,10 @@ END_TEST
 START_TEST(sprintf_2873) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%+15.5hd] - l.%d\n, [%+15.5hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%+15.5hd] - l.%d\n, [%+15.5hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%+15.5hd] - l.%d\n, [%+15.5hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%+15.5hd] - l.%d\n, [%+15.5hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6539,8 +6689,10 @@ END_TEST
 START_TEST(sprintf_2874) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%+15.20hd] - l.%d\n, [%+15.20hd]", 0, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%+15.20hd] - l.%d\n, [%+15.20hd]", 0, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%+15.20hd] - l.%d\n, [%+15.20hd]", 0, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%+15.20hd] - l.%d\n, [%+15.20hd]", 0, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6548,8 +6700,10 @@ END_TEST
 START_TEST(sprintf_2875) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%+15.20hd] - l.%d\n, [%+15.20hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%+15.20hd] - l.%d\n, [%+15.20hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%+15.20hd] - l.%d\n, [%+15.20hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%+15.20hd] - l.%d\n, [%+15.20hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6557,8 +6711,10 @@ END_TEST
 START_TEST(sprintf_2876) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%+15.20hd] - l.%d\n, [%+15.20hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%+15.20hd] - l.%d\n, [%+15.20hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%+15.20hd] - l.%d\n, [%+15.20hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%+15.20hd] - l.%d\n, [%+15.20hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6602,8 +6758,10 @@ END_TEST
 START_TEST(sprintf_2881) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%% 3hd] - l.%d\n, [% 3hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%% 3hd] - l.%d\n, [% 3hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%% 3hd] - l.%d\n, [% 3hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%% 3hd] - l.%d\n, [% 3hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6611,8 +6769,10 @@ END_TEST
 START_TEST(sprintf_2882) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%% 3hd] - l.%d\n, [% 3hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%% 3hd] - l.%d\n, [% 3hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%% 3hd] - l.%d\n, [% 3hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%% 3hd] - l.%d\n, [% 3hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6629,8 +6789,10 @@ END_TEST
 START_TEST(sprintf_2884) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%% 3.0hd] - l.%d\n, [% 3.0hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%% 3.0hd] - l.%d\n, [% 3.0hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%% 3.0hd] - l.%d\n, [% 3.0hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%% 3.0hd] - l.%d\n, [% 3.0hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6638,8 +6800,10 @@ END_TEST
 START_TEST(sprintf_2885) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%% 3.0hd] - l.%d\n, [% 3.0hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%% 3.0hd] - l.%d\n, [% 3.0hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%% 3.0hd] - l.%d\n, [% 3.0hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%% 3.0hd] - l.%d\n, [% 3.0hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6656,8 +6820,10 @@ END_TEST
 START_TEST(sprintf_2887) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%% 3.2hd] - l.%d\n, [% 3.2hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%% 3.2hd] - l.%d\n, [% 3.2hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%% 3.2hd] - l.%d\n, [% 3.2hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%% 3.2hd] - l.%d\n, [% 3.2hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6665,8 +6831,10 @@ END_TEST
 START_TEST(sprintf_2888) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%% 3.2hd] - l.%d\n, [% 3.2hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%% 3.2hd] - l.%d\n, [% 3.2hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%% 3.2hd] - l.%d\n, [% 3.2hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%% 3.2hd] - l.%d\n, [% 3.2hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6683,8 +6851,10 @@ END_TEST
 START_TEST(sprintf_2890) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%% 3.5hd] - l.%d\n, [% 3.5hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%% 3.5hd] - l.%d\n, [% 3.5hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%% 3.5hd] - l.%d\n, [% 3.5hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%% 3.5hd] - l.%d\n, [% 3.5hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6692,8 +6862,10 @@ END_TEST
 START_TEST(sprintf_2891) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%% 3.5hd] - l.%d\n, [% 3.5hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%% 3.5hd] - l.%d\n, [% 3.5hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%% 3.5hd] - l.%d\n, [% 3.5hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%% 3.5hd] - l.%d\n, [% 3.5hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6710,8 +6882,10 @@ END_TEST
 START_TEST(sprintf_2893) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%% 3.15hd] - l.%d\n, [% 3.15hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%% 3.15hd] - l.%d\n, [% 3.15hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%% 3.15hd] - l.%d\n, [% 3.15hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%% 3.15hd] - l.%d\n, [% 3.15hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6719,8 +6893,10 @@ END_TEST
 START_TEST(sprintf_2894) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%% 3.15hd] - l.%d\n, [% 3.15hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%% 3.15hd] - l.%d\n, [% 3.15hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%% 3.15hd] - l.%d\n, [% 3.15hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%% 3.15hd] - l.%d\n, [% 3.15hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6737,8 +6913,10 @@ END_TEST
 START_TEST(sprintf_2896) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%% 15hd] - l.%d\n, [% 15hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%% 15hd] - l.%d\n, [% 15hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%% 15hd] - l.%d\n, [% 15hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%% 15hd] - l.%d\n, [% 15hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6746,8 +6924,10 @@ END_TEST
 START_TEST(sprintf_2897) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%% 15hd] - l.%d\n, [% 15hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%% 15hd] - l.%d\n, [% 15hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%% 15hd] - l.%d\n, [% 15hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%% 15hd] - l.%d\n, [% 15hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6764,8 +6944,10 @@ END_TEST
 START_TEST(sprintf_2899) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%% 15.0hd] - l.%d\n, [% 15.0hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%% 15.0hd] - l.%d\n, [% 15.0hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%% 15.0hd] - l.%d\n, [% 15.0hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%% 15.0hd] - l.%d\n, [% 15.0hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6773,8 +6955,10 @@ END_TEST
 START_TEST(sprintf_2900) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%% 15.0hd] - l.%d\n, [% 15.0hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%% 15.0hd] - l.%d\n, [% 15.0hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%% 15.0hd] - l.%d\n, [% 15.0hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%% 15.0hd] - l.%d\n, [% 15.0hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6791,8 +6975,10 @@ END_TEST
 START_TEST(sprintf_2902) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%% 15.5hd] - l.%d\n, [% 15.5hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%% 15.5hd] - l.%d\n, [% 15.5hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%% 15.5hd] - l.%d\n, [% 15.5hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%% 15.5hd] - l.%d\n, [% 15.5hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6800,8 +6986,10 @@ END_TEST
 START_TEST(sprintf_2903) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%% 15.5hd] - l.%d\n, [% 15.5hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%% 15.5hd] - l.%d\n, [% 15.5hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%% 15.5hd] - l.%d\n, [% 15.5hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%% 15.5hd] - l.%d\n, [% 15.5hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6809,8 +6997,10 @@ END_TEST
 START_TEST(sprintf_2904) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%% 15.20hd] - l.%d\n, [% 15.20hd]", 0, -2,  __LINE__);
-  sprintf(str1, "- %d - [%% 15.20hd] - l.%d\n, [% 15.20hd]", 0, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%% 15.20hd] - l.%d\n, [% 15.20hd]", 0, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%% 15.20hd] - l.%d\n, [% 15.20hd]", 0, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6818,8 +7008,10 @@ END_TEST
 START_TEST(sprintf_2905) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%% 15.20hd] - l.%d\n, [% 15.20hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%% 15.20hd] - l.%d\n, [% 15.20hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%% 15.20hd] - l.%d\n, [% 15.20hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%% 15.20hd] - l.%d\n, [% 15.20hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6827,8 +7019,10 @@ END_TEST
 START_TEST(sprintf_2906) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%% 15.20hd] - l.%d\n, [% 15.20hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%% 15.20hd] - l.%d\n, [% 15.20hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%% 15.20hd] - l.%d\n, [% 15.20hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%% 15.20hd] - l.%d\n, [% 15.20hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6899,8 +7093,10 @@ END_TEST
 START_TEST(sprintf_3020) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+3.0d] - l.%d\n, [%-+3.0d]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+3.0d] - l.%d\n, [%-+3.0d]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+3.0d] - l.%d\n, [%-+3.0d]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+3.0d] - l.%d\n, [%-+3.0d]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6908,8 +7104,10 @@ END_TEST
 START_TEST(sprintf_3021) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+3.0d] - l.%d\n, [%-+3.0d]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+3.0d] - l.%d\n, [%-+3.0d]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+3.0d] - l.%d\n, [%-+3.0d]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+3.0d] - l.%d\n, [%-+3.0d]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6926,8 +7124,10 @@ END_TEST
 START_TEST(sprintf_3022) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+3.2d] - l.%d\n, [%-+3.2d]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+3.2d] - l.%d\n, [%-+3.2d]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+3.2d] - l.%d\n, [%-+3.2d]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+3.2d] - l.%d\n, [%-+3.2d]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6935,8 +7135,10 @@ END_TEST
 START_TEST(sprintf_3023) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+3.2d] - l.%d\n, [%-+3.2d]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+3.2d] - l.%d\n, [%-+3.2d]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+3.2d] - l.%d\n, [%-+3.2d]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+3.2d] - l.%d\n, [%-+3.2d]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6953,8 +7155,10 @@ END_TEST
 START_TEST(sprintf_3025) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+3.5d] - l.%d\n, [%-+3.5d]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+3.5d] - l.%d\n, [%-+3.5d]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+3.5d] - l.%d\n, [%-+3.5d]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+3.5d] - l.%d\n, [%-+3.5d]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6962,8 +7166,10 @@ END_TEST
 START_TEST(sprintf_3026) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+3.5d] - l.%d\n, [%-+3.5d]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+3.5d] - l.%d\n, [%-+3.5d]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+3.5d] - l.%d\n, [%-+3.5d]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+3.5d] - l.%d\n, [%-+3.5d]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6980,8 +7186,10 @@ END_TEST
 START_TEST(sprintf_3028) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+3.15d] - l.%d\n, [%-+3.15d]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+3.15d] - l.%d\n, [%-+3.15d]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+3.15d] - l.%d\n, [%-+3.15d]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+3.15d] - l.%d\n, [%-+3.15d]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -6989,8 +7197,10 @@ END_TEST
 START_TEST(sprintf_3029) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+3.15d] - l.%d\n, [%-+3.15d]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+3.15d] - l.%d\n, [%-+3.15d]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+3.15d] - l.%d\n, [%-+3.15d]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+3.15d] - l.%d\n, [%-+3.15d]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7007,8 +7217,10 @@ END_TEST
 START_TEST(sprintf_3031) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+15d] - l.%d\n, [%-+15d]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+15d] - l.%d\n, [%-+15d]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+15d] - l.%d\n, [%-+15d]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+15d] - l.%d\n, [%-+15d]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7016,8 +7228,10 @@ END_TEST
 START_TEST(sprintf_3032) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+15d] - l.%d\n, [%-+15d]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+15d] - l.%d\n, [%-+15d]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+15d] - l.%d\n, [%-+15d]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+15d] - l.%d\n, [%-+15d]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7034,8 +7248,10 @@ END_TEST
 START_TEST(sprintf_3034) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+15.0d] - l.%d\n, [%-+15.0d]", INT_MIN, -2, __LINE__);
-  sprintf(str1, "- %d - [%%-+15.0d] - l.%d\n, [%-+15.0d]", INT_MIN, -2, __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+15.0d] - l.%d\n, [%-+15.0d]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+15.0d] - l.%d\n, [%-+15.0d]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7043,8 +7259,10 @@ END_TEST
 START_TEST(sprintf_3035) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+15.0d] - l.%d\n, [%-+15.0d]", INT_MAX, -2, __LINE__);
-  sprintf(str1, "- %d - [%%-+15.0d] - l.%d\n, [%-+15.0d]", INT_MAX, -2, __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+15.0d] - l.%d\n, [%-+15.0d]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+15.0d] - l.%d\n, [%-+15.0d]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7061,8 +7279,10 @@ END_TEST
 START_TEST(sprintf_3037) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+15.5d] - l.%d\n, [%-+15.5d]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+15.5d] - l.%d\n, [%-+15.5d]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+15.5d] - l.%d\n, [%-+15.5d]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+15.5d] - l.%d\n, [%-+15.5d]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7070,8 +7290,10 @@ END_TEST
 START_TEST(sprintf_3038) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+15.5d] - l.%d\n, [%-+15.5d]", INT_MAX, -2, __LINE__);
-  sprintf(str1, "- %d - [%%-+15.5d] - l.%d\n, [%-+15.5d]", INT_MAX, -2, __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+15.5d] - l.%d\n, [%-+15.5d]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+15.5d] - l.%d\n, [%-+15.5d]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7079,8 +7301,10 @@ END_TEST
 START_TEST(sprintf_3039) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+15.20d] - l.%d\n, [%-+15.20d]", 0, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+15.20d] - l.%d\n, [%-+15.20d]", 0, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+15.20d] - l.%d\n, [%-+15.20d]", 0, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+15.20d] - l.%d\n, [%-+15.20d]", 0, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7088,8 +7312,10 @@ END_TEST
 START_TEST(sprintf_3040) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+15.20d] - l.%d\n, [%-+15.20d]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+15.20d] - l.%d\n, [%-+15.20d]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+15.20d] - l.%d\n, [%-+15.20d]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+15.20d] - l.%d\n, [%-+15.20d]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7097,8 +7323,10 @@ END_TEST
 START_TEST(sprintf_3041) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+15.20d] - l.%d\n, [%-+15.20d]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+15.20d] - l.%d\n, [%-+15.20d]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+15.20d] - l.%d\n, [%-+15.20d]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+15.20d] - l.%d\n, [%-+15.20d]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7169,8 +7397,10 @@ END_TEST
 START_TEST(sprintf_3079) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 3.0d] - l.%d\n, [%- 3.0d]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 3.0d] - l.%d\n, [%- 3.0d]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 3.0d] - l.%d\n, [%- 3.0d]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 3.0d] - l.%d\n, [%- 3.0d]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7178,8 +7408,10 @@ END_TEST
 START_TEST(sprintf_3080) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 3.0d] - l.%d\n, [%- 3.0d]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 3.0d] - l.%d\n, [%- 3.0d]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 3.0d] - l.%d\n, [%- 3.0d]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 3.0d] - l.%d\n, [%- 3.0d]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7196,8 +7428,10 @@ END_TEST
 START_TEST(sprintf_3082) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 3.2d] - l.%d\n, [%- 3.2d]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 3.2d] - l.%d\n, [%- 3.2d]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 3.2d] - l.%d\n, [%- 3.2d]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 3.2d] - l.%d\n, [%- 3.2d]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7205,8 +7439,10 @@ END_TEST
 START_TEST(sprintf_3083) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 3.2d] - l.%d\n, [%- 3.2d]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 3.2d] - l.%d\n, [%- 3.2d]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 3.2d] - l.%d\n, [%- 3.2d]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 3.2d] - l.%d\n, [%- 3.2d]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7223,8 +7459,10 @@ END_TEST
 START_TEST(sprintf_3085) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 3.5d] - l.%d\n, [%- 3.5d]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 3.5d] - l.%d\n, [%- 3.5d]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 3.5d] - l.%d\n, [%- 3.5d]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 3.5d] - l.%d\n, [%- 3.5d]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7232,8 +7470,10 @@ END_TEST
 START_TEST(sprintf_3086) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 3.5d] - l.%d\n, [%- 3.5d]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 3.5d] - l.%d\n, [%- 3.5d]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 3.5d] - l.%d\n, [%- 3.5d]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 3.5d] - l.%d\n, [%- 3.5d]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7250,8 +7490,10 @@ END_TEST
 START_TEST(sprintf_3088) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 3.15d] - l.%d\n, [%- 3.15d]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 3.15d] - l.%d\n, [%- 3.15d]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 3.15d] - l.%d\n, [%- 3.15d]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 3.15d] - l.%d\n, [%- 3.15d]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7259,8 +7501,10 @@ END_TEST
 START_TEST(sprintf_3089) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 3.15d] - l.%d\n, [%- 3.15d]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 3.15d] - l.%d\n, [%- 3.15d]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 3.15d] - l.%d\n, [%- 3.15d]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 3.15d] - l.%d\n, [%- 3.15d]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7277,8 +7521,10 @@ END_TEST
 START_TEST(sprintf_3091) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 15d] - l.%d\n, [%- 15d]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 15d] - l.%d\n, [%- 15d]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 15d] - l.%d\n, [%- 15d]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 15d] - l.%d\n, [%- 15d]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7286,8 +7532,10 @@ END_TEST
 START_TEST(sprintf_3092) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 15d] - l.%d\n, [%- 15d]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 15d] - l.%d\n, [%- 15d]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 15d] - l.%d\n, [%- 15d]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 15d] - l.%d\n, [%- 15d]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7304,8 +7552,10 @@ END_TEST
 START_TEST(sprintf_3094) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 15.0d] - l.%d\n, [%- 15.0d]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 15.0d] - l.%d\n, [%- 15.0d]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 15.0d] - l.%d\n, [%- 15.0d]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 15.0d] - l.%d\n, [%- 15.0d]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7313,8 +7563,10 @@ END_TEST
 START_TEST(sprintf_3095) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 15.0d] - l.%d\n, [%- 15.0d]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 15.0d] - l.%d\n, [%- 15.0d]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 15.0d] - l.%d\n, [%- 15.0d]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 15.0d] - l.%d\n, [%- 15.0d]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7331,8 +7583,10 @@ END_TEST
 START_TEST(sprintf_3097) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 15.5d] - l.%d\n, [%- 15.5d]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 15.5d] - l.%d\n, [%- 15.5d]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 15.5d] - l.%d\n, [%- 15.5d]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 15.5d] - l.%d\n, [%- 15.5d]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7340,8 +7594,10 @@ END_TEST
 START_TEST(sprintf_3098) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 15.5d] - l.%d\n, [%- 15.5d]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 15.5d] - l.%d\n, [%- 15.5d]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 15.5d] - l.%d\n, [%- 15.5d]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 15.5d] - l.%d\n, [%- 15.5d]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7349,8 +7605,10 @@ END_TEST
 START_TEST(sprintf_3099) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 15.20d] - l.%d\n, [%- 15.20d]", 0, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 15.20d] - l.%d\n, [%- 15.20d]", 0, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 15.20d] - l.%d\n, [%- 15.20d]", 0, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 15.20d] - l.%d\n, [%- 15.20d]", 0, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7358,8 +7616,10 @@ END_TEST
 START_TEST(sprintf_3100) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 15.20d] - l.%d\n, [%- 15.20d]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 15.20d] - l.%d\n, [%- 15.20d]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 15.20d] - l.%d\n, [%- 15.20d]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 15.20d] - l.%d\n, [%- 15.20d]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7367,8 +7627,10 @@ END_TEST
 START_TEST(sprintf_3101) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 15.20d] - l.%d\n, [%- 15.20d]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 15.20d] - l.%d\n, [%- 15.20d]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 15.20d] - l.%d\n, [%- 15.20d]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 15.20d] - l.%d\n, [%- 15.20d]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7385,8 +7647,10 @@ END_TEST
 START_TEST(sprintf_3133) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+hd] - l.%d\n, [%-+hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+hd] - l.%d\n, [%-+hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+hd] - l.%d\n, [%-+hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+hd] - l.%d\n, [%-+hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7394,8 +7658,10 @@ END_TEST
 START_TEST(sprintf_3134) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+hd] - l.%d\n, [%-+hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+hd] - l.%d\n, [%-+hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+hd] - l.%d\n, [%-+hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+hd] - l.%d\n, [%-+hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7412,8 +7678,10 @@ END_TEST
 START_TEST(sprintf_3136) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+3hd] - l.%d\n, [%-+3hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+3hd] - l.%d\n, [%-+3hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+3hd] - l.%d\n, [%-+3hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+3hd] - l.%d\n, [%-+3hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7421,8 +7689,10 @@ END_TEST
 START_TEST(sprintf_3137) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+3hd] - l.%d\n, [%-+3hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+3hd] - l.%d\n, [%-+3hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+3hd] - l.%d\n, [%-+3hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+3hd] - l.%d\n, [%-+3hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7439,8 +7709,10 @@ END_TEST
 START_TEST(sprintf_3139) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+3.0hd] - l.%d\n, [%-+3.0hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+3.0hd] - l.%d\n, [%-+3.0hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+3.0hd] - l.%d\n, [%-+3.0hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+3.0hd] - l.%d\n, [%-+3.0hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7448,8 +7720,10 @@ END_TEST
 START_TEST(sprintf_3140) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+3.0hd] - l.%d\n, [%-+3.0hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+3.0hd] - l.%d\n, [%-+3.0hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+3.0hd] - l.%d\n, [%-+3.0hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+3.0hd] - l.%d\n, [%-+3.0hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7466,8 +7740,10 @@ END_TEST
 START_TEST(sprintf_3142) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+3.2hd] - l.%d\n, [%-+3.2hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+3.2hd] - l.%d\n, [%-+3.2hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+3.2hd] - l.%d\n, [%-+3.2hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+3.2hd] - l.%d\n, [%-+3.2hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7475,8 +7751,10 @@ END_TEST
 START_TEST(sprintf_3143) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+3.2hd] - l.%d\n, [%-+3.2hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+3.2hd] - l.%d\n, [%-+3.2hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+3.2hd] - l.%d\n, [%-+3.2hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+3.2hd] - l.%d\n, [%-+3.2hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7493,8 +7771,10 @@ END_TEST
 START_TEST(sprintf_3145) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+3.5hd] - l.%d\n, [%-+3.5hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+3.5hd] - l.%d\n, [%-+3.5hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+3.5hd] - l.%d\n, [%-+3.5hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+3.5hd] - l.%d\n, [%-+3.5hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7502,8 +7782,10 @@ END_TEST
 START_TEST(sprintf_3146) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+3.5hd] - l.%d\n, [%-+3.5hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+3.5hd] - l.%d\n, [%-+3.5hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+3.5hd] - l.%d\n, [%-+3.5hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+3.5hd] - l.%d\n, [%-+3.5hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7511,8 +7793,10 @@ END_TEST
 START_TEST(sprintf_3147) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+3.15hd] - l.%d\n, [%-+3.15hd]", 0, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+3.15hd] - l.%d\n, [%-+3.15hd]", 0, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+3.15hd] - l.%d\n, [%-+3.15hd]", 0, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+3.15hd] - l.%d\n, [%-+3.15hd]", 0, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7520,8 +7804,10 @@ END_TEST
 START_TEST(sprintf_3148) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+3.15hd] - l.%d\n, [%-+3.15hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+3.15hd] - l.%d\n, [%-+3.15hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+3.15hd] - l.%d\n, [%-+3.15hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+3.15hd] - l.%d\n, [%-+3.15hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7529,8 +7815,10 @@ END_TEST
 START_TEST(sprintf_3149) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+3.15hd] - l.%d\n, [%-+3.15hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+3.15hd] - l.%d\n, [%-+3.15hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+3.15hd] - l.%d\n, [%-+3.15hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+3.15hd] - l.%d\n, [%-+3.15hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7547,8 +7835,10 @@ END_TEST
 START_TEST(sprintf_3151) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+15hd] - l.%d\n, [%-+15hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+15hd] - l.%d\n, [%-+15hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+15hd] - l.%d\n, [%-+15hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+15hd] - l.%d\n, [%-+15hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7556,8 +7846,10 @@ END_TEST
 START_TEST(sprintf_3152) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+15hd] - l.%d\n, [%-+15hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+15hd] - l.%d\n, [%-+15hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+15hd] - l.%d\n, [%-+15hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+15hd] - l.%d\n, [%-+15hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7565,8 +7857,10 @@ END_TEST
 START_TEST(sprintf_3153) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+15.0hd] - l.%d\n, [%-+15.0hd]", 0, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+15.0hd] - l.%d\n, [%-+15.0hd]", 0, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+15.0hd] - l.%d\n, [%-+15.0hd]", 0, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+15.0hd] - l.%d\n, [%-+15.0hd]", 0, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7574,8 +7868,10 @@ END_TEST
 START_TEST(sprintf_3154) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+15.0hd] - l.%d\n, [%-+15.0hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+15.0hd] - l.%d\n, [%-+15.0hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+15.0hd] - l.%d\n, [%-+15.0hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+15.0hd] - l.%d\n, [%-+15.0hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7583,8 +7879,10 @@ END_TEST
 START_TEST(sprintf_3155) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+15.0hd] - l.%d\n, [%-+15.0hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+15.0hd] - l.%d\n, [%-+15.0hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+15.0hd] - l.%d\n, [%-+15.0hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+15.0hd] - l.%d\n, [%-+15.0hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7592,8 +7890,10 @@ END_TEST
 START_TEST(sprintf_3156) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+15.5hd] - l.%d\n, [%-+15.5hd]", 0, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+15.5hd] - l.%d\n, [%-+15.5hd]", 0, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+15.5hd] - l.%d\n, [%-+15.5hd]", 0, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+15.5hd] - l.%d\n, [%-+15.5hd]", 0, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7601,8 +7901,10 @@ END_TEST
 START_TEST(sprintf_3157) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+15.5hd] - l.%d\n, [%-+15.5hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+15.5hd] - l.%d\n, [%-+15.5hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+15.5hd] - l.%d\n, [%-+15.5hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+15.5hd] - l.%d\n, [%-+15.5hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7610,8 +7912,10 @@ END_TEST
 START_TEST(sprintf_3158) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+15.5hd] - l.%d\n, [%-+15.5hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+15.5hd] - l.%d\n, [%-+15.5hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+15.5hd] - l.%d\n, [%-+15.5hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+15.5hd] - l.%d\n, [%-+15.5hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7619,8 +7923,10 @@ END_TEST
 START_TEST(sprintf_3159) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+15.20hd] - l.%d\n, [%-+15.20hd]", 0, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+15.20hd] - l.%d\n, [%-+15.20hd]", 0, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+15.20hd] - l.%d\n, [%-+15.20hd]", 0, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+15.20hd] - l.%d\n, [%-+15.20hd]", 0, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7628,8 +7934,10 @@ END_TEST
 START_TEST(sprintf_3160) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+15.20hd] - l.%d\n, [%-+15.20hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+15.20hd] - l.%d\n, [%-+15.20hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+15.20hd] - l.%d\n, [%-+15.20hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+15.20hd] - l.%d\n, [%-+15.20hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7637,8 +7945,10 @@ END_TEST
 START_TEST(sprintf_3161) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-+15.20hd] - l.%d\n, [%-+15.20hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-+15.20hd] - l.%d\n, [%-+15.20hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-+15.20hd] - l.%d\n, [%-+15.20hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-+15.20hd] - l.%d\n, [%-+15.20hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7655,8 +7965,10 @@ END_TEST
 START_TEST(sprintf_3193) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- hd] - l.%d\n, [%- hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- hd] - l.%d\n, [%- hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- hd] - l.%d\n, [%- hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- hd] - l.%d\n, [%- hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7664,8 +7976,10 @@ END_TEST
 START_TEST(sprintf_3194) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- hd] - l.%d\n, [%- hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- hd] - l.%d\n, [%- hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- hd] - l.%d\n, [%- hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- hd] - l.%d\n, [%- hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7682,8 +7996,10 @@ END_TEST
 START_TEST(sprintf_3196) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 3hd] - l.%d\n, [%- 3hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 3hd] - l.%d\n, [%- 3hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 3hd] - l.%d\n, [%- 3hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 3hd] - l.%d\n, [%- 3hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7691,8 +8007,10 @@ END_TEST
 START_TEST(sprintf_3197) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 3hd] - l.%d\n, [%- 3hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 3hd] - l.%d\n, [%- 3hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 3hd] - l.%d\n, [%- 3hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 3hd] - l.%d\n, [%- 3hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7709,8 +8027,10 @@ END_TEST
 START_TEST(sprintf_3199) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 3.0hd] - l.%d\n, [%- 3.0hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 3.0hd] - l.%d\n, [%- 3.0hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 3.0hd] - l.%d\n, [%- 3.0hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 3.0hd] - l.%d\n, [%- 3.0hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7718,8 +8038,10 @@ END_TEST
 START_TEST(sprintf_3200) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 3.0hd] - l.%d\n, [%- 3.0hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 3.0hd] - l.%d\n, [%- 3.0hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 3.0hd] - l.%d\n, [%- 3.0hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 3.0hd] - l.%d\n, [%- 3.0hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7736,8 +8058,10 @@ END_TEST
 START_TEST(sprintf_3202) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 3.2hd] - l.%d\n, [%- 3.2hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 3.2hd] - l.%d\n, [%- 3.2hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 3.2hd] - l.%d\n, [%- 3.2hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 3.2hd] - l.%d\n, [%- 3.2hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7745,8 +8069,10 @@ END_TEST
 START_TEST(sprintf_3203) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 3.2hd] - l.%d\n, [%- 3.2hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 3.2hd] - l.%d\n, [%- 3.2hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 3.2hd] - l.%d\n, [%- 3.2hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 3.2hd] - l.%d\n, [%- 3.2hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7763,8 +8089,10 @@ END_TEST
 START_TEST(sprintf_3205) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 3.5hd] - l.%d\n, [%- 3.5hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 3.5hd] - l.%d\n, [%- 3.5hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 3.5hd] - l.%d\n, [%- 3.5hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 3.5hd] - l.%d\n, [%- 3.5hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7772,8 +8100,10 @@ END_TEST
 START_TEST(sprintf_3206) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 3.5hd] - l.%d\n, [%- 3.5hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 3.5hd] - l.%d\n, [%- 3.5hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 3.5hd] - l.%d\n, [%- 3.5hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 3.5hd] - l.%d\n, [%- 3.5hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7781,8 +8111,10 @@ END_TEST
 START_TEST(sprintf_3207) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 3.15hd] - l.%d\n, [%- 3.15hd]", 0, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 3.15hd] - l.%d\n, [%- 3.15hd]", 0, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 3.15hd] - l.%d\n, [%- 3.15hd]", 0, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 3.15hd] - l.%d\n, [%- 3.15hd]", 0, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7790,8 +8122,10 @@ END_TEST
 START_TEST(sprintf_3208) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 3.15hd] - l.%d\n, [%- 3.15hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 3.15hd] - l.%d\n, [%- 3.15hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 3.15hd] - l.%d\n, [%- 3.15hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 3.15hd] - l.%d\n, [%- 3.15hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7799,8 +8133,10 @@ END_TEST
 START_TEST(sprintf_3209) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 3.15hd] - l.%d\n, [%- 3.15hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 3.15hd] - l.%d\n, [%- 3.15hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 3.15hd] - l.%d\n, [%- 3.15hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 3.15hd] - l.%d\n, [%- 3.15hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7817,8 +8153,10 @@ END_TEST
 START_TEST(sprintf_3211) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 15hd] - l.%d\n, [%- 15hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 15hd] - l.%d\n, [%- 15hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 15hd] - l.%d\n, [%- 15hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 15hd] - l.%d\n, [%- 15hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7826,8 +8164,10 @@ END_TEST
 START_TEST(sprintf_3212) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 15hd] - l.%d\n, [%- 15hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 15hd] - l.%d\n, [%- 15hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 15hd] - l.%d\n, [%- 15hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 15hd] - l.%d\n, [%- 15hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7835,8 +8175,10 @@ END_TEST
 START_TEST(sprintf_3213) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 15.0hd] - l.%d\n, [%- 15.0hd]", 0, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 15.0hd] - l.%d\n, [%- 15.0hd]", 0, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 15.0hd] - l.%d\n, [%- 15.0hd]", 0, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 15.0hd] - l.%d\n, [%- 15.0hd]", 0, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7844,8 +8186,10 @@ END_TEST
 START_TEST(sprintf_3214) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 15.0hd] - l.%d\n, [%- 15.0hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 15.0hd] - l.%d\n, [%- 15.0hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 15.0hd] - l.%d\n, [%- 15.0hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 15.0hd] - l.%d\n, [%- 15.0hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7853,8 +8197,10 @@ END_TEST
 START_TEST(sprintf_3215) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 15.0hd] - l.%d\n, [%- 15.0hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 15.0hd] - l.%d\n, [%- 15.0hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 15.0hd] - l.%d\n, [%- 15.0hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 15.0hd] - l.%d\n, [%- 15.0hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7862,8 +8208,10 @@ END_TEST
 START_TEST(sprintf_3216) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 15.5hd] - l.%d\n, [%- 15.5hd]", 0, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 15.5hd] - l.%d\n, [%- 15.5hd]", 0, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 15.5hd] - l.%d\n, [%- 15.5hd]", 0, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 15.5hd] - l.%d\n, [%- 15.5hd]", 0, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7871,8 +8219,10 @@ END_TEST
 START_TEST(sprintf_3217) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 15.5hd] - l.%d\n, [%- 15.5hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 15.5hd] - l.%d\n, [%- 15.5hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 15.5hd] - l.%d\n, [%- 15.5hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 15.5hd] - l.%d\n, [%- 15.5hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7880,8 +8230,10 @@ END_TEST
 START_TEST(sprintf_3218) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 15.5hd] - l.%d\n, [%- 15.5hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 15.5hd] - l.%d\n, [%- 15.5hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 15.5hd] - l.%d\n, [%- 15.5hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 15.5hd] - l.%d\n, [%- 15.5hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7889,8 +8241,10 @@ END_TEST
 START_TEST(sprintf_3219) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 15.20hd] - l.%d\n, [%- 15.20hd]", 0, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 15.20hd] - l.%d\n, [%- 15.20hd]", 0, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 15.20hd] - l.%d\n, [%- 15.20hd]", 0, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 15.20hd] - l.%d\n, [%- 15.20hd]", 0, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7898,8 +8252,10 @@ END_TEST
 START_TEST(sprintf_3220) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 15.20hd] - l.%d\n, [%- 15.20hd]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 15.20hd] - l.%d\n, [%- 15.20hd]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 15.20hd] - l.%d\n, [%- 15.20hd]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 15.20hd] - l.%d\n, [%- 15.20hd]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -7907,8 +8263,10 @@ END_TEST
 START_TEST(sprintf_3221) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%- 15.20hd] - l.%d\n, [%- 15.20hd]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%- 15.20hd] - l.%d\n, [%- 15.20hd]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%- 15.20hd] - l.%d\n, [%- 15.20hd]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%- 15.20hd] - l.%d\n, [%- 15.20hd]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -8400,8 +8758,10 @@ END_TEST
 START_TEST(sprintf_2724i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%3.15i] - l.%d\n, [%3.15i]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%3.15i] - l.%d\n, [%3.15i]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%3.15i] - l.%d\n, [%3.15i]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%3.15i] - l.%d\n, [%3.15i]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -8409,8 +8769,10 @@ END_TEST
 START_TEST(sprintf_2725i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%3.15i] - l.%d\n, [%3.15i]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%3.15i] - l.%d\n, [%3.15i]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%3.15i] - l.%d\n, [%3.15i]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%3.15i] - l.%d\n, [%3.15i]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -8454,8 +8816,10 @@ END_TEST
 START_TEST(sprintf_2730i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%15.0i] - l.%d\n, [%15.0i]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%15.0i] - l.%d\n, [%15.0i]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%15.0i] - l.%d\n, [%15.0i]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%15.0i] - l.%d\n, [%15.0i]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -8463,8 +8827,10 @@ END_TEST
 START_TEST(sprintf_2731i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%15.0i] - l.%d\n, [%15.0i]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%15.0i] - l.%d\n, [%15.0i]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%15.0i] - l.%d\n, [%15.0i]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%15.0i] - l.%d\n, [%15.0i]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -8481,8 +8847,10 @@ END_TEST
 START_TEST(sprintf_2733i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%15.5i] - l.%d\n, [%15.5i]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%15.5i] - l.%d\n, [%15.5i]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%15.5i] - l.%d\n, [%15.5i]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%15.5i] - l.%d\n, [%15.5i]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -8490,8 +8858,10 @@ END_TEST
 START_TEST(sprintf_2734i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%15.5i] - l.%d\n, [%15.5i]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%15.5i] - l.%d\n, [%15.5i]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%15.5i] - l.%d\n, [%15.5i]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%15.5i] - l.%d\n, [%15.5i]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -8508,8 +8878,10 @@ END_TEST
 START_TEST(sprintf_2736i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%15.20i] - l.%d\n, [%15.20i]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%15.20i] - l.%d\n, [%15.20i]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%15.20i] - l.%d\n, [%15.20i]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%15.20i] - l.%d\n, [%15.20i]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -8517,8 +8889,10 @@ END_TEST
 START_TEST(sprintf_2737i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%15.20i] - l.%d\n, [%15.20i]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%15.20i] - l.%d\n, [%15.20i]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%15.20i] - l.%d\n, [%15.20i]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%15.20i] - l.%d\n, [%15.20i]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -8544,8 +8918,10 @@ END_TEST
 START_TEST(sprintf_2740i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-3.0i] - l.%d\n, [%-3.0i]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-3.0i] - l.%d\n, [%-3.0i]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-3.0i] - l.%d\n, [%-3.0i]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-3.0i] - l.%d\n, [%-3.0i]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -8562,8 +8938,10 @@ END_TEST
 START_TEST(sprintf_2742i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-3.5i] - l.%d\n, [%-3.5i]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-3.5i] - l.%d\n, [%-3.5i]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-3.5i] - l.%d\n, [%-3.5i]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-3.5i] - l.%d\n, [%-3.5i]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -8571,8 +8949,10 @@ END_TEST
 START_TEST(sprintf_2743i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-3.5i] - l.%d\n, [%-3.5i]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-3.5i] - l.%d\n, [%-3.5i]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-3.5i] - l.%d\n, [%-3.5i]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-3.5i] - l.%d\n, [%-3.5i]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -8589,8 +8969,10 @@ END_TEST
 START_TEST(sprintf_2745i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-3.15i] - l.%d\n, [%-3.15i]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-3.15i] - l.%d\n, [%-3.15i]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-3.15i] - l.%d\n, [%-3.15i]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-3.15i] - l.%d\n, [%-3.15i]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -8598,8 +8980,10 @@ END_TEST
 START_TEST(sprintf_2746i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-3.15i] - l.%d\n, [%-3.15i]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-3.15i] - l.%d\n, [%-3.15i]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-3.15i] - l.%d\n, [%-3.15i]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-3.15i] - l.%d\n, [%-3.15i]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -8697,8 +9081,10 @@ END_TEST
 START_TEST(sprintf_i_2757_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%+3.5i] - l.%i\n, [%+3.5i]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%+3.5i] - l.%i\n, [%+3.5i]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%+3.5i] - l.%i\n, [%+3.5i]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%+3.5i] - l.%i\n, [%+3.5i]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -8706,8 +9092,10 @@ END_TEST
 START_TEST(sprintf_i_2758_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%+3.5i] - l.%i\n, [%+3.5i]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%+3.5i] - l.%i\n, [%+3.5i]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%+3.5i] - l.%i\n, [%+3.5i]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%+3.5i] - l.%i\n, [%+3.5i]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -8724,8 +9112,10 @@ END_TEST
 START_TEST(sprintf_i_2760_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%+3.15i] - l.%i\n, [%+3.15i]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%+3.15i] - l.%i\n, [%+3.15i]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%+3.15i] - l.%i\n, [%+3.15i]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%+3.15i] - l.%i\n, [%+3.15i]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -8733,8 +9123,10 @@ END_TEST
 START_TEST(sprintf_i_2761_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%+3.15i] - l.%i\n, [%+3.15i]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%+3.15i] - l.%i\n, [%+3.15i]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%+3.15i] - l.%i\n, [%+3.15i]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%+3.15i] - l.%i\n, [%+3.15i]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -8778,8 +9170,10 @@ END_TEST
 START_TEST(sprintf_i_2766_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%+15.0i] - l.%i\n, [%+15.0i]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%+15.0i] - l.%i\n, [%+15.0i]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%+15.0i] - l.%i\n, [%+15.0i]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%+15.0i] - l.%i\n, [%+15.0i]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -8787,8 +9181,10 @@ END_TEST
 START_TEST(sprintf_i_2767_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%+15.0i] - l.%i\n, [%+15.0i]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%+15.0i] - l.%i\n, [%+15.0i]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%+15.0i] - l.%i\n, [%+15.0i]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%+15.0i] - l.%i\n, [%+15.0i]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -8805,8 +9201,10 @@ END_TEST
 START_TEST(sprintf_i_2769_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%+15.5i] - l.%i\n, [%+15.5i]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%+15.5i] - l.%i\n, [%+15.5i]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%+15.5i] - l.%i\n, [%+15.5i]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%+15.5i] - l.%i\n, [%+15.5i]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -8814,8 +9212,10 @@ END_TEST
 START_TEST(sprintf_i_2770_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%+15.5i] - l.%i\n, [%+15.5i]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%+15.5i] - l.%i\n, [%+15.5i]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%+15.5i] - l.%i\n, [%+15.5i]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%+15.5i] - l.%i\n, [%+15.5i]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -8832,8 +9232,10 @@ END_TEST
 START_TEST(sprintf_i_2772_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%+15.20i] - l.%i\n, [%+15.20i]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%+15.20i] - l.%i\n, [%+15.20i]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%+15.20i] - l.%i\n, [%+15.20i]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%+15.20i] - l.%i\n, [%+15.20i]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -8841,8 +9243,10 @@ END_TEST
 START_TEST(sprintf_i_2773_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%+15.20i] - l.%i\n, [%+15.20i]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%+15.20i] - l.%i\n, [%+15.20i]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%+15.20i] - l.%i\n, [%+15.20i]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%+15.20i] - l.%i\n, [%+15.20i]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -8913,8 +9317,10 @@ END_TEST
 START_TEST(sprintf_i_2781_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, " - %i - [%% 3.0i] - l.%i\n, [% 3.0i]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, " - %i - [%% 3.0i] - l.%i\n, [% 3.0i]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, " - %i - [%% 3.0i] - l.%i\n, [% 3.0i]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, " - %i - [%% 3.0i] - l.%i\n, [% 3.0i]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -8922,8 +9328,10 @@ END_TEST
 START_TEST(sprintf_i_2782_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, " - %i - [%% 3.0i] - l.%i\n, [% 3.0i]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, " - %i - [%% 3.0i] - l.%i\n, [% 3.0i]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, " - %i - [%% 3.0i] - l.%i\n, [% 3.0i]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, " - %i - [%% 3.0i] - l.%i\n, [% 3.0i]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -8940,8 +9348,10 @@ END_TEST
 START_TEST(sprintf_i_2784_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%% 3.2i] - l.%i\n, [% 3.2i]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%% 3.2i] - l.%i\n, [% 3.2i]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%% 3.2i] - l.%i\n, [% 3.2i]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%% 3.2i] - l.%i\n, [% 3.2i]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -8949,8 +9359,10 @@ END_TEST
 START_TEST(sprintf_i_2785_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%% 3.2i] - l.%i\n, [% 3.2i]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%% 3.2i] - l.%i\n, [% 3.2i]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%% 3.2i] - l.%i\n, [% 3.2i]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%% 3.2i] - l.%i\n, [% 3.2i]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -8967,8 +9379,10 @@ END_TEST
 START_TEST(sprintf_i_2786_2_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%% 3.5i] - l.%i\n, [% 3.5i]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%% 3.5i] - l.%i\n, [% 3.5i]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%% 3.5i] - l.%i\n, [% 3.5i]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%% 3.5i] - l.%i\n, [% 3.5i]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -8976,8 +9390,10 @@ END_TEST
 START_TEST(sprintf_i_2787_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%% 3.5i] - l.%i\n, [% 3.5i]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%% 3.5i] - l.%i\n, [% 3.5i]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%% 3.5i] - l.%i\n, [% 3.5i]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%% 3.5i] - l.%i\n, [% 3.5i]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -8994,8 +9410,10 @@ END_TEST
 START_TEST(sprintf_i_2789_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%% 3.15i] - l.%i\n, [% 3.15i]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%% 3.15i] - l.%i\n, [% 3.15i]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%% 3.15i] - l.%i\n, [% 3.15i]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%% 3.15i] - l.%i\n, [% 3.15i]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9003,8 +9421,10 @@ END_TEST
 START_TEST(sprintf_i_2790_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%% 3.15i] - l.%i\n, [% 3.15i]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%% 3.15i] - l.%i\n, [% 3.15i]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%% 3.15i] - l.%i\n, [% 3.15i]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%% 3.15i] - l.%i\n, [% 3.15i]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9048,8 +9468,10 @@ END_TEST
 START_TEST(sprintf_i_2795_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%% 15.0i] - l.%i\n, [% 15.0i]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%% 15.0i] - l.%i\n, [% 15.0i]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%% 15.0i] - l.%i\n, [% 15.0i]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%% 15.0i] - l.%i\n, [% 15.0i]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9057,8 +9479,10 @@ END_TEST
 START_TEST(sprintf_i_2796_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%% 15.0i] - l.%i\n, [% 15.0i]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%% 15.0i] - l.%i\n, [% 15.0i]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%% 15.0i] - l.%i\n, [% 15.0i]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%% 15.0i] - l.%i\n, [% 15.0i]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9075,8 +9499,10 @@ END_TEST
 START_TEST(sprintf_i_2802_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%% 15.20i] - l.%i\n, [% 15.20i]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%% 15.20i] - l.%i\n, [% 15.20i]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%% 15.20i] - l.%i\n, [% 15.20i]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%% 15.20i] - l.%i\n, [% 15.20i]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9147,8 +9573,10 @@ END_TEST
 START_TEST(sprintf_i_2809_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%3.0hi] - l.%i\n, [%3.0hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%3.0hi] - l.%i\n, [%3.0hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%3.0hi] - l.%i\n, [%3.0hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%3.0hi] - l.%i\n, [%3.0hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9156,8 +9584,10 @@ END_TEST
 START_TEST(sprintf_i_2810_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%3.0hi] - l.%i\n, [%3.0hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%3.0hi] - l.%i\n, [%3.0hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%3.0hi] - l.%i\n, [%3.0hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%3.0hi] - l.%i\n, [%3.0hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9174,8 +9604,10 @@ END_TEST
 START_TEST(sprintf_i_2812_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%3.2hi] - l.%i\n, [%3.2hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%3.2hi] - l.%i\n, [%3.2hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%3.2hi] - l.%i\n, [%3.2hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%3.2hi] - l.%i\n, [%3.2hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9183,8 +9615,10 @@ END_TEST
 START_TEST(sprintf_i_2813_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%3.2hi] - l.%i\n, [%3.2hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%3.2hi] - l.%i\n, [%3.2hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%3.2hi] - l.%i\n, [%3.2hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%3.2hi] - l.%i\n, [%3.2hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9201,8 +9635,10 @@ END_TEST
 START_TEST(sprintf_i_2815_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%3.5hi] - l.%i\n, [%3.5hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%3.5hi] - l.%i\n, [%3.5hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%3.5hi] - l.%i\n, [%3.5hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%3.5hi] - l.%i\n, [%3.5hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9210,8 +9646,10 @@ END_TEST
 START_TEST(sprintf_i_2816_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%3.5hi] - l.%i\n, [%3.5hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%3.5hi] - l.%i\n, [%3.5hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%3.5hi] - l.%i\n, [%3.5hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%3.5hi] - l.%i\n, [%3.5hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9228,8 +9666,10 @@ END_TEST
 START_TEST(sprintf_i_2818_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%3.15hi] - l.%i\n, [%3.15hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%3.15hi] - l.%i\n, [%3.15hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%3.15hi] - l.%i\n, [%3.15hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%3.15hi] - l.%i\n, [%3.15hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9237,8 +9677,10 @@ END_TEST
 START_TEST(sprintf_i_2819_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%3.15hi] - l.%i\n, [%3.15hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%3.15hi] - l.%i\n, [%3.15hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%3.15hi] - l.%i\n, [%3.15hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%3.15hi] - l.%i\n, [%3.15hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9255,8 +9697,10 @@ END_TEST
 START_TEST(sprintf_i_2821_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%15hi] - l.%i\n, [%15hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%15hi] - l.%i\n, [%15hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%15hi] - l.%i\n, [%15hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%15hi] - l.%i\n, [%15hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9264,8 +9708,10 @@ END_TEST
 START_TEST(sprintf_i_2822_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%15hi] - l.%i\n, [%15hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%15hi] - l.%i\n, [%15hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%15hi] - l.%i\n, [%15hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%15hi] - l.%i\n, [%15hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9282,8 +9728,10 @@ END_TEST
 START_TEST(sprintf_i_2824_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%15.0hi] - l.%i\n, [%15.0hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%15.0hi] - l.%i\n, [%15.0hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%15.0hi] - l.%i\n, [%15.0hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%15.0hi] - l.%i\n, [%15.0hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9291,8 +9739,10 @@ END_TEST
 START_TEST(sprintf_i_2825_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%15.0hi] - l.%i\n, [%15.0hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%15.0hi] - l.%i\n, [%15.0hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%15.0hi] - l.%i\n, [%15.0hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%15.0hi] - l.%i\n, [%15.0hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9309,8 +9759,10 @@ END_TEST
 START_TEST(sprintf_i_2827_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%15.5hi] - l.%i\n, [%15.5hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%15.5hi] - l.%i\n, [%15.5hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%15.5hi] - l.%i\n, [%15.5hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%15.5hi] - l.%i\n, [%15.5hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9318,8 +9770,10 @@ END_TEST
 START_TEST(sprintf_i_2828_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%15.5hi] - l.%i\n, [%15.5hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%15.5hi] - l.%i\n, [%15.5hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%15.5hi] - l.%i\n, [%15.5hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%15.5hi] - l.%i\n, [%15.5hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9336,8 +9790,10 @@ END_TEST
 START_TEST(sprintf_i_2830_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%15.20hi] - l.%i\n, [%15.20hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%15.20hi] - l.%i\n, [%15.20hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%15.20hi] - l.%i\n, [%15.20hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%15.20hi] - l.%i\n, [%15.20hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9345,8 +9801,10 @@ END_TEST
 START_TEST(sprintf_i_2831_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%15.20hi] - l.%i\n, [%15.20hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%15.20hi] - l.%i\n, [%15.20hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%15.20hi] - l.%i\n, [%15.20hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%15.20hi] - l.%i\n, [%15.20hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9390,8 +9848,10 @@ END_TEST
 START_TEST(sprintf_i_2836_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-3hi] - l.%i\n, [%-3hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-3hi] - l.%i\n, [%-3hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-3hi] - l.%i\n, [%-3hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-3hi] - l.%i\n, [%-3hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9399,8 +9859,10 @@ END_TEST
 START_TEST(sprintf_i_2837_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-3hi] - l.%i\n, [%-3hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-3hi] - l.%i\n, [%-3hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-3hi] - l.%i\n, [%-3hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-3hi] - l.%i\n, [%-3hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9417,8 +9879,10 @@ END_TEST
 START_TEST(sprintf_i_2839_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-3.0hi] - l.%i\n, [%-3.0hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-3.0hi] - l.%i\n, [%-3.0hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-3.0hi] - l.%i\n, [%-3.0hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-3.0hi] - l.%i\n, [%-3.0hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9426,8 +9890,10 @@ END_TEST
 START_TEST(sprintf_i_2840_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-3.0hi] - l.%i\n, [%-3.0hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-3.0hi] - l.%i\n, [%-3.0hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-3.0hi] - l.%i\n, [%-3.0hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-3.0hi] - l.%i\n, [%-3.0hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9444,8 +9910,10 @@ END_TEST
 START_TEST(sprintf_i_2842_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-3.2hi] - l.%i\n, [%-3.2hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-3.2hi] - l.%i\n, [%-3.2hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-3.2hi] - l.%i\n, [%-3.2hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-3.2hi] - l.%i\n, [%-3.2hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9453,8 +9921,10 @@ END_TEST
 START_TEST(sprintf_i_2843_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-3.2hi] - l.%i\n, [%-3.2hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-3.2hi] - l.%i\n, [%-3.2hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-3.2hi] - l.%i\n, [%-3.2hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-3.2hi] - l.%i\n, [%-3.2hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9471,8 +9941,10 @@ END_TEST
 START_TEST(sprintf_i_2845_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-3.5hi] - l.%i\n, [%-3.5hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-3.5hi] - l.%i\n, [%-3.5hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-3.5hi] - l.%i\n, [%-3.5hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-3.5hi] - l.%i\n, [%-3.5hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9480,8 +9952,10 @@ END_TEST
 START_TEST(sprintf_i_2846_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-3.5hi] - l.%i\n, [%-3.5hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-3.5hi] - l.%i\n, [%-3.5hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-3.5hi] - l.%i\n, [%-3.5hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-3.5hi] - l.%i\n, [%-3.5hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9498,8 +9972,10 @@ END_TEST
 START_TEST(sprintf_i_2848_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-3.15hi] - l.%i\n, [%-3.15hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-3.15hi] - l.%i\n, [%-3.15hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-3.15hi] - l.%i\n, [%-3.15hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-3.15hi] - l.%i\n, [%-3.15hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9507,8 +9983,10 @@ END_TEST
 START_TEST(sprintf_i_2849_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-3.15hi] - l.%i\n, [%-3.15hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-3.15hi] - l.%i\n, [%-3.15hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-3.15hi] - l.%i\n, [%-3.15hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-3.15hi] - l.%i\n, [%-3.15hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9552,8 +10030,10 @@ END_TEST
 START_TEST(sprintf_i_2854_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%+3hi] - l.%i\n, [%+3hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%+3hi] - l.%i\n, [%+3hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%+3hi] - l.%i\n, [%+3hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%+3hi] - l.%i\n, [%+3hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9561,8 +10041,10 @@ END_TEST
 START_TEST(sprintf_i_2855_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%+3hi] - l.%i\n, [%+3hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%+3hi] - l.%i\n, [%+3hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%+3hi] - l.%i\n, [%+3hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%+3hi] - l.%i\n, [%+3hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9579,8 +10061,10 @@ END_TEST
 START_TEST(sprintf_i_2857_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%+3.0hi] - l.%i\n, [%+3.0hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%+3.0hi] - l.%i\n, [%+3.0hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%+3.0hi] - l.%i\n, [%+3.0hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%+3.0hi] - l.%i\n, [%+3.0hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9588,8 +10072,10 @@ END_TEST
 START_TEST(sprintf_i_2858_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%+3.0hi] - l.%i\n, [%+3.0hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%+3.0hi] - l.%i\n, [%+3.0hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%+3.0hi] - l.%i\n, [%+3.0hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%+3.0hi] - l.%i\n, [%+3.0hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9606,8 +10092,10 @@ END_TEST
 START_TEST(sprintf_i_2860_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%+3.5hi] - l.%i\n, [%+3.5hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%+3.5hi] - l.%i\n, [%+3.5hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%+3.5hi] - l.%i\n, [%+3.5hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%+3.5hi] - l.%i\n, [%+3.5hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9615,8 +10103,10 @@ END_TEST
 START_TEST(sprintf_i_2861_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%+3.5hi] - l.%i\n, [%+3.5hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%+3.5hi] - l.%i\n, [%+3.5hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%+3.5hi] - l.%i\n, [%+3.5hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%+3.5hi] - l.%i\n, [%+3.5hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9633,8 +10123,10 @@ END_TEST
 START_TEST(sprintf_i_2863_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%+3.15hi] - l.%i\n, [%+3.15hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%+3.15hi] - l.%i\n, [%+3.15hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%+3.15hi] - l.%i\n, [%+3.15hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%+3.15hi] - l.%i\n, [%+3.15hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9642,8 +10134,10 @@ END_TEST
 START_TEST(sprintf_i_2864_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%+3.15hi] - l.%i\n, [%+3.15hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%+3.15hi] - l.%i\n, [%+3.15hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%+3.15hi] - l.%i\n, [%+3.15hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%+3.15hi] - l.%i\n, [%+3.15hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9660,8 +10154,10 @@ END_TEST
 START_TEST(sprintf_i_2866_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%+15hi] - l.%i\n, [%+15hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%+15hi] - l.%i\n, [%+15hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%+15hi] - l.%i\n, [%+15hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%+15hi] - l.%i\n, [%+15hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9669,8 +10165,10 @@ END_TEST
 START_TEST(sprintf_i_2867_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%+15hi] - l.%i\n, [%+15hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%+15hi] - l.%i\n, [%+15hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%+15hi] - l.%i\n, [%+15hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%+15hi] - l.%i\n, [%+15hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9687,8 +10185,10 @@ END_TEST
 START_TEST(sprintf_i_2869_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%+15.0hi] - l.%i\n, [%+15.0hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%+15.0hi] - l.%i\n, [%+15.0hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%+15.0hi] - l.%i\n, [%+15.0hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%+15.0hi] - l.%i\n, [%+15.0hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9696,8 +10196,10 @@ END_TEST
 START_TEST(sprintf_i_2870_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%+15.0hi] - l.%i\n, [%+15.0hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%+15.0hi] - l.%i\n, [%+15.0hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%+15.0hi] - l.%i\n, [%+15.0hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%+15.0hi] - l.%i\n, [%+15.0hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9714,8 +10216,10 @@ END_TEST
 START_TEST(sprintf_i_2872_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%+15.5hi] - l.%i\n, [%+15.5hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%+15.5hi] - l.%i\n, [%+15.5hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%+15.5hi] - l.%i\n, [%+15.5hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%+15.5hi] - l.%i\n, [%+15.5hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9723,8 +10227,10 @@ END_TEST
 START_TEST(sprintf_i_2873_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%+15.5hi] - l.%i\n, [%+15.5hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%+15.5hi] - l.%i\n, [%+15.5hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%+15.5hi] - l.%i\n, [%+15.5hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%+15.5hi] - l.%i\n, [%+15.5hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9732,8 +10238,10 @@ END_TEST
 START_TEST(sprintf_i_2874_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%+15.20hi] - l.%i\n, [%+15.20hi]", 0, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%+15.20hi] - l.%i\n, [%+15.20hi]", 0, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%+15.20hi] - l.%i\n, [%+15.20hi]", 0, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%+15.20hi] - l.%i\n, [%+15.20hi]", 0, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9741,8 +10249,10 @@ END_TEST
 START_TEST(sprintf_i_2875_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%+15.20hi] - l.%i\n, [%+15.20hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%+15.20hi] - l.%i\n, [%+15.20hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%+15.20hi] - l.%i\n, [%+15.20hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%+15.20hi] - l.%i\n, [%+15.20hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9750,8 +10260,10 @@ END_TEST
 START_TEST(sprintf_i_2876_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%+15.20hi] - l.%i\n, [%+15.20hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%+15.20hi] - l.%i\n, [%+15.20hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%+15.20hi] - l.%i\n, [%+15.20hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%+15.20hi] - l.%i\n, [%+15.20hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9795,8 +10307,10 @@ END_TEST
 START_TEST(sprintf_i_2881_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%% 3hi] - l.%i\n, [% 3hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%% 3hi] - l.%i\n, [% 3hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%% 3hi] - l.%i\n, [% 3hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%% 3hi] - l.%i\n, [% 3hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9804,8 +10318,10 @@ END_TEST
 START_TEST(sprintf_i_2882_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%% 3hi] - l.%i\n, [% 3hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%% 3hi] - l.%i\n, [% 3hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%% 3hi] - l.%i\n, [% 3hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%% 3hi] - l.%i\n, [% 3hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9822,8 +10338,10 @@ END_TEST
 START_TEST(sprintf_i_2884_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%% 3.0hi] - l.%i\n, [% 3.0hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%% 3.0hi] - l.%i\n, [% 3.0hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%% 3.0hi] - l.%i\n, [% 3.0hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%% 3.0hi] - l.%i\n, [% 3.0hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9831,8 +10349,10 @@ END_TEST
 START_TEST(sprintf_i_2885_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%% 3.0hi] - l.%i\n, [% 3.0hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%% 3.0hi] - l.%i\n, [% 3.0hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%% 3.0hi] - l.%i\n, [% 3.0hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%% 3.0hi] - l.%i\n, [% 3.0hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9849,8 +10369,10 @@ END_TEST
 START_TEST(sprintf_i_2887_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%% 3.2hi] - l.%i\n, [% 3.2hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%% 3.2hi] - l.%i\n, [% 3.2hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%% 3.2hi] - l.%i\n, [% 3.2hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%% 3.2hi] - l.%i\n, [% 3.2hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9858,8 +10380,10 @@ END_TEST
 START_TEST(sprintf_i_2888_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%% 3.2hi] - l.%i\n, [% 3.2hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%% 3.2hi] - l.%i\n, [% 3.2hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%% 3.2hi] - l.%i\n, [% 3.2hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%% 3.2hi] - l.%i\n, [% 3.2hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9876,8 +10400,10 @@ END_TEST
 START_TEST(sprintf_i_2890_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%% 3.5hi] - l.%i\n, [% 3.5hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%% 3.5hi] - l.%i\n, [% 3.5hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%% 3.5hi] - l.%i\n, [% 3.5hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%% 3.5hi] - l.%i\n, [% 3.5hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9885,8 +10411,10 @@ END_TEST
 START_TEST(sprintf_i_2891_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%% 3.5hi] - l.%i\n, [% 3.5hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%% 3.5hi] - l.%i\n, [% 3.5hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%% 3.5hi] - l.%i\n, [% 3.5hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%% 3.5hi] - l.%i\n, [% 3.5hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9903,8 +10431,10 @@ END_TEST
 START_TEST(sprintf_i_2893_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%% 3.15hi] - l.%i\n, [% 3.15hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%% 3.15hi] - l.%i\n, [% 3.15hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%% 3.15hi] - l.%i\n, [% 3.15hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%% 3.15hi] - l.%i\n, [% 3.15hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9912,8 +10442,10 @@ END_TEST
 START_TEST(sprintf_i_2894_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%% 3.15hi] - l.%i\n, [% 3.15hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%% 3.15hi] - l.%i\n, [% 3.15hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%% 3.15hi] - l.%i\n, [% 3.15hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%% 3.15hi] - l.%i\n, [% 3.15hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9930,8 +10462,10 @@ END_TEST
 START_TEST(sprintf_i_2896_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%% 15hi] - l.%i\n, [% 15hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%% 15hi] - l.%i\n, [% 15hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%% 15hi] - l.%i\n, [% 15hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%% 15hi] - l.%i\n, [% 15hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9939,8 +10473,10 @@ END_TEST
 START_TEST(sprintf_i_2897_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%% 15hi] - l.%i\n, [% 15hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%% 15hi] - l.%i\n, [% 15hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%% 15hi] - l.%i\n, [% 15hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%% 15hi] - l.%i\n, [% 15hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9957,8 +10493,10 @@ END_TEST
 START_TEST(sprintf_i_2899_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%% 15.0hi] - l.%i\n, [% 15.0hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%% 15.0hi] - l.%i\n, [% 15.0hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%% 15.0hi] - l.%i\n, [% 15.0hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%% 15.0hi] - l.%i\n, [% 15.0hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9966,8 +10504,10 @@ END_TEST
 START_TEST(sprintf_i_2900_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%% 15.0hi] - l.%i\n, [% 15.0hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%% 15.0hi] - l.%i\n, [% 15.0hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%% 15.0hi] - l.%i\n, [% 15.0hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%% 15.0hi] - l.%i\n, [% 15.0hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9975,8 +10515,10 @@ END_TEST
 START_TEST(sprintf_i_2904_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%% 15.20hi] - l.%i\n, [% 15.20hi]", 0, -2,  __LINE__);
-  sprintf(str1, "- %i - [%% 15.20hi] - l.%i\n, [% 15.20hi]", 0, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%% 15.20hi] - l.%i\n, [% 15.20hi]", 0, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%% 15.20hi] - l.%i\n, [% 15.20hi]", 0, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9984,8 +10526,10 @@ END_TEST
 START_TEST(sprintf_i_2905_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%% 15.20hi] - l.%i\n, [% 15.20hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%% 15.20hi] - l.%i\n, [% 15.20hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%% 15.20hi] - l.%i\n, [% 15.20hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%% 15.20hi] - l.%i\n, [% 15.20hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -9993,8 +10537,10 @@ END_TEST
 START_TEST(sprintf_i_2906_i) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%% 15.20hi] - l.%i\n, [% 15.20hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%% 15.20hi] - l.%i\n, [% 15.20hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%% 15.20hi] - l.%i\n, [% 15.20hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%% 15.20hi] - l.%i\n, [% 15.20hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10065,8 +10611,10 @@ END_TEST
 START_TEST(sprintf_i_3020) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+3.0i] - l.%i\n, [%-+3.0i]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+3.0i] - l.%i\n, [%-+3.0i]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+3.0i] - l.%i\n, [%-+3.0i]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+3.0i] - l.%i\n, [%-+3.0i]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10074,8 +10622,10 @@ END_TEST
 START_TEST(sprintf_i_3021) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+3.0i] - l.%i\n, [%-+3.0i]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+3.0i] - l.%i\n, [%-+3.0i]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+3.0i] - l.%i\n, [%-+3.0i]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+3.0i] - l.%i\n, [%-+3.0i]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10092,8 +10642,10 @@ END_TEST
 START_TEST(sprintf_i_3022) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+3.2i] - l.%i\n, [%-+3.2i]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+3.2i] - l.%i\n, [%-+3.2i]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+3.2i] - l.%i\n, [%-+3.2i]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+3.2i] - l.%i\n, [%-+3.2i]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10101,8 +10653,10 @@ END_TEST
 START_TEST(sprintf_i_3023) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+3.2i] - l.%i\n, [%-+3.2i]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+3.2i] - l.%i\n, [%-+3.2i]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+3.2i] - l.%i\n, [%-+3.2i]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+3.2i] - l.%i\n, [%-+3.2i]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10119,8 +10673,10 @@ END_TEST
 START_TEST(sprintf_i_3025) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+3.5i] - l.%i\n, [%-+3.5i]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+3.5i] - l.%i\n, [%-+3.5i]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+3.5i] - l.%i\n, [%-+3.5i]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+3.5i] - l.%i\n, [%-+3.5i]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10128,8 +10684,10 @@ END_TEST
 START_TEST(sprintf_i_3026) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+3.5i] - l.%i\n, [%-+3.5i]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+3.5i] - l.%i\n, [%-+3.5i]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+3.5i] - l.%i\n, [%-+3.5i]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+3.5i] - l.%i\n, [%-+3.5i]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10146,8 +10704,10 @@ END_TEST
 START_TEST(sprintf_i_3028) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+3.15i] - l.%i\n, [%-+3.15i]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+3.15i] - l.%i\n, [%-+3.15i]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+3.15i] - l.%i\n, [%-+3.15i]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+3.15i] - l.%i\n, [%-+3.15i]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10155,8 +10715,10 @@ END_TEST
 START_TEST(sprintf_i_3029) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+3.15i] - l.%i\n, [%-+3.15i]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+3.15i] - l.%i\n, [%-+3.15i]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+3.15i] - l.%i\n, [%-+3.15i]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+3.15i] - l.%i\n, [%-+3.15i]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10173,8 +10735,10 @@ END_TEST
 START_TEST(sprintf_i_3031) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+15i] - l.%i\n, [%-+15i]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+15i] - l.%i\n, [%-+15i]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+15i] - l.%i\n, [%-+15i]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+15i] - l.%i\n, [%-+15i]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10182,8 +10746,10 @@ END_TEST
 START_TEST(sprintf_i_3032) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+15i] - l.%i\n, [%-+15i]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+15i] - l.%i\n, [%-+15i]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+15i] - l.%i\n, [%-+15i]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+15i] - l.%i\n, [%-+15i]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10200,8 +10766,10 @@ END_TEST
 START_TEST(sprintf_i_3034) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+15.0i] - l.%i\n, [%-+15.0i]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+15.0i] - l.%i\n, [%-+15.0i]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+15.0i] - l.%i\n, [%-+15.0i]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+15.0i] - l.%i\n, [%-+15.0i]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10209,8 +10777,10 @@ END_TEST
 START_TEST(sprintf_i_3035) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+15.0i] - l.%i\n, [%-+15.0i]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+15.0i] - l.%i\n, [%-+15.0i]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+15.0i] - l.%i\n, [%-+15.0i]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+15.0i] - l.%i\n, [%-+15.0i]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10227,8 +10797,10 @@ END_TEST
 START_TEST(sprintf_i_3037) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+15.5i] - l.%i\n, [%-+15.5i]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+15.5i] - l.%i\n, [%-+15.5i]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+15.5i] - l.%i\n, [%-+15.5i]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+15.5i] - l.%i\n, [%-+15.5i]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10236,8 +10808,10 @@ END_TEST
 START_TEST(sprintf_i_3038) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+15.5i] - l.%i\n, [%-+15.5i]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+15.5i] - l.%i\n, [%-+15.5i]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+15.5i] - l.%i\n, [%-+15.5i]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+15.5i] - l.%i\n, [%-+15.5i]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10245,8 +10819,10 @@ END_TEST
 START_TEST(sprintf_i_3039) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+15.20i] - l.%i\n, [%-+15.20i]", 0, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+15.20i] - l.%i\n, [%-+15.20i]", 0, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+15.20i] - l.%i\n, [%-+15.20i]", 0, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+15.20i] - l.%i\n, [%-+15.20i]", 0, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10254,8 +10830,10 @@ END_TEST
 START_TEST(sprintf_i_3040) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+15.20i] - l.%i\n, [%-+15.20i]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+15.20i] - l.%i\n, [%-+15.20i]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+15.20i] - l.%i\n, [%-+15.20i]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+15.20i] - l.%i\n, [%-+15.20i]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10263,8 +10841,10 @@ END_TEST
 START_TEST(sprintf_i_3041) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+15.20i] - l.%i\n, [%-+15.20i]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+15.20i] - l.%i\n, [%-+15.20i]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+15.20i] - l.%i\n, [%-+15.20i]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+15.20i] - l.%i\n, [%-+15.20i]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10335,8 +10915,10 @@ END_TEST
 START_TEST(sprintf_i_3079) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 3.0i] - l.%i\n, [%- 3.0i]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 3.0i] - l.%i\n, [%- 3.0i]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 3.0i] - l.%i\n, [%- 3.0i]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 3.0i] - l.%i\n, [%- 3.0i]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10344,8 +10926,10 @@ END_TEST
 START_TEST(sprintf_i_3080) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 3.0i] - l.%i\n, [%- 3.0i]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 3.0i] - l.%i\n, [%- 3.0i]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 3.0i] - l.%i\n, [%- 3.0i]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 3.0i] - l.%i\n, [%- 3.0i]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10362,8 +10946,10 @@ END_TEST
 START_TEST(sprintf_i_3082) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 3.2i] - l.%i\n, [%- 3.2i]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 3.2i] - l.%i\n, [%- 3.2i]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 3.2i] - l.%i\n, [%- 3.2i]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 3.2i] - l.%i\n, [%- 3.2i]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10371,8 +10957,10 @@ END_TEST
 START_TEST(sprintf_i_3083) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 3.2i] - l.%i\n, [%- 3.2i]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 3.2i] - l.%i\n, [%- 3.2i]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 3.2i] - l.%i\n, [%- 3.2i]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 3.2i] - l.%i\n, [%- 3.2i]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10389,8 +10977,10 @@ END_TEST
 START_TEST(sprintf_i_3085) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 3.5i] - l.%i\n, [%- 3.5i]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 3.5i] - l.%i\n, [%- 3.5i]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 3.5i] - l.%i\n, [%- 3.5i]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 3.5i] - l.%i\n, [%- 3.5i]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10398,8 +10988,10 @@ END_TEST
 START_TEST(sprintf_i_3086) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 3.5i] - l.%i\n, [%- 3.5i]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 3.5i] - l.%i\n, [%- 3.5i]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 3.5i] - l.%i\n, [%- 3.5i]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 3.5i] - l.%i\n, [%- 3.5i]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10416,8 +11008,10 @@ END_TEST
 START_TEST(sprintf_i_3088) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 3.15i] - l.%i\n, [%- 3.15i]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 3.15i] - l.%i\n, [%- 3.15i]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 3.15i] - l.%i\n, [%- 3.15i]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 3.15i] - l.%i\n, [%- 3.15i]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10425,8 +11019,10 @@ END_TEST
 START_TEST(sprintf_i_3089) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 3.15i] - l.%i\n, [%- 3.15i]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 3.15i] - l.%i\n, [%- 3.15i]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 3.15i] - l.%i\n, [%- 3.15i]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 3.15i] - l.%i\n, [%- 3.15i]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10443,8 +11039,10 @@ END_TEST
 START_TEST(sprintf_i_3091) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 15i] - l.%i\n, [%- 15i]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 15i] - l.%i\n, [%- 15i]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 15i] - l.%i\n, [%- 15i]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 15i] - l.%i\n, [%- 15i]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10452,8 +11050,10 @@ END_TEST
 START_TEST(sprintf_i_3092) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 15i] - l.%i\n, [%- 15i]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 15i] - l.%i\n, [%- 15i]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 15i] - l.%i\n, [%- 15i]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 15i] - l.%i\n, [%- 15i]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10470,8 +11070,10 @@ END_TEST
 START_TEST(sprintf_i_3094) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 15.0i] - l.%i\n, [%- 15.0i]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 15.0i] - l.%i\n, [%- 15.0i]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 15.0i] - l.%i\n, [%- 15.0i]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 15.0i] - l.%i\n, [%- 15.0i]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10479,8 +11081,10 @@ END_TEST
 START_TEST(sprintf_i_3095) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 15.0i] - l.%i\n, [%- 15.0i]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 15.0i] - l.%i\n, [%- 15.0i]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 15.0i] - l.%i\n, [%- 15.0i]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 15.0i] - l.%i\n, [%- 15.0i]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10497,8 +11101,10 @@ END_TEST
 START_TEST(sprintf_i_3097) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 15.5i] - l.%i\n, [%- 15.5i]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 15.5i] - l.%i\n, [%- 15.5i]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 15.5i] - l.%i\n, [%- 15.5i]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 15.5i] - l.%i\n, [%- 15.5i]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10506,8 +11112,10 @@ END_TEST
 START_TEST(sprintf_i_3098) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 15.5i] - l.%i\n, [%- 15.5i]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 15.5i] - l.%i\n, [%- 15.5i]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 15.5i] - l.%i\n, [%- 15.5i]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 15.5i] - l.%i\n, [%- 15.5i]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10515,8 +11123,10 @@ END_TEST
 START_TEST(sprintf_i_3099) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 15.20i] - l.%i\n, [%- 15.20i]", 0, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 15.20i] - l.%i\n, [%- 15.20i]", 0, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 15.20i] - l.%i\n, [%- 15.20i]", 0, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 15.20i] - l.%i\n, [%- 15.20i]", 0, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10524,8 +11134,10 @@ END_TEST
 START_TEST(sprintf_i_3100) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 15.20i] - l.%i\n, [%- 15.20i]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 15.20i] - l.%i\n, [%- 15.20i]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 15.20i] - l.%i\n, [%- 15.20i]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 15.20i] - l.%i\n, [%- 15.20i]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10533,8 +11145,10 @@ END_TEST
 START_TEST(sprintf_i_3101) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 15.20i] - l.%i\n, [%- 15.20i]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 15.20i] - l.%i\n, [%- 15.20i]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 15.20i] - l.%i\n, [%- 15.20i]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 15.20i] - l.%i\n, [%- 15.20i]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10551,8 +11165,10 @@ END_TEST
 START_TEST(sprintf_i_3133) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+hi] - l.%i\n, [%-+hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+hi] - l.%i\n, [%-+hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+hi] - l.%i\n, [%-+hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+hi] - l.%i\n, [%-+hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10560,8 +11176,10 @@ END_TEST
 START_TEST(sprintf_i_3134) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+hi] - l.%i\n, [%-+hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+hi] - l.%i\n, [%-+hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+hi] - l.%i\n, [%-+hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+hi] - l.%i\n, [%-+hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10578,8 +11196,10 @@ END_TEST
 START_TEST(sprintf_i_3136) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+3hi] - l.%i\n, [%-+3hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+3hi] - l.%i\n, [%-+3hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+3hi] - l.%i\n, [%-+3hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+3hi] - l.%i\n, [%-+3hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10587,8 +11207,10 @@ END_TEST
 START_TEST(sprintf_i_3137) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+3hi] - l.%i\n, [%-+3hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+3hi] - l.%i\n, [%-+3hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+3hi] - l.%i\n, [%-+3hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+3hi] - l.%i\n, [%-+3hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10605,8 +11227,10 @@ END_TEST
 START_TEST(sprintf_i_3139) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+3.0hi] - l.%i\n, [%-+3.0hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+3.0hi] - l.%i\n, [%-+3.0hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+3.0hi] - l.%i\n, [%-+3.0hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+3.0hi] - l.%i\n, [%-+3.0hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10614,8 +11238,10 @@ END_TEST
 START_TEST(sprintf_i_3140) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+3.0hi] - l.%i\n, [%-+3.0hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+3.0hi] - l.%i\n, [%-+3.0hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+3.0hi] - l.%i\n, [%-+3.0hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+3.0hi] - l.%i\n, [%-+3.0hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10632,8 +11258,10 @@ END_TEST
 START_TEST(sprintf_i_3142) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+3.2hi] - l.%i\n, [%-+3.2hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+3.2hi] - l.%i\n, [%-+3.2hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+3.2hi] - l.%i\n, [%-+3.2hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+3.2hi] - l.%i\n, [%-+3.2hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10641,8 +11269,10 @@ END_TEST
 START_TEST(sprintf_i_3143) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+3.2hi] - l.%i\n, [%-+3.2hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+3.2hi] - l.%i\n, [%-+3.2hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+3.2hi] - l.%i\n, [%-+3.2hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+3.2hi] - l.%i\n, [%-+3.2hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10659,8 +11289,10 @@ END_TEST
 START_TEST(sprintf_i_3145) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+3.5hi] - l.%i\n, [%-+3.5hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+3.5hi] - l.%i\n, [%-+3.5hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+3.5hi] - l.%i\n, [%-+3.5hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+3.5hi] - l.%i\n, [%-+3.5hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10668,8 +11300,10 @@ END_TEST
 START_TEST(sprintf_i_3146) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+3.5hi] - l.%i\n, [%-+3.5hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+3.5hi] - l.%i\n, [%-+3.5hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+3.5hi] - l.%i\n, [%-+3.5hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+3.5hi] - l.%i\n, [%-+3.5hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10677,8 +11311,10 @@ END_TEST
 START_TEST(sprintf_i_3147) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+3.15hi] - l.%i\n, [%-+3.15hi]", 0, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+3.15hi] - l.%i\n, [%-+3.15hi]", 0, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+3.15hi] - l.%i\n, [%-+3.15hi]", 0, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+3.15hi] - l.%i\n, [%-+3.15hi]", 0, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10686,8 +11322,10 @@ END_TEST
 START_TEST(sprintf_i_3148) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+3.15hi] - l.%i\n, [%-+3.15hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+3.15hi] - l.%i\n, [%-+3.15hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+3.15hi] - l.%i\n, [%-+3.15hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+3.15hi] - l.%i\n, [%-+3.15hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10695,8 +11333,10 @@ END_TEST
 START_TEST(sprintf_i_3149) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+3.15hi] - l.%i\n, [%-+3.15hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+3.15hi] - l.%i\n, [%-+3.15hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+3.15hi] - l.%i\n, [%-+3.15hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+3.15hi] - l.%i\n, [%-+3.15hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10713,8 +11353,10 @@ END_TEST
 START_TEST(sprintf_i_3151) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+15hi] - l.%i\n, [%-+15hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+15hi] - l.%i\n, [%-+15hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+15hi] - l.%i\n, [%-+15hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+15hi] - l.%i\n, [%-+15hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10722,8 +11364,10 @@ END_TEST
 START_TEST(sprintf_i_3152) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+15hi] - l.%i\n, [%-+15hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+15hi] - l.%i\n, [%-+15hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+15hi] - l.%i\n, [%-+15hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+15hi] - l.%i\n, [%-+15hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10731,8 +11375,10 @@ END_TEST
 START_TEST(sprintf_i_3153) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+15.0hi] - l.%i\n, [%-+15.0hi]", 0, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+15.0hi] - l.%i\n, [%-+15.0hi]", 0, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+15.0hi] - l.%i\n, [%-+15.0hi]", 0, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+15.0hi] - l.%i\n, [%-+15.0hi]", 0, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10740,8 +11386,10 @@ END_TEST
 START_TEST(sprintf_i_3154) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+15.0hi] - l.%i\n, [%-+15.0hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+15.0hi] - l.%i\n, [%-+15.0hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+15.0hi] - l.%i\n, [%-+15.0hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+15.0hi] - l.%i\n, [%-+15.0hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10749,8 +11397,10 @@ END_TEST
 START_TEST(sprintf_i_3155) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+15.0hi] - l.%i\n, [%-+15.0hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+15.0hi] - l.%i\n, [%-+15.0hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+15.0hi] - l.%i\n, [%-+15.0hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+15.0hi] - l.%i\n, [%-+15.0hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10758,8 +11408,10 @@ END_TEST
 START_TEST(sprintf_i_3156) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+15.5hi] - l.%i\n, [%-+15.5hi]", 0, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+15.5hi] - l.%i\n, [%-+15.5hi]", 0, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+15.5hi] - l.%i\n, [%-+15.5hi]", 0, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+15.5hi] - l.%i\n, [%-+15.5hi]", 0, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10767,8 +11419,10 @@ END_TEST
 START_TEST(sprintf_i_3157) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+15.5hi] - l.%i\n, [%-+15.5hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+15.5hi] - l.%i\n, [%-+15.5hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+15.5hi] - l.%i\n, [%-+15.5hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+15.5hi] - l.%i\n, [%-+15.5hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10776,8 +11430,10 @@ END_TEST
 START_TEST(sprintf_i_3158) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+15.5hi] - l.%i\n, [%-+15.5hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+15.5hi] - l.%i\n, [%-+15.5hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+15.5hi] - l.%i\n, [%-+15.5hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+15.5hi] - l.%i\n, [%-+15.5hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10785,8 +11441,10 @@ END_TEST
 START_TEST(sprintf_i_3159) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+15.20hi] - l.%i\n, [%-+15.20hi]", 0, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+15.20hi] - l.%i\n, [%-+15.20hi]", 0, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+15.20hi] - l.%i\n, [%-+15.20hi]", 0, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+15.20hi] - l.%i\n, [%-+15.20hi]", 0, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10794,8 +11452,10 @@ END_TEST
 START_TEST(sprintf_i_3160) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+15.20hi] - l.%i\n, [%-+15.20hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+15.20hi] - l.%i\n, [%-+15.20hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+15.20hi] - l.%i\n, [%-+15.20hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+15.20hi] - l.%i\n, [%-+15.20hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10803,8 +11463,10 @@ END_TEST
 START_TEST(sprintf_i_3161) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%-+15.20hi] - l.%i\n, [%-+15.20hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%-+15.20hi] - l.%i\n, [%-+15.20hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%-+15.20hi] - l.%i\n, [%-+15.20hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%-+15.20hi] - l.%i\n, [%-+15.20hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10821,8 +11483,10 @@ END_TEST
 START_TEST(sprintf_i_3193) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- hi] - l.%i\n, [%- hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- hi] - l.%i\n, [%- hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- hi] - l.%i\n, [%- hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- hi] - l.%i\n, [%- hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10830,8 +11494,10 @@ END_TEST
 START_TEST(sprintf_i_3194) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- hi] - l.%i\n, [%- hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- hi] - l.%i\n, [%- hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- hi] - l.%i\n, [%- hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- hi] - l.%i\n, [%- hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10848,8 +11514,10 @@ END_TEST
 START_TEST(sprintf_i_3196) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 3hi] - l.%i\n, [%- 3hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 3hi] - l.%i\n, [%- 3hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 3hi] - l.%i\n, [%- 3hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 3hi] - l.%i\n, [%- 3hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10857,8 +11525,10 @@ END_TEST
 START_TEST(sprintf_i_3197) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 3hi] - l.%i\n, [%- 3hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 3hi] - l.%i\n, [%- 3hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 3hi] - l.%i\n, [%- 3hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 3hi] - l.%i\n, [%- 3hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10875,8 +11545,10 @@ END_TEST
 START_TEST(sprintf_i_3199) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 3.0hi] - l.%i\n, [%- 3.0hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 3.0hi] - l.%i\n, [%- 3.0hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 3.0hi] - l.%i\n, [%- 3.0hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 3.0hi] - l.%i\n, [%- 3.0hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10884,8 +11556,10 @@ END_TEST
 START_TEST(sprintf_i_3200) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 3.0hi] - l.%i\n, [%- 3.0hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 3.0hi] - l.%i\n, [%- 3.0hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 3.0hi] - l.%i\n, [%- 3.0hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 3.0hi] - l.%i\n, [%- 3.0hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10902,8 +11576,10 @@ END_TEST
 START_TEST(sprintf_i_3202) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 3.2hi] - l.%i\n, [%- 3.2hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 3.2hi] - l.%i\n, [%- 3.2hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 3.2hi] - l.%i\n, [%- 3.2hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 3.2hi] - l.%i\n, [%- 3.2hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10911,8 +11587,10 @@ END_TEST
 START_TEST(sprintf_i_3203) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 3.2hi] - l.%i\n, [%- 3.2hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 3.2hi] - l.%i\n, [%- 3.2hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 3.2hi] - l.%i\n, [%- 3.2hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 3.2hi] - l.%i\n, [%- 3.2hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10929,8 +11607,10 @@ END_TEST
 START_TEST(sprintf_i_3205) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 3.5hi] - l.%i\n, [%- 3.5hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 3.5hi] - l.%i\n, [%- 3.5hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 3.5hi] - l.%i\n, [%- 3.5hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 3.5hi] - l.%i\n, [%- 3.5hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10938,8 +11618,10 @@ END_TEST
 START_TEST(sprintf_i_3206) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 3.5hi] - l.%i\n, [%- 3.5hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 3.5hi] - l.%i\n, [%- 3.5hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 3.5hi] - l.%i\n, [%- 3.5hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 3.5hi] - l.%i\n, [%- 3.5hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10947,8 +11629,10 @@ END_TEST
 START_TEST(sprintf_i_3207) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 3.15hi] - l.%i\n, [%- 3.15hi]", 0, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 3.15hi] - l.%i\n, [%- 3.15hi]", 0, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 3.15hi] - l.%i\n, [%- 3.15hi]", 0, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 3.15hi] - l.%i\n, [%- 3.15hi]", 0, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10956,8 +11640,10 @@ END_TEST
 START_TEST(sprintf_i_3208) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 3.15hi] - l.%i\n, [%- 3.15hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 3.15hi] - l.%i\n, [%- 3.15hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 3.15hi] - l.%i\n, [%- 3.15hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 3.15hi] - l.%i\n, [%- 3.15hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10965,8 +11651,10 @@ END_TEST
 START_TEST(sprintf_i_3209) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 3.15hi] - l.%i\n, [%- 3.15hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 3.15hi] - l.%i\n, [%- 3.15hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 3.15hi] - l.%i\n, [%- 3.15hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 3.15hi] - l.%i\n, [%- 3.15hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10983,8 +11671,10 @@ END_TEST
 START_TEST(sprintf_i_3211) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 15hi] - l.%i\n, [%- 15hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 15hi] - l.%i\n, [%- 15hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 15hi] - l.%i\n, [%- 15hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 15hi] - l.%i\n, [%- 15hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -10992,8 +11682,10 @@ END_TEST
 START_TEST(sprintf_i_3212) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 15hi] - l.%i\n, [%- 15hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 15hi] - l.%i\n, [%- 15hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 15hi] - l.%i\n, [%- 15hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 15hi] - l.%i\n, [%- 15hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -11001,8 +11693,10 @@ END_TEST
 START_TEST(sprintf_i_3213) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 15.0hi] - l.%i\n, [%- 15.0hi]", 0, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 15.0hi] - l.%i\n, [%- 15.0hi]", 0, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 15.0hi] - l.%i\n, [%- 15.0hi]", 0, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 15.0hi] - l.%i\n, [%- 15.0hi]", 0, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -11010,8 +11704,10 @@ END_TEST
 START_TEST(sprintf_i_3214) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 15.0hi] - l.%i\n, [%- 15.0hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 15.0hi] - l.%i\n, [%- 15.0hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 15.0hi] - l.%i\n, [%- 15.0hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 15.0hi] - l.%i\n, [%- 15.0hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -11019,8 +11715,10 @@ END_TEST
 START_TEST(sprintf_i_3215) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 15.0hi] - l.%i\n, [%- 15.0hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 15.0hi] - l.%i\n, [%- 15.0hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 15.0hi] - l.%i\n, [%- 15.0hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 15.0hi] - l.%i\n, [%- 15.0hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -11028,8 +11726,10 @@ END_TEST
 START_TEST(sprintf_i_3216) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 15.5hi] - l.%i\n, [%- 15.5hi]", 0, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 15.5hi] - l.%i\n, [%- 15.5hi]", 0, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 15.5hi] - l.%i\n, [%- 15.5hi]", 0, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 15.5hi] - l.%i\n, [%- 15.5hi]", 0, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -11037,8 +11737,10 @@ END_TEST
 START_TEST(sprintf_i_3217) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 15.5hi] - l.%i\n, [%- 15.5hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 15.5hi] - l.%i\n, [%- 15.5hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 15.5hi] - l.%i\n, [%- 15.5hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 15.5hi] - l.%i\n, [%- 15.5hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -11046,8 +11748,10 @@ END_TEST
 START_TEST(sprintf_i_3218) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 15.5hi] - l.%i\n, [%- 15.5hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 15.5hi] - l.%i\n, [%- 15.5hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 15.5hi] - l.%i\n, [%- 15.5hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 15.5hi] - l.%i\n, [%- 15.5hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -11055,8 +11759,10 @@ END_TEST
 START_TEST(sprintf_i_3219) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 15.20hi] - l.%i\n, [%- 15.20hi]", 0, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 15.20hi] - l.%i\n, [%- 15.20hi]", 0, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 15.20hi] - l.%i\n, [%- 15.20hi]", 0, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 15.20hi] - l.%i\n, [%- 15.20hi]", 0, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -11064,8 +11770,10 @@ END_TEST
 START_TEST(sprintf_i_3220) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 15.20hi] - l.%i\n, [%- 15.20hi]", SHRT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 15.20hi] - l.%i\n, [%- 15.20hi]", SHRT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 15.20hi] - l.%i\n, [%- 15.20hi]", SHRT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 15.20hi] - l.%i\n, [%- 15.20hi]", SHRT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -11073,8 +11781,10 @@ END_TEST
 START_TEST(sprintf_i_3221) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %i - [%%- 15.20hi] - l.%i\n, [%- 15.20hi]", SHRT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %i - [%%- 15.20hi] - l.%i\n, [%- 15.20hi]", SHRT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %i - [%%- 15.20hi] - l.%i\n, [%- 15.20hi]", SHRT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %i - [%%- 15.20hi] - l.%i\n, [%- 15.20hi]", SHRT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -11217,8 +11927,10 @@ END_TEST
 START_TEST(sprintf_i_4017) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%3.15u] - l.%d\n, [%3.15u]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%3.15u] - l.%d\n, [%3.15u]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%3.15u] - l.%d\n, [%3.15u]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%3.15u] - l.%d\n, [%3.15u]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -11226,8 +11938,10 @@ END_TEST
 START_TEST(sprintf_i_4018) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%3.15u] - l.%d\n, [%3.15u]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%3.15u] - l.%d\n, [%3.15u]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%3.15u] - l.%d\n, [%3.15u]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%3.15u] - l.%d\n, [%3.15u]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -11271,8 +11985,10 @@ END_TEST
 START_TEST(sprintf_i_4023) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%15.0u] - l.%d\n, [%15.0u]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%15.0u] - l.%d\n, [%15.0u]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%15.0u] - l.%d\n, [%15.0u]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%15.0u] - l.%d\n, [%15.0u]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -11280,8 +11996,10 @@ END_TEST
 START_TEST(sprintf_i_4024) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%15.5u] - l.%d\n, [%15.5u]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%15.5u] - l.%d\n, [%15.5u]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%15.5u] - l.%d\n, [%15.5u]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%15.5u] - l.%d\n, [%15.5u]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -11298,8 +12016,10 @@ END_TEST
 START_TEST(sprintf_i_4026) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%15.20u] - l.%d\n, [%15.20u]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%15.20u] - l.%d\n, [%15.20u]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%15.20u] - l.%d\n, [%15.20u]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%15.20u] - l.%d\n, [%15.20u]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -11307,8 +12027,10 @@ END_TEST
 START_TEST(sprintf_i_4027) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%15.20u] - l.%d\n, [%15.20u]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%15.20u] - l.%d\n, [%15.20u]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%15.20u] - l.%d\n, [%15.20u]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%15.20u] - l.%d\n, [%15.20u]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -11379,8 +12101,10 @@ END_TEST
 START_TEST(sprintf_i_4035) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-3.0u] - l.%d\n, [%-3.0u]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-3.0u] - l.%d\n, [%-3.0u]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-3.0u] - l.%d\n, [%-3.0u]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-3.0u] - l.%d\n, [%-3.0u]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -11388,8 +12112,10 @@ END_TEST
 START_TEST(sprintf_i_4036) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-3.0u] - l.%d\n, [%-3.0u]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-3.0u] - l.%d\n, [%-3.0u]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-3.0u] - l.%d\n, [%-3.0u]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-3.0u] - l.%d\n, [%-3.0u]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -11406,8 +12132,10 @@ END_TEST
 START_TEST(sprintf_i_4038) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-3.2u] - l.%d\n, [%-3.2u]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-3.2u] - l.%d\n, [%-3.2u]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-3.2u] - l.%d\n, [%-3.2u]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-3.2u] - l.%d\n, [%-3.2u]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -11415,8 +12143,10 @@ END_TEST
 START_TEST(sprintf_i_4039) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-3.2u] - l.%d\n, [%-3.2u]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-3.2u] - l.%d\n, [%-3.2u]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-3.2u] - l.%d\n, [%-3.2u]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-3.2u] - l.%d\n, [%-3.2u]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -11433,8 +12163,10 @@ END_TEST
 START_TEST(sprintf_i_4041) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-3.5u] - l.%d\n, [%-3.5u]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-3.5u] - l.%d\n, [%-3.5u]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-3.5u] - l.%d\n, [%-3.5u]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-3.5u] - l.%d\n, [%-3.5u]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -11442,8 +12174,10 @@ END_TEST
 START_TEST(sprintf_i_4042) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-3.5u] - l.%d\n, [%-3.5u]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-3.5u] - l.%d\n, [%-3.5u]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-3.5u] - l.%d\n, [%-3.5u]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-3.5u] - l.%d\n, [%-3.5u]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -11460,8 +12194,10 @@ END_TEST
 START_TEST(sprintf_i_4044) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-3.15u] - l.%d\n, [%-3.15u]", INT_MIN, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-3.15u] - l.%d\n, [%-3.15u]", INT_MIN, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-3.15u] - l.%d\n, [%-3.15u]", INT_MIN, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-3.15u] - l.%d\n, [%-3.15u]", INT_MIN, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -11469,8 +12205,10 @@ END_TEST
 START_TEST(sprintf_i_4045) {
   char str1[1024] = "";
   char str2[1024] = "";
-  s21_sprintf(str2, "- %d - [%%-3.15u] - l.%d\n, [%-3.15u]", INT_MAX, -2,  __LINE__);
-  sprintf(str1, "- %d - [%%-3.15u] - l.%d\n, [%-3.15u]", INT_MAX, -2,  __LINE__ - 1);
+  s21_sprintf(str2, "- %d - [%%-3.15u] - l.%d\n, [%-3.15u]", INT_MAX, -2,
+              __LINE__);
+  sprintf(str1, "- %d - [%%-3.15u] - l.%d\n, [%-3.15u]", INT_MAX, -2,
+          __LINE__ - 1);
   ck_assert_str_eq(str1, str2);
 }
 END_TEST
@@ -11721,8 +12459,6 @@ START_TEST(SPRINTF_FLOAT_PLUS_H) {
   ck_assert_str_eq(result, result_s21);
 }
 END_TEST
-
-
 
 START_TEST(SPRINTF_DECIMAL) {
   char result[100] = "";
@@ -12462,7 +13198,6 @@ void part1_tests(TCase *tc1_1) {
   tcase_add_test(tc1_1, SPRINTFTestRleonard9);
   tcase_add_test(tc1_1, SPRINTFTestRleonard12);
   tcase_add_test(tc1_1, SPRINTFTestRleonard13);
-
 
   tcase_add_test(tc1_1, simple_int);
   tcase_add_test(tc1_1, precise_int);

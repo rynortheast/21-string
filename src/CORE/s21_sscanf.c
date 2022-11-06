@@ -9,7 +9,7 @@ int s21_sscanf(const char *str, const char *format, ...) {
   if (!tmp) {
     printf("ERROR");
   } else {
-     tmp = s21_strcpy(tmp, str);
+    tmp = s21_strcpy(tmp, str);
     oksym(&tmp, &options);
     if (!*tmp) options.end = 1;
     tmp = s21_strcpy(tmp - options.count, str);
@@ -254,8 +254,7 @@ int opu(va_list args, ops *op, char **src, int base) {
         *(short unsigned *)va_arg(args, void *) =
             s21_atoul(*src, &strlim, base);
       else if (op->len == 2)
-        *(long unsigned *)va_arg(args, void *) =
-            s21_atoul(*src, &strlim, base);
+        *(long unsigned *)va_arg(args, void *) = s21_atoul(*src, &strlim, base);
       else
         *(unsigned *)va_arg(args, void *) = s21_atoul(*src, &strlim, base);
     } else {
@@ -339,42 +338,42 @@ int opc(va_list args, ops *op, char **src) {
 }
 
 int opst(va_list args, ops *op, char **src) {
-    int res = 0;
-    char *new_str = malloc(sizeof(char));
-    if (new_str) {
-        oksym(src, op);
+  int res = 0;
+  char *new_str = malloc(sizeof(char));
+  if (new_str) {
+    oksym(src, op);
     int i = 0;
     for (; **src && **src != ' ' && **src != '\n' && **src != '\t' &&
-         **src != '\r' && **src != '\x0B' && **src != '\f' &&
-         (op->wid == 0 || i < op->wid);
-       i++, (*src)++) {
-    new_str[i] = **src;
-    new_str = realloc(new_str, (i + 2) * sizeof(char));
-    if (!new_str) exit(0);
+           **src != '\r' && **src != '\x0B' && **src != '\f' &&
+           (op->wid == 0 || i < op->wid);
+         i++, (*src)++) {
+      new_str[i] = **src;
+      new_str = realloc(new_str, (i + 2) * sizeof(char));
+      if (!new_str) exit(0);
     }
     new_str[i] = '\0';
     int k = s21_strlen(new_str) + 1;
     va_list tmp_list;
     va_copy(tmp_list, args);
     for (int j = 0; j < k; j++) {
-        if (!op->supr) {
-            if (!op->len) *((char *)va_arg(tmp_list, char *) + j) = new_str[j];
-            if (j + 1 < k) {
-                va_end(tmp_list);
-                va_copy(tmp_list, args);
-            }
+      if (!op->supr) {
+        if (!op->len) *((char *)va_arg(tmp_list, char *) + j) = new_str[j];
+        if (j + 1 < k) {
+          va_end(tmp_list);
+          va_copy(tmp_list, args);
         }
+      }
     }
     va_end(args);
     va_copy(args, tmp_list);
     if (op->len == 2 && !op->supr)
-        mbstowcs((wchar_t *)va_arg(args, wchar_t *), new_str, k);
+      mbstowcs((wchar_t *)va_arg(args, wchar_t *), new_str, k);
     free(new_str);
     if (!op->supr) res++;
     op->count += k - 1;
     op->format = 0;
     va_end(tmp_list);
-    }
+  }
   return res;
 }
 
