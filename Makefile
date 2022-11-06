@@ -1,52 +1,56 @@
 
-SRC = ./src
+CFLAGS = -Wall -Wextra -Werror -pedantic -std=c11 -fsanitize=address -g
+GCOVFLAGS = -fprofile-arcs -ftest-coverage
 
-FLAGS = -Wall -Werror -Wextra -pedantic -std=c11
+HEADERS = s21_string.h
+SOURCES = $(wildcard ./CORE/*.c)
 
-FILES_c = $(SRC)/s21_string.c $(SRC)/s21_sprintf.c $(SRC)/s21_sscanf.c
-FILES_o = s21_string.o s21_sprintf.o s21_sscanf.o
+OBJ_LIBRARY := $(patsubst %.c, %.o, $(SOURCES))
+
+%.o: %.c $(HEADER)
+	gcc $(CFLAGS) -c $< -o $@
 
 all: s21_string.a gcov_report test
 
-s21_string.a: $(SRC)/s21_string.h $(FILES_c)
-	gcc $(FLAGS) -c $(FILES_c)
-	ar rc s21_string.a $(FILES_o)
-	rm -f $(FILES_o)
+s21_string.a: $(OBJ_LIBRARY) $(HEADERS)
+	ar rcs s21_string.a $(OBJ_LIBRARY)
+	ranlib s21_string.a
+	rm -rf ./*/*.o
 
-test: s21_string.a $(SRC)/test.c
-	gcc $(FLAGS) $(SRC)/test.c -o test -lcheck -L. s21_string.a -lm
+test: s21_string.a TESTS/SUITE_main.c
+	gcc $(CFLAGS) TESTS/SUITE_main.c s21_string.a -o test.out -lm -lcheck
+	./test.out
 
-auxTest: auxTest_1 auxTest_2 auxTest_3
+personal: s21_string.a TESTS/personal.c
+	gcc $(CFLAGS) TESTS/personal.c s21_string.a -o test.out -lm
+	./personal.out
 
-auxTest_1: s21_string.a $(SRC)/AUX_TEST/AT_001.c
-	gcc -Wall -Werror -Wextra -pedantic -std=c11 $(SRC)/AUX_TEST/AT_001.c -o auxTest_1 -lcheck -L. s21_string.a -lm
+test_1: s21_string.a TESTS/SUITE_aux__1.c
+	gcc $(CFLAGS) TESTS/SUITE_aux__1.c s21_string.a -o test.out -lm -lcheck
+	./test_1.out
 
-auxTest_2: s21_string.a $(SRC)/AUX_TEST/AT_002.c
-	gcc $(SRC)/AUX_TEST/AT_002.c -o auxTest_2 -lcheck -L. s21_string.a -lm
+test_2: s21_string.a TESTS/SUITE_aux__2.c
+	gcc $(CFLAGS) TESTS/SUITE_aux__2.c s21_string.a -o test.out -lm -lcheck
+	./test_2.out
 
-auxTest_3: 
-	gcc -fsanitize=address \
-		$(SRC)/AUX_TEST/AT_003/main.c \
-		$(SRC)/AUX_TEST/AT_003/test_insert.c \
-		$(SRC)/AUX_TEST/AT_003/test_memcmp.c \
-		$(SRC)/AUX_TEST/AT_003/test_sprintf.c \
-		$(SRC)/AUX_TEST/AT_003/test_sscanf.c \
-		$(SRC)/AUX_TEST/AT_003/test_trim.c \
-		-o auxTest_3 -lcheck -L. s21_string.a -lm
+test_3: s21_string.a TESTS/SUITE_aux__3.c
+	gcc $(CFLAGS) TESTS/SUITE_aux__3.c s21_string.a -o test.out -lm -lcheck
+	./test_3.out
 
-gcov_report:
-	gcc $(FLAGS) -fprofile-arcs -ftest-coverage $(FILES_c) $(SRC)/test.c -o test -lcheck
-	./test
-	lcov -t "s21_sprintf" -o s21_sprintf.info -c -d .
-	lcov -t "s21_string" -o s21_string.info -c -d .
-	lcov -t "s21_sscanf" -o s21_sscanf.info -c -d .
-	genhtml -o gcov_report s21_string.info s21_sscanf.info
-	rm -f *.gcda *.gcno *.info test
+gcov_report: s21_string.a TESTS/SUITE_main.c
+	gcc $(GCOVFLAGS) TESTS/SUITE_main.c $(SOURCES) -o report.out -lm -lcheck
+	./report.out
+	gcov -f $(SOURCES)
+	lcov -t "gcov_report" -o Coverage_Report.info -c -d .
+	genhtml -o ./report Coverage_Report.info
+	rm -f *.gcno *.gcda *.info report.out *.gcov
+	open ./report/index-sort-f.html
 
-rebuild:
-	make clean
-	make all
+check:
+	clang-format -style=Google -n ./*/*.c
+
+rebuild: clean all
 
 clean:
-	rm -f s21_string.a test
-	rm -rf gcov_report
+	rm -f *.o *.a *.gcno *.gcda *.info *.out *.gcov
+	rm -rf ./report
