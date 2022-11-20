@@ -1,12 +1,12 @@
-#include "s21_string.h"
+#include "../s21_string.h"
 
-int s21_memcmp(const void *str1, const void *str2, s21_size_t n) {
-  unsigned char *tmp1 = (unsigned char *)str1;
-  unsigned char *tmp2 = (unsigned char *)str2;
-  int res = 0;
-  for (s21_size_t i = 0; i < n; i++) {
-    res = tmp1[i] - tmp2[i];
-    if (tmp1[i] != tmp2[i]) break;
-  }
-  return res;
+int s21_memcmp(const void *mem_1, const void *mem_2, s21_size_t size) {
+  unsigned char *str_1 = (unsigned char *)mem_1;
+  unsigned char *str_2 = (unsigned char *)mem_2;
+  int result = 0;
+
+  for (int x = 0; result == 0 && str_1[x] != '\0' && x < size; x += 1)
+    result = str_1[x] - str_2[x];
+
+  return result;
 }
