@@ -1,4 +1,4 @@
-#include "s21_string.h"
+#include "../../s21_string.h"
 
 int s21_sprintf(char *str, const char *format, ...) {
   str[0] = '\0';

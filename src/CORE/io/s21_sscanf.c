@@ -1,4 +1,4 @@
-#include "s21_string.h"
+#include "../../s21_string.h"
 
 int s21_sscanf(const char *str, const char *format, ...) {
   setlocale(LC_ALL, "");
