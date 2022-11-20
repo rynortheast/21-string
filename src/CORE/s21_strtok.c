@@ -1,5 +1,6 @@
-#include "s21_string.h"
+#include "../s21_string.h"
 
+//  TODO [s21_strtok] Необходим рефакторинг кода :|
 char *s21_strtok(char *str, const char *delim) {
   static int next, restok;
   static s21_size_t idx;

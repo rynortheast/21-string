@@ -1,9 +1,11 @@
-#include "s21_string.h"
+#include "../s21_string.h"
 
-char *s21_strcpy(char *str_main, const char *str_aux) {
-  int str_aux_len = s21_strlen(str_aux);
-  for (int x = 0; x <= str_aux_len; x++) {
-    str_main[x] = str_aux[x];
+char *s21_strcpy(char *destptr, const char *srcptr) {
+  int srcptrLength = s21_strlen(srcptr);
+
+  for (int x = 0; x <= srcptrLength; x += 1) {
+    destptr[x] = srcptr[x];
   }
-  return str_main;
+
+  return destptr;
 }

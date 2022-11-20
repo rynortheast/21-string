@@ -1,20 +1,17 @@
 #include "s21_string.h"
 
-char *s21_strstr(const char *str_main, const char *str_aux) {
-  char *result = s21_NULL;
-  size_t strAuxLen = s21_strlen(str_aux);
-  if (strAuxLen != 0) {
-    for (int x = 0; str_main[x] != '\0'; x += 1) {
-      if (str_main[x] != str_aux[0]) {
-        continue;
-      }
-      if (strncmp(str_main + x, str_aux, strAuxLen) == 0) {
-        result = ((char *)str_main + x);
-        break;
+char *s21_strstr(const char *destptr, const char *srcptr) {
+  size_t srcptrLength = s21_strlen(srcptr);
+  const char *result = s21_NULL;
+
+  if (srcptrLength != 0) {
+    for (int x = 0; result == s21_NULL && destptr[x] != '\0'; x += 1) {
+      if (destptr[x] == srcptr[0]) {
+        if (strncmp(destptr + x, srcptr, srcptrLength) == 0)
+          result = destptr + x;
       }
     }
-  } else {
-    result = (char *)str_main;
   }
-  return result;
+
+  return (char *)(result == s21_NULL ? destptr : result);
 }

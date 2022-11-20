@@ -1,13 +1,13 @@
 #include "s21_string.h"
 
-char *s21_strpbrk(const char *str, const char *key) {
-  s21_size_t result = 0;
-  int check = 0;
-  for (result = 0; result < (s21_strlen(str)); result++) {
-    if (s21_strchr(key, str[result])) {
-      check = 1;
-      break;
-    }
+char *s21_strpbrk(const char *str, const char *keys) {
+  s21_size_t strLength = s21_strlen(str);
+  s21_size_t shift = 0;
+  int status = 0;
+
+  for (shift = 0; status == 0 && shift < strLength; shift += 1) {
+    if (s21_strchr(keys, str[shift])) status = 1;
   }
-  return (char *)((check == 1) ? str + result : s21_NULL);
+
+  return (char *)(status ? (str + shift) : s21_NULL);
 }

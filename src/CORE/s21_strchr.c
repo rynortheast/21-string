@@ -1,13 +1,11 @@
-#include "s21_string.h"
+#include "../s21_string.h"
 
 char *s21_strchr(const char *str, int symbol) {
+  int strLength = s21_strlen(str) + 1;
   const char *result = s21_NULL;
-  int str_len = s21_strlen(str) + 1;
-  for (int counter = 0; counter < str_len; counter++) {
-    if (str[counter] == symbol) {
-      result = (str + counter);
-      break;
-    }
-  }
+
+  for (int x = 0; x < strLength && result == s21_NULL; x += 1)
+    if (str[x] == symbol) result = (str + x);
+
   return (char *)result;
 }

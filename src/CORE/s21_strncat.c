@@ -1,11 +1,19 @@
-#include "s21_string.h"
+#include "../s21_string.h"
 
-char *s21_strncat(char *str_main, const char *str_aux, s21_size_t accuracy) {
-  int len = s21_strlen(str_main);
-  for (s21_size_t counter = 0; counter < accuracy && str_aux[counter] != '\0';
-       counter += 1) {
-    str_main[len + counter] = str_aux[counter];
-    str_main[len + counter + 1] = '\0';
+//  TODO [s21_strncat] Необходим рефакторинг кода :|
+char *s21_strncat(char *result, const char *str, s21_size_t size) {
+  int strLength = s21_strlen(str);
+
+  for (s21_size_t x = 0; x < size && str[x] != '\0'; x += 1) {
+    result[strLength + x] = str[x];
+    result[strLength + x + 1] = '\0';
   }
-  return str_main;
+
+  for (int x = 0, strLength = s21_strlen(str); x < size && str[x] != '\0';
+       x += 1) {
+    result[strLength + x] = str[x];
+    result[strLength + x + 1] = '\0';
+  }
+
+  return result;
 }

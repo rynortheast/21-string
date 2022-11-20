@@ -1,13 +1,12 @@
 #include "s21_string.h"
 
 char *s21_strrchr(const char *str, int symbol) {
+  int strLength = s21_strlen(str);
   const char *result = s21_NULL;
-  int str_len = s21_strlen(str);
-  for (int counter = str_len; counter >= 0; counter--) {
-    if (str[counter] == symbol) {
-      result = (str + counter);
-      break;
-    }
+
+  for (int x = strLength; result == s21_NULL && x >= 0; x -= 1) {
+    if (str[x] == symbol) result = (str + x);
   }
+
   return (char *)result;
 }

@@ -1,9 +1,11 @@
-#include "s21_string.h"
+#include "../s21_string.h"
 
-char *s21_strcat(char *str_main, const char *str_aux) {
-  int str_aux_len = s21_strlen(str_aux);
-  int str_main_len = s21_strlen(str_main);
-  for (int counter = 0; counter <= str_aux_len; counter++)
-    str_main[str_main_len + counter] = str_aux[counter];
-  return str_main;
+char *s21_strcat(char *destptr, const char *srcptr) {
+  int destptrLength = s21_strlen(destptr);
+  int srcptrLength = s21_strlen(srcptr);
+
+  for (int x = 0; x <= srcptrLength; x += 1)
+    destptr[destptrLength + x] = srcptr[x];
+
+  return destptr;
 }
